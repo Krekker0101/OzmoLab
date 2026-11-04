@@ -9,4 +9,33 @@ html {
 
 body {
   font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  margin: 0;
+  min-width: 0;
+  overflow-x: hidden;
+}
+
+button,
+[role='button'] {
+  touch-action: manipulation;
+}
+
+.touch-scroll-strip {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  scroll-snap-type: x proximity;
+  overscroll-behavior-inline: contain;
+}
+
+.touch-scroll-strip::-webkit-scrollbar {
+  display: none;
+}
+
+.touch-scroll-strip > * {
+  scroll-snap-align: start;
+}
+
+@supports (padding: env(safe-area-inset-bottom)) {
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom);
+  }
 }

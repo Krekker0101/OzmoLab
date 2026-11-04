@@ -42,7 +42,7 @@ export default function App() {
 
   return (
     <div
-      className={`flex min-h-screen w-full flex-col overflow-hidden font-sans select-none transition-colors duration-200 motion-safe:scroll-smooth ${
+      className={`flex h-[100dvh] min-h-screen w-full min-w-0 flex-col overflow-hidden font-sans select-none transition-colors duration-200 motion-safe:scroll-smooth ${
         isLight ? 'bg-white text-slate-800' : 'bg-slate-950 text-slate-100'
       }`}
     >
@@ -84,7 +84,7 @@ export default function App() {
           </div>
 
           <div className="min-h-0 flex-1 overflow-hidden lg:hidden">
-            <div className="h-full transition-opacity duration-200">
+            <div className="flex h-full min-h-0 flex-col transition-opacity duration-200">
               {mobilePanel === 'catalog' && <ComponentCatalog />}
               {mobilePanel === 'workbench' && <WorkbenchCanvas />}
               {mobilePanel === 'journal' && <ObservationJournal />}

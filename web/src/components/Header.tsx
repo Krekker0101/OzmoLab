@@ -46,7 +46,7 @@ export const Header: React.FC = () => {
 
   return (
     <header
-      className={`flex flex-wrap items-center justify-between gap-2 px-3 py-2.5 sm:px-4 lg:flex-nowrap lg:gap-8 lg:px-6 border-b shrink-0 transition-colors duration-200 ${
+      className={`flex min-w-0 flex-wrap items-center justify-between gap-2 px-3 py-2.5 sm:px-4 lg:flex-nowrap lg:gap-8 lg:px-6 border-b shrink-0 transition-colors duration-200 ${
         isLight
           ? 'bg-white/95 border-slate-200/90 text-slate-800 shadow-xs backdrop-blur-xs'
           : 'bg-slate-900 border-slate-800 text-slate-100'
@@ -144,7 +144,7 @@ export const Header: React.FC = () => {
         </nav>
       ) : (
         /* Панель лаборатории при работе с монтажным столом */
-        <nav className="order-3 flex w-full min-w-0 items-center gap-2 overflow-x-auto py-1 no-scrollbar lg:order-none lg:w-auto">
+        <nav className="touch-scroll-strip order-3 flex w-full min-w-0 items-center gap-2 overflow-x-auto py-1 no-scrollbar lg:order-none lg:w-auto">
           <div
             className={`flex items-center p-0.5 rounded-lg border transition-colors ${
               isLight

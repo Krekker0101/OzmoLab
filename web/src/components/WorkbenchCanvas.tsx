@@ -140,17 +140,18 @@ export const WorkbenchCanvas: React.FC = () => {
 
   useEffect(() => {
     if (!svgRef.current) return;
-    const updateSize = () => {
-      if (svgRef.current) {
-        setCanvasDimensions({
-          width: svgRef.current.clientWidth || 1200,
-          height: svgRef.current.clientHeight || 800,
-        });
+    const updateSize = (width = svgRef.current?.clientWidth, height = svgRef.current?.clientHeight) => {
+      if (width && height) {
+        setCanvasDimensions({width, height});
       }
     };
     updateSize();
-    window.addEventListener('resize', updateSize);
-    return () => window.removeEventListener('resize', updateSize);
+    const observer = new ResizeObserver(([entry]) => {
+      const {width, height} = entry.contentRect;
+      updateSize(width, height);
+    });
+    observer.observe(svgRef.current);
+    return () => observer.disconnect();
   }, []);
 
   // Состояние перетаскивания линейки и транспортира
@@ -360,11 +361,11 @@ export const WorkbenchCanvas: React.FC = () => {
     >
       {/* Верхняя панель управления монтажным столом */}
       <header
-        className={`h-12 border-b flex items-center justify-between px-4 z-20 shrink-0 ${
+        className={`min-h-12 border-b flex flex-wrap items-center justify-between gap-2 px-3 py-1.5 z-20 shrink-0 ${
           isLight ? 'bg-white/95 border-slate-200/90 shadow-2xs' : 'bg-slate-900/95 border-slate-800'
         }`}
       >
-        <div className="flex items-center gap-3">
+        <div className="touch-scroll-strip flex min-w-0 max-w-full items-center gap-3 overflow-x-auto">
           <h2
             className={`text-xs font-bold uppercase tracking-wider ${
               isLight ? 'text-slate-800' : 'text-slate-200'
@@ -446,7 +447,7 @@ export const WorkbenchCanvas: React.FC = () => {
         </div>
 
         {/* Инструменты отмены, вращения, сетки и запуска */}
-        <div className="flex items-center gap-2">
+        <div className="touch-scroll-strip flex min-w-0 max-w-full items-center gap-2 overflow-x-auto">
           {/* Undo / Redo */}
           <div className="flex items-center gap-1 border-r pr-2 border-slate-200 dark:border-slate-800">
             <button
