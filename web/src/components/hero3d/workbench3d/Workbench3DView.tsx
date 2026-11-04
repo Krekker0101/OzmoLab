@@ -438,7 +438,7 @@ export const Workbench3DView: React.FC = () => {
   return (
     <div className="relative w-full h-full flex flex-col overflow-hidden select-none">
       {/* Three.js 3D Canvas Контейнер */}
-      <div ref={mountRef} className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing" />
+      <div ref={mountRef} className="absolute inset-x-0 top-0 bottom-20 w-full cursor-grab active:cursor-grabbing sm:inset-0" />
 
       {/* ВЕРХНЯЯ ПАНЕЛЬ ИНСТРУМЕНТОВ 3D СТОЛА */}
       <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 p-2 sm:p-3 pointer-events-none">
