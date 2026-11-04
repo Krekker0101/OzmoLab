@@ -463,7 +463,7 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
             <div className="absolute -top-1 -right-1 w-2 h-2 rounded-full bg-emerald-500" />
           </div>
           <span>
-            {language === 'tg' ? 'Озмоишгоҳи 3D' : language === 'ru' ? '3D лаборатория' : '3D Workbench'}
+            {language === 'tg' ? 'Озмоишгоҳи 3D' : language === 'ru' ? '3D лаборатория' : '3D Physics'}
           </span>
           <span className="px-1.5 py-0.5 rounded-md text-[10px] bg-sky-500/20 text-sky-600 dark:text-sky-300 font-mono">
             {components.length}

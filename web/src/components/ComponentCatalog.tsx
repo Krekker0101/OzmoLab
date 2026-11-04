@@ -70,7 +70,7 @@ export const ComponentCatalog: React.FC = () => {
 
   return (
     <aside
-      className={`w-72 flex flex-col shrink-0 border-r transition-colors duration-200 ${
+      className={`w-full max-h-[42vh] min-h-[220px] flex flex-col shrink-0 border-b transition-colors duration-200 lg:h-auto lg:max-h-none lg:w-72 lg:border-b-0 lg:border-r ${
         isLight
           ? 'bg-white border-slate-200/90 text-slate-800'
           : 'bg-slate-900/95 border-slate-800 text-slate-200'

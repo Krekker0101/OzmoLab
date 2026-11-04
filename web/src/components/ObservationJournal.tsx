@@ -351,7 +351,7 @@ export const ObservationJournal: React.FC = () => {
     <>
       {/* Правая панель с вкладками */}
       <aside
-        className={`w-88 flex flex-col shrink-0 transition-colors duration-200 border-l ${
+        className={`w-full min-h-[520px] flex flex-col shrink-0 transition-colors duration-200 border-t lg:min-h-0 lg:w-88 lg:border-t-0 lg:border-l ${
           isLight
             ? 'bg-white border-slate-200/90 text-slate-800'
             : 'bg-slate-900/95 border-slate-800 text-slate-200'

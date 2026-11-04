@@ -41,7 +41,7 @@ export default function App() {
 
   return (
     <div
-      className={`flex flex-col h-screen w-screen overflow-hidden font-sans select-none transition-colors duration-200 ${
+      className={`flex min-h-screen w-full flex-col overflow-hidden font-sans select-none transition-colors duration-200 motion-safe:scroll-smooth ${
         isLight ? 'bg-white text-slate-800' : 'bg-slate-950 text-slate-100'
       }`}
     >
@@ -54,7 +54,7 @@ export default function App() {
       ) : currentView === 'photo-agent' ? (
         <PhotoCircuitAgent />
       ) : (
-        <div className="flex-1 flex min-h-0 relative overflow-hidden">
+        <div className="flex-1 flex min-h-0 min-w-0 flex-col overflow-y-auto overflow-x-hidden lg:flex-row lg:overflow-hidden">
           {/* Левая колонка: Каталог элементов и Уроки */}
           <ComponentCatalog />
 

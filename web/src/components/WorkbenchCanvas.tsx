@@ -354,7 +354,7 @@ export const WorkbenchCanvas: React.FC = () => {
 
   return (
     <main
-      className={`relative flex-1 flex flex-col overflow-hidden select-none transition-colors duration-200 ${
+      className={`relative min-h-[620px] flex-1 flex flex-col overflow-hidden overscroll-contain select-none transition-colors duration-200 lg:min-h-0 ${
         isLight ? 'bg-slate-100 text-slate-800' : 'bg-slate-950 text-slate-100'
       }`}
     >

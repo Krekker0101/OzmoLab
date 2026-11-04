@@ -1017,8 +1017,16 @@ export const Workbench3DView: React.FC = () => {
         <Sparkles className="w-3.5 h-3.5 text-amber-400" />
         <span>
           {hoveredComp
-            ? `Выбран: ${hoveredComp.type} • Зажмите ЛКМ для перемещения по столу`
-            : 'Кликните по рубильнику для замыкания • Вращайте сцену ЛКМ • Масштабируйте колесом мыши'}
+            ? language === 'en'
+              ? `Selected: ${hoveredComp.type} • Drag with the left mouse button to move`
+              : language === 'ru'
+                ? `Выбран: ${hoveredComp.type} • Зажмите ЛКМ для перемещения по столу`
+                : `Интихоб шуд: ${hoveredComp.type} • Барои ҳаракат бо тугмаи чап кашед`
+            : language === 'en'
+              ? 'Click the switch to close the circuit • Drag with the mouse to rotate • Use the wheel to zoom'
+              : language === 'ru'
+                ? 'Кликните по рубильнику для замыкания • Вращайте сцену ЛКМ • Масштабируйте колесом мыши'
+                : 'Барои бастани занҷир ба калид клик кунед • Барои гардиш бо муш кашед • Барои масштаб чархро истифода баред'}
         </span>
       </div>
     </div>
