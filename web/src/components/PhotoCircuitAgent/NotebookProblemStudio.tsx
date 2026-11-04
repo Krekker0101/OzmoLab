@@ -68,7 +68,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
       {id: 'm1', mass: 1, x: 1, y: 0, confidence: 1},
       {id: 'm2', mass: 2, x: 4, y: 0, confidence: 1},
     ],
-    title: isTg ? 'Маркази массаҳои 1D' : 'Центр масс в 1D',
+    title: language === 'en' ? 'Center of mass in 1D' : isTg ? 'Маркази массаҳои 1D' : 'Центр масс в 1D',
   });
 
   const [resistanceProblem, setResistanceProblem] = useState<ResistanceProblem>({
@@ -216,10 +216,10 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                 {isOtherNotes
                   ? isTg
                     ? 'Қайдҳои назариявӣ шинохта шуданд'
-                    : 'Распознаны конспекты/теоретические записи'
+                    : language === 'en' ? 'Notes or theoretical writing detected' : 'Распознаны конспекты/теоретические записи'
                   : isTg
                     ? 'Акс хонда нашуд'
-                    : 'Не удалось разобрать фото'}
+                    : language === 'en' ? 'Could not parse this photo' : 'Не удалось разобрать фото'}
               </h3>
               <p className="text-xs text-amber-900/90 dark:text-amber-300 mt-1">
                 {notebookResult?.userGuidance}
@@ -230,14 +230,14 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                   onClick={onUploadNewPhoto}
                   className="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-600 text-white shadow-xs hover:bg-amber-500 transition-all"
                 >
-                  {isTg ? 'Боргирии акси дигар' : 'Загрузить другое фото'}
+                  {language === 'en' ? 'Upload another photo' : isTg ? 'Боргирии акси дигар' : 'Загрузить другое фото'}
                 </button>
                 <button
                   type="button"
                   onClick={() => setIsManualBuilderActive(true)}
                   className="px-3 py-1.5 rounded-lg text-xs font-semibold border border-amber-400 dark:border-amber-700 hover:bg-amber-100/50 transition-all text-amber-950 dark:text-amber-200"
                 >
-                  {isTg ? 'Масъаларо дастӣ ворид кунед' : 'Ввести задачу вручную'}
+                  {language === 'en' ? 'Enter a problem manually' : isTg ? 'Масъаларо дастӣ ворид кунед' : 'Ввести задачу вручную'}
                 </button>
               </div>
             </div>
@@ -258,14 +258,14 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
             <div className="flex items-center justify-between gap-2 mb-2">
               <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 flex items-center gap-1.5">
                 <Eye className="w-3.5 h-3.5" />
-                <span>{isTg ? 'Акси аслии дафтар' : 'Оригинал страницы тетради'}</span>
+                <span>{language === 'en' ? 'Original notebook page' : isTg ? 'Акси аслии дафтар' : 'Оригинал страницы тетради'}</span>
               </span>
               <button
                 type="button"
                 onClick={onUploadNewPhoto}
                 className="text-[11px] text-sky-600 dark:text-sky-400 hover:underline font-semibold"
               >
-                {isTg ? 'иваз кардан' : 'заменить фото'}
+                {language === 'en' ? 'replace photo' : isTg ? 'иваз кардан' : 'заменить фото'}
               </button>
             </div>
 
@@ -278,12 +278,12 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                   onClick={() => setIsPhotoExpanded(!isPhotoExpanded)}
                 />
                 <div className="absolute bottom-2 right-2 bg-slate-900/80 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-xs">
-                  {isTg ? 'Барои калон кардан пахш намоед' : 'Клик для увеличения'}
+                  {language === 'en' ? 'Click to enlarge' : isTg ? 'Барои калон кардан пахш намоед' : 'Клик для увеличения'}
                 </div>
               </div>
             ) : (
               <div className="py-8 text-center text-xs text-slate-400 border border-dashed rounded-xl">
-                {isTg ? 'Акси дафтар бор нашудааст' : 'Фото тетради не загружено'}
+                {language === 'en' ? 'No notebook photo uploaded' : isTg ? 'Акси дафтар бор нашудааст' : 'Фото тетради не загружено'}
               </div>
             )}
           </div>
@@ -295,7 +295,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
             }`}
           >
             <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 block mb-2">
-              {isTg ? 'Намунаҳои китоби дарсӣ (Санҷиши тез):' : 'Учебные примеры (Быстрый тест):'}
+              {language === 'en' ? 'Textbook examples (Quick test):' : isTg ? 'Намунаҳои китоби дарсӣ (Санҷиши тез):' : 'Учебные примеры (Быстрый тест):'}
             </span>
             <div className="flex flex-col gap-1.5">
               <button
@@ -303,7 +303,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                 onClick={() => applyPreset('case1')}
                 className="text-left p-2.5 rounded-xl border text-xs font-semibold hover:border-sky-500 transition-all flex items-center justify-between"
               >
-                <span>1D: m дар x=1 ва 2m дар x=4</span>
+                <span>{language === 'en' ? '1D: m at x=1 and 2m at x=4' : isTg ? '1D: m дар x=1 ва 2m дар x=4' : '1D: m при x=1 и 2m при x=4'}</span>
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 dark:bg-emerald-950 dark:text-emerald-300 font-bold">
                   Ҷавоб: 3
                 </span>
@@ -313,7 +313,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                 onClick={() => applyPreset('case2')}
                 className="text-left p-2.5 rounded-xl border text-xs font-semibold hover:border-sky-500 transition-all flex items-center justify-between"
               >
-                <span>1D: m дар 0 ва 3m дар d</span>
+                <span>{language === 'en' ? '1D: m at 0 and 3m at d' : isTg ? '1D: m дар 0 ва 3m дар d' : '1D: m при 0 и 3m при d'}</span>
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-indigo-100 text-indigo-800 dark:bg-indigo-950 dark:text-indigo-300 font-bold">
                   Ҷавоб: 3d/4
                 </span>
@@ -323,7 +323,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                 onClick={() => applyPreset('case3')}
                 className="text-left p-2.5 rounded-xl border text-xs font-semibold hover:border-sky-500 transition-all flex items-center justify-between"
               >
-                <span>2D Квадрат: 3m, 4m, m, 2m бо тарафи a</span>
+                <span>{language === 'en' ? '2D square: 3m, 4m, m, 2m with side a' : isTg ? '2D Квадрат: 3m, 4m, m, 2m бо тарафи a' : '2D квадрат: 3m, 4m, m, 2m со стороной a'}</span>
                 <span className="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300 font-bold">
                   (a/2, 3a/10)
                 </span>
@@ -343,10 +343,10 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
             <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 mb-4 pb-3 border-b border-slate-200 dark:border-slate-800">
               <div>
                 <span className="text-[11px] font-bold text-sky-600 dark:text-sky-400 uppercase tracking-wide">
-                  {isTg ? 'Марҳилаи тасдиқи хонанда' : 'Этап подтверждения параметров'}
+                  {language === 'en' ? 'Student parameter confirmation' : isTg ? 'Марҳилаи тасдиқи хонанда' : 'Этап подтверждения параметров'}
                 </span>
                 <h2 className="text-base font-bold text-slate-900 dark:text-slate-100">
-                  {isTg ? 'Маркази массаҳо (Center of Mass)' : 'Центр масс точечных тел'}
+                  {language === 'en' ? 'Center of mass (point masses)' : isTg ? 'Маркази массаҳо (Center of Mass)' : 'Центр масс точечных тел'}
                 </h2>
               </div>
 
@@ -379,7 +379,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
 
                 {/* Variable symbol input (e.g. d, a) */}
                 <div className="flex items-center gap-1">
-                  <span className="text-xs text-slate-400 font-bold">Рамз:</span>
+                  <span className="text-xs text-slate-400 font-bold">{language === 'en' ? 'Symbol:' : 'Рамз:'}</span>
                   <input
                     type="text"
                     placeholder="d ё a"
@@ -417,7 +417,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                       </span>
                       {isLowConfidence && (
                         <span className="text-[10px] font-bold px-1.5 py-0.5 rounded-full bg-amber-200 text-amber-900 dark:bg-amber-900 dark:text-amber-100">
-                          ⚠️ {isTg ? 'Санҷед' : 'Проверьте'}
+                          ⚠️ {language === 'en' ? 'Check' : isTg ? 'Санҷед' : 'Проверьте'}
                         </span>
                       )}
                     </div>
@@ -490,7 +490,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                 className="min-h-[42px] px-3 py-2 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:border-sky-500 hover:text-sky-500 transition-all flex items-center justify-center gap-1.5"
               >
                 <Plus className="w-3.5 h-3.5" />
-                <span>{isTg ? 'Иловаи масса' : 'Добавить массу'}</span>
+                <span>{language === 'en' ? 'Add mass' : isTg ? 'Иловаи масса' : 'Добавить массу'}</span>
               </button>
 
               <button
@@ -499,7 +499,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                 className="min-h-[44px] flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-600 to-sky-600 hover:from-emerald-500 hover:to-sky-500 text-white shadow-md active:scale-95 transition-all"
               >
                 <Play className="w-4 h-4 fill-white" />
-                <span>{isTg ? 'Ҳал кардан бо ҳисобкунак' : 'Рассчитать детерминированно'}</span>
+                <span>{language === 'en' ? 'Calculate deterministically' : isTg ? 'Ҳал кардан бо ҳисобкунак' : 'Рассчитать детерминированно'}</span>
               </button>
             </div>
           </div>
@@ -515,14 +515,14 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
               <div className="flex items-center justify-between gap-2 p-3.5 rounded-xl bg-gradient-to-r from-emerald-500/10 via-sky-500/10 to-indigo-500/10 border border-emerald-500/20 mb-4">
                 <div>
                   <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-600 dark:text-emerald-400">
-                    {isTg ? 'Ҳисоби детерминистии маркази массаҳо' : 'Детерминированный результат'}
+                    {language === 'en' ? 'Deterministic center-of-mass result' : isTg ? 'Ҳисоби детерминистии маркази массаҳо' : 'Детерминированный результат'}
                   </span>
                   <div className="text-xl sm:text-2xl font-black text-slate-900 dark:text-slate-100 font-mono mt-0.5">
                     COM = {comSolution.formattedCoordinates}
                   </div>
                 </div>
                 <div className="text-right">
-                  <span className="text-[11px] text-slate-400 block">{isTg ? 'Массаи умумӣ' : 'Общая масса'}</span>
+                  <span className="text-[11px] text-slate-400 block">{language === 'en' ? 'Total mass' : isTg ? 'Массаи умумӣ' : 'Общая масса'}</span>
                   <span className="text-sm font-bold font-mono">{comSolution.totalMass}m</span>
                 </div>
               </div>
@@ -539,7 +539,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                   }`}
                 >
                   <HelpCircle className="w-3.5 h-3.5" />
-                  <span>{isTg ? 'Маслиҳат' : 'Подсказка'}</span>
+                  <span>{language === 'en' ? 'Hint' : isTg ? 'Маслиҳат' : 'Подсказка'}</span>
                 </button>
                 <button
                   type="button"
@@ -551,7 +551,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                   }`}
                 >
                   <ListOrdered className="w-3.5 h-3.5" />
-                  <span>{isTg ? 'Қадам ба қадам' : 'По шагам'}</span>
+                  <span>{language === 'en' ? 'Step by step' : isTg ? 'Қадам ба қадам' : 'По шагам'}</span>
                 </button>
                 <button
                   type="button"
@@ -563,7 +563,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                   }`}
                 >
                   <Award className="w-3.5 h-3.5" />
-                  <span>{isTg ? 'Ҷавоби пурра' : 'Ответ'}</span>
+                  <span>{language === 'en' ? 'Answer' : isTg ? 'Ҷавоби пурра' : 'Ответ'}</span>
                 </button>
               </div>
 
@@ -574,7 +574,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                     <Sparkles className="w-4 h-4 text-amber-500 shrink-0 mt-0.5" />
                     <div>
                       <div className="font-bold mb-1">
-                        {isTg ? 'Саволи роҳнамо аз омӯзгор:' : 'Наводящий вопрос наставника:'}
+                        {language === 'en' ? 'Guiding question from the tutor:' : isTg ? 'Саволи роҳнамо аз омӯзгор:' : 'Наводящий вопрос наставника:'}
                       </div>
                       <p className="leading-relaxed">
                         {comSolution.tutor[language as 'tg' | 'ru' | 'en']?.hint ||
@@ -587,7 +587,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                 {socraticTab === 'steps' && (
                   <div className="flex flex-col gap-2">
                     <div className="font-bold text-slate-800 dark:text-slate-200 mb-1">
-                      {isTg ? 'Масири ҳалли математикӣ:' : 'Математический ход решения:'}
+                      {language === 'en' ? 'Mathematical solution path:' : isTg ? 'Масири ҳалли математикӣ:' : 'Математический ход решения:'}
                     </div>
                     {(
                       comSolution.tutor[language as 'tg' | 'ru' | 'en']?.steps ||
@@ -607,7 +607,7 @@ export const NotebookProblemStudio: React.FC<NotebookProblemStudioProps> = ({
                   <div className="flex items-start gap-2.5 text-emerald-800 dark:text-emerald-300">
                     <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
                     <div>
-                      <div className="font-bold mb-1">{isTg ? 'Хулосаи илмӣ:' : 'Итог:'}</div>
+                      <div className="font-bold mb-1">{language === 'en' ? 'Scientific conclusion:' : isTg ? 'Хулосаи илмӣ:' : 'Итог:'}</div>
                       <p className="font-mono font-bold text-sm">
                         {comSolution.tutor[language as 'tg' | 'ru' | 'en']?.finalAnswer ||
                           comSolution.tutor.tg.finalAnswer}

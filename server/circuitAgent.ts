@@ -41,7 +41,7 @@ export interface AgentPipelineStep {
 }
 
 export interface AgentExplanation {
-  language: 'tg' | 'ru';
+  language: 'tg' | 'ru' | 'en';
   title: string;
   summary: string;
   whatWentWrong: string;
@@ -68,7 +68,11 @@ export interface AgentRequest {
   imageBase64?: string;
   presetId?: string;
   customNetlist?: NetlistCircuit;
-  language?: 'tg' | 'ru';
+  language?: SupportedLanguage;
+}
+
+function localized(language: SupportedLanguage, tg: string, ru: string, en: string): string {
+  return language === 'en' ? en : language === 'ru' ? ru : tg;
 }
 
 /**
@@ -744,7 +748,7 @@ export function generateTeacherExplanation(
   originalSolution: MNASolution,
   fixedNetlist: NetlistCircuit | undefined,
   fixedSolution: MNASolution | undefined,
-  lang: 'tg' | 'ru' = 'ru',
+  lang: SupportedLanguage = 'ru',
 ): AgentExplanation {
   const warnings = originalSolution.warnings;
   const isTg = lang === 'tg';
@@ -966,8 +970,8 @@ export async function runPhotoToCircuitAgent(req: AgentRequest): Promise<AgentRu
     steps.push({
       step: 'perception',
       status: 'success',
-      title: language === 'tg' ? 'Қабули нақшаи занҷир' : 'Получение схемы цепи',
-      description: language === 'tg' ? 'Нақша мустақиман қабул карда шуд' : 'Схема получена из интерфейса',
+      title: localized(language, 'Қабули нақшаи занҷир', 'Получение схемы цепи', 'Circuit received'),
+      description: localized(language, 'Нақша мустақиман қабул карда шуд', 'Схема получена из интерфейса', 'Circuit received from the interface'),
       timestamp: Date.now(),
       data: {componentsCount: netlist.components.length},
     });
@@ -977,7 +981,7 @@ export async function runPhotoToCircuitAgent(req: AgentRequest): Promise<AgentRu
     steps.push({
       step: 'perception',
       status: 'success',
-      title: language === 'tg' ? 'Боргирии намунаи таҷрибавӣ' : 'Загрузка тестового сценария',
+      title: localized(language, 'Боргирии намунаи таҷрибавӣ', 'Загрузка тестового сценария', 'Loading test scenario'),
       description: `${modelUsed}`,
       timestamp: Date.now(),
       data: {presetId: req.presetId, componentsCount: netlist.components.length},
@@ -993,13 +997,13 @@ export async function runPhotoToCircuitAgent(req: AgentRequest): Promise<AgentRu
       step: 'perception',
       status: isTruncated ? 'warning' : isNegative ? 'warning' : 'success',
       title: isNegative
-        ? (language === 'tg' ? 'Занҷири барқӣ ёфт нашуд' : 'Цепь не обнаружена')
-        : (language === 'tg' ? 'Шинохти акс бо модели Meta' : 'Распознавание фото моделью Meta'),
+        ? localized(language, 'Занҷири барқӣ ёфт нашуд', 'Цепь не обнаружена', 'No circuit detected')
+        : localized(language, 'Шинохти акс бо модели Meta', 'Распознавание фото моделью Meta', 'Photo recognition with Meta model'),
       description: isNegative
         ? t('circuit_agent.not_a_circuit', language)
         : isTruncated
           ? t('circuit_agent.fallback_unread', language)
-          : `${modelUsed} — ${netlist.components.length} ${language === 'tg' ? 'унсур шинохта шуд' : 'компонентов распознано'}`,
+          : `${modelUsed} — ${netlist.components.length} ${localized(language, 'унсур шинохта шуд', 'компонентов распознано', 'components recognized')}`,
       timestamp: Date.now(),
       data: {
         modelUsed,
@@ -1021,20 +1025,16 @@ export async function runPhotoToCircuitAgent(req: AgentRequest): Promise<AgentRu
   if (netlist.isCircuit === false || netlist.components.length === 0) {
     const nonCircuitExplanation = {
       language,
-      title: language === 'tg' ? 'Дар ин акс занҷири барқӣ ёфт нашуд' : 'На фото не обнаружена электрическая цепь',
+      title: localized(language, 'Дар ин акс занҷири барқӣ ёфт нашуд', 'На фото не обнаружена электрическая цепь', 'No electrical circuit was detected in this photo'),
       summary: t('circuit_agent.not_a_circuit', language),
-      whatWentWrong: language === 'tg'
-        ? 'Дар акс формулаҳо, расмҳои оптика ё механика дида мешаванд, вале унсурҳои занҷири барқӣ (батарея, резистор, лампа) нестанд.'
-        : 'Фотография содержит формулы или схемы из других разделов физики (механика, оптика), но не содержит элементов электрической цепи.',
-      physicsLaw: language === 'tg' ? 'Қонуни ҳифзи энергия ва занҷирҳои барқӣ' : 'Законы электродинамики и электрических цепей',
+      whatWentWrong: localized(language, 'Дар акс формулаҳо, расмҳои оптика ё механика дида мешаванд, вале унсурҳои занҷири барқӣ (батарея, резистор, лампа) нестанд.', 'Фотография содержит формулы или схемы из других разделов физики (механика, оптика), но не содержит элементов электрической цепи.', 'The photo contains formulas or diagrams from another physics area, but no electrical circuit components.'),
+      physicsLaw: localized(language, 'Қонуни ҳифзи энергия ва занҷирҳои барқӣ', 'Законы электродинамики и электрических цепей', 'Laws of electrodynamics and electrical circuits'),
       formulaSteps: [
-        language === 'tg' ? '1. Барои таҳлили занҷир манбаи ҷараён (батарея) лозим аст.' : '1. Для расчёта цепи необходим источник ЭДС (батарея).',
-        language === 'tg' ? '2. Истеъмолкунанда (лампа ё резистор) бояд васл шавад.' : '2. Должна присутствовать нагрузка (лампа или резистор).',
-        language === 'tg' ? '3. Ноқилҳо бояд ҳалқаи сарбастаро ташкил кунанд.' : '3. Проводники должны образовывать замкнутый контур.',
+        localized(language, '1. Барои таҳлили занҷир манбаи ҷараён (батарея) лозим аст.', '1. Для расчёта цепи необходим источник ЭДС (батарея).', '1. A source (battery) is required to analyze the circuit.'),
+        localized(language, '2. Истеъмолкунанда (лампа ё резистор) бояд васл шавад.', '2. Должна присутствовать нагрузка (лампа или резистор).', '2. A load such as a lamp or resistor must be connected.'),
+        localized(language, '3. Ноқилҳо бояд ҳалқаи сарбастаро ташкил кунанд.', '3. Проводники должны образовывать замкнутый контур.', '3. Conductors must form a closed loop.'),
       ],
-      howToFix: language === 'tg'
-        ? 'Акси равшани занҷири барқиро бор кунед ё дар мизи корӣ худатон занҷирро созед.'
-        : 'Пожалуйста, сфотографируйте электрическую цепь или соберите её вручную на верстаке.',
+      howToFix: localized(language, 'Акси равшани занҷири барқиро бор кунед ё дар мизи корӣ худатон занҷирро созед.', 'Пожалуйста, сфотографируйте электрическую цепь или соберите её вручную на верстаке.', 'Upload a clear circuit photo or build the circuit manually on the workbench.'),
     };
 
     return {
@@ -1061,8 +1061,8 @@ export async function runPhotoToCircuitAgent(req: AgentRequest): Promise<AgentRu
   steps.push({
     step: 'netlist',
     status: 'success',
-    title: language === 'tg' ? 'Ташаккули Netlist (Zod)' : 'Формирование нетлиста цепи (Zod)',
-    description: `${netlist.components.length} унсур, референтӣ ground: ${netlist.groundNode || '0'}`,
+    title: localized(language, 'Ташаккули Netlist (Zod)', 'Формирование нетлиста цепи (Zod)', 'Building netlist (Zod)'),
+    description: `${netlist.components.length} ${localized(language, 'унсур', 'компонентов', 'components')}, ${localized(language, 'замини истинод', 'опорная земля', 'reference ground')}: ${netlist.groundNode || '0'}`,
     timestamp: Date.now(),
     data: netlist,
   });
@@ -1074,11 +1074,11 @@ export async function runPhotoToCircuitAgent(req: AgentRequest): Promise<AgentRu
   steps.push({
     step: 'solve_original',
     status: originalSolution.warnings.length > 0 ? 'warning' : 'success',
-    title: language === 'tg' ? 'Ҳисоби математикии MNA' : 'Детерминированный ММА расчет',
+    title: localized(language, 'Ҳисоби математикии MNA', 'Детерминированный ММА расчет', 'Deterministic MNA calculation'),
     description:
       originalSolution.warnings.length > 0
-        ? `${originalSolution.warnings.length} ${language === 'tg' ? 'хато ошкор шуд' : 'аномалий обнаружено'}`
-        : `${language === 'tg' ? 'Занҷир бехатар аст' : 'Цепь в штатном режиме'} (I=${originalSolution.totalCurrent}A)`,
+        ? `${originalSolution.warnings.length} ${localized(language, 'хато ошкор шуд', 'аномалий обнаружено', 'anomalies detected')}`
+        : `${localized(language, 'Занҷир бехатар аст', 'Цепь в штатном режиме', 'Circuit is operating normally')} (I=${originalSolution.totalCurrent}A)`,
     timestamp: Date.now(),
     data: originalSolution,
   });
@@ -1088,12 +1088,12 @@ export async function runPhotoToCircuitAgent(req: AgentRequest): Promise<AgentRu
   steps.push({
     step: 'diagnosis',
     status: hasMistake ? 'warning' : 'success',
-    title: language === 'tg' ? 'Ташхиси хатогиҳо' : 'Диагностика физических ошибок',
+    title: localized(language, 'Ташхиси хатогиҳо', 'Диагностика физических ошибок', 'Physical error diagnosis'),
     description: hasMistake
       ? originalSolution.warnings.map((w) => w.message).join(' | ')
       : language === 'tg'
         ? 'Ҳамаи параметрҳо дурустанд'
-        : 'Все физические параметры в норме',
+        : localized(language, 'Ҳамаи параметрҳо дурустанд', 'Все физические параметры в норме', 'All physical parameters are within normal range'),
     timestamp: Date.now(),
     data: originalSolution.warnings,
   });
@@ -1110,7 +1110,7 @@ export async function runPhotoToCircuitAgent(req: AgentRequest): Promise<AgentRu
     steps.push({
       step: 'propose_fix',
       status: 'success',
-      title: language === 'tg' ? 'Пешниҳоди ислоҳот' : 'Синтез топологического исправления',
+      title: localized(language, 'Пешниҳоди ислоҳот', 'Синтез топологического исправления', 'Proposed circuit fix'),
       description:
         language === 'tg'
           ? 'Топологияи нав бо муқовимати муҳофизатӣ ташаккул ёфт'
@@ -1122,10 +1122,10 @@ export async function runPhotoToCircuitAgent(req: AgentRequest): Promise<AgentRu
     steps.push({
       step: 'solve_fixed',
       status: fixedSolution.status === 'ok' ? 'success' : 'warning',
-      title: language === 'tg' ? 'Санҷиши такрории ҳал' : 'Повторная верификация исправленной цепи',
+      title: localized(language, 'Санҷиши такрории ҳал', 'Повторная верификация исправленной цепи', 'Re-verify corrected circuit'),
       description:
         fixedSolution.status === 'ok'
-          ? `${language === 'tg' ? 'Занҷири ислоҳшуда санҷида шуд' : 'Исправленная цепь верифицирована'}: I=${fixedSolution.totalCurrent}A, статус OK`
+          ? `${localized(language, 'Занҷири ислоҳшуда санҷида шуд', 'Исправленная цепь верифицирована', 'Corrected circuit verified')}: I=${fixedSolution.totalCurrent}A, ${localized(language, 'ҳолат OK', 'статус OK', 'status OK')}`
           : 'Остались нерешённые предупреждения',
       timestamp: Date.now(),
       data: fixedSolution,
@@ -1144,7 +1144,7 @@ export async function runPhotoToCircuitAgent(req: AgentRequest): Promise<AgentRu
   steps.push({
     step: 'explanation',
     status: 'success',
-    title: language === 'tg' ? 'Тавзеҳи омӯзгор' : 'Педагогическое объяснение',
+    title: localized(language, 'Тавзеҳи омӯзгор', 'Педагогическое объяснение', 'Teacher explanation'),
     description: explanation.title,
     timestamp: Date.now(),
     data: explanation,

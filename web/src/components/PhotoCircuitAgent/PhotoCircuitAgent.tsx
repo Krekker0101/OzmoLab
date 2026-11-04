@@ -71,6 +71,7 @@ export const PhotoCircuitAgent: React.FC = () => {
   const {language, theme, setCurrentView, loadNetlistIntoWorkbench} = useLabStore();
   const isLight = theme === 'light';
   const isTg = language === 'tg';
+  const tx = (tg: string, ru: string, en: string) => language === 'en' ? en : language === 'ru' ? ru : tg;
 
   const [appMode, setAppMode] = useState<'circuit' | 'notebook'>('circuit');
   const [notebookResult, setNotebookResult] = useState<NotebookExtractionResult | null>(null);
@@ -101,9 +102,7 @@ export const PhotoCircuitAgent: React.FC = () => {
     setIsPerceiving(false);
     setPerceiveElapsedSec(0);
     setPerceptionNotice(
-      isTg
-        ? 'Шинохти акс аз ҷониби корбар бекор карда шуд.'
-        : 'Распознавание фото отменено пользователем.',
+      tx('Шинохти акс аз ҷониби корбар бекор карда шуд.', 'Распознавание фото отменено пользователем.', 'Photo recognition was cancelled by the user.'),
     );
   };
 
@@ -145,9 +144,7 @@ export const PhotoCircuitAgent: React.FC = () => {
     } catch (err) {
       console.error('[PhotoCircuitAgent] Run failed:', err);
       setErrorMessage(
-        isTg
-          ? 'Хатогӣ ҳангоми санҷиши занҷир. Лутфан, дубора кӯшиш кунед.'
-          : 'Ошибка при верификации цепи. Пожалуйста, повторите попытку.',
+        tx('Хатогӣ ҳангоми санҷиши занҷир. Лутфан, дубора кӯшиш кунед.', 'Ошибка при верификации цепи. Пожалуйста, повторите попытку.', 'Circuit verification failed. Please try again.'),
       );
     } finally {
       setIsLoading(false);
@@ -231,9 +228,7 @@ export const PhotoCircuitAgent: React.FC = () => {
         }
         console.error('[PhotoCircuitAgent] Perception failed:', err);
         setErrorMessage(
-          isTg
-            ? 'Хатогӣ ҳангоми шинохти акс бо модели Meta. Шумо метавонед нақшаро дастӣ созед.'
-            : 'Ошибка при распознавании фото моделью Meta. Вы можете собрать цепь вручную.',
+          tx('Хатогӣ ҳангоми шинохти акс бо модели Meta. Шумо метавонед нақшаро дастӣ созед.', 'Ошибка при распознавании фото моделью Meta. Вы можете собрать цепь вручную.', 'Photo recognition with the Meta model failed. You can build the circuit manually.'),
         );
       } finally {
         if (timerRef.current) {
@@ -322,9 +317,7 @@ export const PhotoCircuitAgent: React.FC = () => {
             </span>
           </h1>
           <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 mt-1 max-w-2xl">
-            {isTg
-              ? 'Акси занҷири барқиро бор кунед. Агент онро шинохта, ба нетлист табдил медиҳад, бо солвери физикӣ месанҷад, хатогиро мефаҳмонад ва ислоҳи бехатарро синтез менамояд.'
-              : 'Сфотографируйте схему или макет цепи. Агент распознает компоненты моделью Meta Muse Spark Open, построит нетлист, верифицирует детерминированным MNA-солвером, диагностирует ошибки и объяснит как учитель физики.'}
+            {tx('Акси занҷири барқиро бор кунед. Агент онро шинохта, ба нетлист табдил медиҳад, бо солвери физикӣ месанҷад, хатогиро мефаҳмонад ва ислоҳи бехатарро синтез менамояд.', 'Сфотографируйте схему или макет цепи. Агент распознает компоненты моделью Meta Muse Spark Open, построит нетлист, верифицирует детерминированным MNA-солвером, диагностирует ошибки и объяснит как учитель физики.', 'Upload a photo of an electrical circuit. The agent recognizes it, builds a netlist, verifies it with a deterministic MNA solver, diagnoses errors, and explains a safe fix like a physics teacher.')}
           </p>
         </div>
 
@@ -342,12 +335,12 @@ export const PhotoCircuitAgent: React.FC = () => {
             {isLoading ? (
               <>
                 <RefreshCw className="w-4 h-4 animate-spin" />
-                <span>{isTg ? 'Таҳлил рафта истодааст...' : 'Агент анализирует...'}</span>
+                <span>{tx('Таҳлил рафта истодааст...', 'Агент анализирует...', 'Agent is analyzing...')}</span>
               </>
             ) : (
               <>
                 <Play className="w-4 h-4 fill-white" />
-                <span>{isTg ? 'Санҷиши занҷир бо ИИ' : 'Верифицировать схему'}</span>
+                <span>{tx('Санҷиши занҷир бо ИИ', 'Верифицировать схему', 'Verify circuit with AI')}</span>
               </>
             )}
           </button>
@@ -366,7 +359,7 @@ export const PhotoCircuitAgent: React.FC = () => {
           }`}
         >
           <Zap className="w-3.5 h-3.5" />
-          <span>{isTg ? '1. Занҷирҳои барқӣ (Circuits)' : '1. Электрические цепи (Circuits)'}</span>
+          <span>{tx('1. Занҷирҳои барқӣ (Circuits)', '1. Электрические цепи (Circuits)', '1. Electrical circuits')}</span>
         </button>
         <button
           type="button"
@@ -378,7 +371,7 @@ export const PhotoCircuitAgent: React.FC = () => {
           }`}
         >
           <BookOpen className="w-3.5 h-3.5" />
-          <span>{isTg ? '2. Саҳифаи дафтар (Notebook Mode)' : '2. Фото тетради (Notebook Mode)'}</span>
+          <span>{tx('2. Саҳифаи дафтар (Notebook Mode)', '2. Фото тетради (Notebook Mode)', '2. Notebook page')}</span>
         </button>
       </div>
 
@@ -405,7 +398,7 @@ export const PhotoCircuitAgent: React.FC = () => {
             }`}
           >
             <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 flex items-center justify-between">
-              <span>{isTg ? '1. Акс ё намунаи таҷрибавӣ' : '1. Фото схемы или пресет'}</span>
+              <span>{tx('1. Акс ё намунаи таҷрибавӣ', '1. Фото схемы или пресет', '1. Circuit photo or preset')}</span>
               {uploadedImage && (
                 <button
                   onClick={() => {
@@ -415,7 +408,7 @@ export const PhotoCircuitAgent: React.FC = () => {
                   }}
                   className="text-sky-600 dark:text-sky-400 hover:underline text-[11px] font-semibold lowercase"
                 >
-                  {isTg ? 'тоза кардан' : 'сбросить фото'}
+                  {tx('тоза кардан', 'сбросить фото', 'reset photo')}
                 </button>
               )}
             </h2>
@@ -449,7 +442,7 @@ export const PhotoCircuitAgent: React.FC = () => {
                     />
                   </div>
                   <span className="text-xs font-semibold text-sky-600 dark:text-sky-400">
-                    {isTg ? 'Акс бо муваффақият бор шуд (барои иваз клик кунед)' : 'Фото загружено (кликните для замены)'}
+                    {tx('Акс бо муваффақият бор шуд (барои иваз клик кунед)', 'Фото загружено (кликните для замены)', 'Photo uploaded (click to replace)')}
                   </span>
                 </div>
               ) : (
@@ -459,10 +452,10 @@ export const PhotoCircuitAgent: React.FC = () => {
                   </div>
                   <div>
                     <div className="text-xs font-bold text-slate-800 dark:text-slate-200">
-                      {isTg ? 'Акси занҷирро бор кунед' : 'Загрузите фото схемы или макета'}
+                      {tx('Акси занҷирро бор кунед', 'Загрузите фото схемы или макета', 'Upload a circuit or layout photo')}
                     </div>
                     <div className="text-[11px] text-slate-500 dark:text-slate-400">
-                      {isTg ? 'PNG, JPG аз камера ё галерея' : 'PNG, JPG с камеры смартфона или тетради'}
+                      {tx('PNG, JPG аз камера ё галерея', 'PNG, JPG с камеры смартфона или тетради', 'PNG or JPG from a phone camera or notebook')}
                     </div>
                   </div>
                 </div>
@@ -472,37 +465,37 @@ export const PhotoCircuitAgent: React.FC = () => {
             {/* Educational Preset Cases */}
             <div className="mt-4">
               <div className="text-[11px] font-bold text-slate-500 dark:text-slate-400 uppercase tracking-wider mb-2">
-                {isTg ? 'Намунаҳои омӯзишии мактабӣ:' : 'Школьные учебные кейсы:'}
+                {tx('Намунаҳои омӯзишии мактабӣ:', 'Школьные учебные кейсы:', 'School learning cases:')}
               </div>
               <div className="flex flex-col gap-1.5">
                 {[
                   {
                     id: 'led_missing_resistor',
-                    name: isTg ? 'Диод бе муқовимат (хатари сӯхтан)' : 'Светодиод без резистора (перегорит)',
+                    name: tx('Диод бе муқовимат (хатари сӯхтан)', 'Светодиод без резистора (перегорит)', 'LED without resistor (burnout risk)'),
                     tag: 'Burnout Hazard',
                     tagColor: 'bg-rose-100 text-rose-700 dark:bg-rose-950/70 dark:text-rose-300',
                   },
                   {
                     id: 'direct_short_circuit',
-                    name: isTg ? 'Расиши кӯтоҳ дар батарея (КЗ)' : 'Короткое замыкание батареи (КЗ)',
+                    name: tx('Расиши кӯтоҳ дар батарея (КЗ)', 'Короткое замыкание батареи (КЗ)', 'Battery short circuit'),
                     tag: 'Fire Hazard',
                     tagColor: 'bg-amber-100 text-amber-700 dark:bg-amber-950/70 dark:text-amber-300',
                   },
                   {
                     id: 'open_switch_loop',
-                    name: isTg ? 'Занҷири кушода (калиди кушод)' : 'Разомкнутая цепь (ключ выключен)',
+                    name: tx('Занҷири кушода (калиди кушод)', 'Разомкнутая цепь (ключ выключен)', 'Open circuit (switch off)'),
                     tag: 'Open Circuit',
                     tagColor: 'bg-slate-200 text-slate-700 dark:bg-slate-800 dark:text-slate-300',
                   },
                   {
                     id: 'led_reverse_biased',
-                    name: isTg ? 'Диоди баръакс пайвастшуда' : 'Светодиод включен обратной полярностью',
+                    name: tx('Диоди баръакс пайвастшуда', 'Светодиод включен обратной полярностью', 'LED connected with reverse polarity'),
                     tag: 'Reverse Bias',
                     tagColor: 'bg-indigo-100 text-indigo-700 dark:bg-indigo-950/70 dark:text-indigo-300',
                   },
                   {
                     id: 'proper_safe_circuit',
-                    name: isTg ? 'Занҷири дурусти 9В бо 330Ω' : 'Штатная безопасная цепь (9В, 330Ω, LED)',
+                    name: tx('Занҷири дурусти 9В бо 330Ω', 'Штатная безопасная цепь (9В, 330Ω, LED)', 'Safe 9V circuit (330Ω, LED)'),
                     tag: 'Safe OK',
                     tagColor: 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/70 dark:text-emerald-300',
                   },
@@ -555,9 +548,9 @@ export const PhotoCircuitAgent: React.FC = () => {
               }`}
             >
               <h2 className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400 mb-3 flex items-center justify-between">
-                <span>{isTg ? 'Раванди таҳлили 7-зинагии агент' : '7 шагов верификации агента'}</span>
+                <span>{tx('Раванди таҳлили 7-зинагии агент', '7 шагов верификации агента', '7-step agent verification')}</span>
                 <span className="text-[10px] text-emerald-600 dark:text-emerald-400 font-bold">
-                  {agentResult.steps.length}/7 завершено
+                  {agentResult.steps.length}/7 {tx('анҷом ёфт', 'завершено', 'completed')}
                 </span>
               </h2>
 
@@ -624,12 +617,12 @@ export const PhotoCircuitAgent: React.FC = () => {
 
               <div>
                 <h3 className="font-bold text-base text-slate-900 dark:text-slate-100">
-                  {isTg ? 'Таҳлили мултимодалии акс бо Meta Muse Spark Open...' : 'Анализ фото схемы моделью Meta Muse Spark Open...'}
+                  {tx('Таҳлили мултимодалии акс бо Meta Muse Spark Open...', 'Анализ фото схемы моделью Meta Muse Spark Open...', 'Analyzing the photo with Meta Muse Spark Open...')}
                 </h3>
                 <p className="text-xs text-slate-500 dark:text-slate-400 max-w-md mt-1">
                   {isTg
                     ? 'Агент гиреҳҳо ва унсурҳоро муайян карда истодааст (одатан 15–25 сония). Шумо метавонед интизор шавед ё амалро бекор кунед.'
-                    : 'Модель выделяет компоненты и топологические узлы (обычно 15–25 секунд). Вы можете дождаться завершения или отменить операцию.'}
+                    : tx('Агент гиреҳҳо ва унсурҳоро муайян карда истодааст (одатан 15–25 сония). Шумо метавонед интизор шавед ё амалро бекор кунед.', 'Модель выделяет компоненты и топологические узлы (обычно 15–25 секунд). Вы можете дождаться завершения или отменить операцию.', 'The agent is identifying components and topology nodes (usually 15–25 seconds). You can wait or cancel the operation.')}
                 </p>
               </div>
 
@@ -639,7 +632,7 @@ export const PhotoCircuitAgent: React.FC = () => {
                 className="mt-1 px-4 py-2 rounded-xl text-xs font-bold border border-rose-300 dark:border-rose-800 bg-rose-50 dark:bg-rose-950/40 text-rose-700 dark:text-rose-300 hover:bg-rose-100 dark:hover:bg-rose-900/60 transition-all flex items-center gap-1.5 active:scale-95 shadow-xs"
               >
                 <X className="w-3.5 h-3.5" />
-                <span>{isTg ? 'Бекор кардан' : 'Отменить анализ'}</span>
+                <span>{tx('Бекор кардан', 'Отменить анализ', 'Cancel analysis')}</span>
               </button>
             </div>
           )}
@@ -660,12 +653,12 @@ export const PhotoCircuitAgent: React.FC = () => {
                     <h3 className="font-bold text-sm text-slate-800 dark:text-slate-100">
                       {isTg
                         ? 'Дар ин акс занҷири барқӣ ёфт нашуд'
-                        : 'На этой фотографии не обнаружена электрическая цепь'}
+                        : tx('Дар ин акс занҷири барқӣ ёфт нашуд', 'На этой фотографии не обнаружена электрическая цепь', 'No electrical circuit was detected in this photo')}
                     </h3>
                     <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                       {isTg
                         ? 'Агент муайян кард, ки ин расми дигар (масалан, механика, оптика ё қайдҳои дафтар) аст. Мо ҷузъҳои бардурӯғ ихтироъ намекунем. Лутфан, акси нақша ё схемаи барқиро бор кунед.'
-                        : 'Модель определила, что фото относится к другому разделу физики (механика, оптика или чертёж) и не содержит электрической цепи. Пожалуйста, загрузите фото электрической схемы.'}
+                        : tx('Агент муайян кард, ки ин расми дигар (масалан, механика, оптика ё қайдҳои дафтар) аст. Мо ҷузъҳои бардурӯғ ихтироъ намекунем. Лутфан, акси нақша ё схемаи барқиро бор кунед.', 'Модель определила, что фото относится к другому разделу физики (механика, оптика или чертёж) и не содержит электрической цепи. Пожалуйста, загрузите фото электрической схемы.', 'The agent identified another type of image, such as mechanics, optics, or notebook notes. We do not invent components. Please upload an electrical circuit photo.')}
                     </p>
                   </div>
                   <button
@@ -674,7 +667,7 @@ export const PhotoCircuitAgent: React.FC = () => {
                     className="mt-2 min-h-[44px] px-5 py-2.5 rounded-xl text-xs font-bold bg-sky-600 hover:bg-sky-500 text-white shadow-md active:scale-95 transition-all flex items-center gap-2"
                   >
                     <Upload className="w-4 h-4" />
-                    <span>{isTg ? 'Боргирии акси дигар' : 'Загрузить другое фото'}</span>
+                    <span>{tx('Боргирии акси дигар', 'Загрузить другое фото', 'Upload another photo')}</span>
                   </button>
                 </div>
               ) : (
@@ -683,16 +676,16 @@ export const PhotoCircuitAgent: React.FC = () => {
                     <div>
                       <div className="flex items-center gap-2 flex-wrap">
                         <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">
-                          {isTg ? 'Марҳилаи тасдиқ' : 'Этап проверки'}
+                          {tx('Марҳилаи тасдиқ', 'Этап проверки', 'Confirmation step')}
                         </span>
                         <h2 className="text-sm font-bold">
-                          {isTg ? 'Унсурҳои шинохташуда' : 'Проверка распознанных деталей'}
+                          {tx('Унсурҳои шинохташуда', 'Проверка распознанных деталей', 'Review recognized components')}
                         </h2>
                       </div>
                       <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
                         {isTg
                           ? 'Пеш аз ҳисоб, лутфан унсурҳоро санҷед ва агар лозим бошад, ислоҳ намоед.'
-                          : 'Перед расчетом проверьте детали цепи и укажите тип для неуверенно распознанных элементов.'}
+                          : tx('Пеш аз ҳисоб унсурҳои занҷирро санҷед ва навъи унсурҳои номуайянро нишон диҳед.', 'Перед расчетом проверьте детали цепи и укажите тип для неуверенно распознанных элементов.', 'Review the circuit components and specify the type of uncertain elements before calculating.')}
                       </p>
                     </div>
 
@@ -702,7 +695,7 @@ export const PhotoCircuitAgent: React.FC = () => {
                       className="w-full sm:w-auto min-h-[44px] justify-center flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-bold bg-emerald-600 hover:bg-emerald-500 text-white shadow-md active:scale-95 transition-all"
                     >
                       <Play className="w-3.5 h-3.5 fill-white" />
-                      <span>{isTg ? 'Тасдиқ ва ҳисоб' : 'Подтвердить и рассчитать'}</span>
+                      <span>{tx('Тасдиқ ва ҳисоб', 'Подтвердить и рассчитать', 'Confirm and calculate')}</span>
                     </button>
                   </div>
 
@@ -788,7 +781,7 @@ export const PhotoCircuitAgent: React.FC = () => {
                               <span>
                                 {isTg
                                   ? 'Ин детал номаълум аст. Лутфан, навъи онро интихоб намоед:'
-                                  : 'Деталь распознана неуверенно. Укажите верный тип:'}
+                                  : tx('Унсур бо эътимоди паст шинохта шуд. Навъи дурустро интихоб кунед:', 'Деталь распознана неуверенно. Укажите верный тип:', 'This component was recognized with low confidence. Select the correct type:')}
                               </span>
                             </div>
                           )}
@@ -807,15 +800,15 @@ export const PhotoCircuitAgent: React.FC = () => {
                                     : 'border-slate-600 bg-slate-900 text-slate-200'
                               }`}
                             >
-                              <option value="battery">🔋 {isTg ? 'Батарея' : 'Батарея'}</option>
-                              <option value="resistor">⚡ {isTg ? 'Муқовимат' : 'Резистор'}</option>
-                              <option value="lamp">💡 {isTg ? 'Лампочка' : 'Лампочка'}</option>
-                              <option value="led">🏮 {isTg ? 'Светодиод' : 'Светодиод'}</option>
-                              <option value="switch">🔒 {isTg ? 'Калид' : 'Выключатель'}</option>
-                              <option value="wire">〰️ {isTg ? 'Сим' : 'Провод'}</option>
-                              <option value="voltmeter">🆅 {isTg ? 'Вольтметр' : 'Вольтметр'}</option>
-                              <option value="ammeter">🅰️ {isTg ? 'Амперметр' : 'Амперметр'}</option>
-                              <option value="unknown">❓ {isTg ? 'Номаълум' : 'Неизвестно'}</option>
+                              <option value="battery">🔋 {tx('Батарея', 'Батарея', 'Battery')}</option>
+                              <option value="resistor">⚡ {tx('Муқовимат', 'Резистор', 'Resistor')}</option>
+                              <option value="lamp">💡 {tx('Лампочка', 'Лампочка', 'Lamp')}</option>
+                              <option value="led">🏮 {tx('Светодиод', 'Светодиод', 'LED')}</option>
+                              <option value="switch">🔒 {tx('Калид', 'Выключатель', 'Switch')}</option>
+                              <option value="wire">〰️ {tx('Сим', 'Провод', 'Wire')}</option>
+                              <option value="voltmeter">🆅 {tx('Вольтметр', 'Вольтметр', 'Voltmeter')}</option>
+                              <option value="ammeter">🅰️ {tx('Амперметр', 'Амперметр', 'Ammeter')}</option>
+                              <option value="unknown">❓ {tx('Номаълум', 'Неизвестно', 'Unknown')}</option>
                             </select>
 
                             {comp.type === 'switch' ? (
@@ -831,12 +824,8 @@ export const PhotoCircuitAgent: React.FC = () => {
                                 }`}
                               >
                                 {comp.isOpen
-                                  ? isTg
-                                    ? 'Кушода (Open)'
-                                    : 'Разомкнут (Open)'
-                                  : isTg
-                                    ? 'Пӯшида (Closed)'
-                                    : 'Замкнут (Closed)'}
+                                  ? tx('Кушода (Open)', 'Разомкнут (Open)', 'Open')
+                                  : tx('Пӯшида (Closed)', 'Замкнут (Closed)', 'Closed')}
                               </button>
                             ) : comp.type === 'battery' ||
                               comp.type === 'resistor' ||
@@ -871,7 +860,7 @@ export const PhotoCircuitAgent: React.FC = () => {
                       className="min-h-[42px] px-3 py-2 rounded-xl border border-dashed border-slate-300 dark:border-slate-700 text-xs font-semibold text-slate-600 dark:text-slate-300 hover:border-sky-500 hover:text-sky-500 transition-all flex items-center justify-center gap-1.5"
                     >
                       <span>+</span>
-                      <span>{isTg ? 'Иловаи унсури нав' : 'Добавить компонент'}</span>
+                      <span>{tx('Иловаи унсури нав', 'Добавить компонент', 'Add component')}</span>
                     </button>
 
                     <button
@@ -880,7 +869,7 @@ export const PhotoCircuitAgent: React.FC = () => {
                       className="min-h-[44px] flex items-center justify-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold bg-gradient-to-r from-emerald-600 to-sky-600 hover:from-emerald-500 hover:to-sky-500 text-white shadow-md active:scale-95 transition-all"
                     >
                       <Play className="w-4 h-4 fill-white" />
-                      <span>{isTg ? 'Тасдиқ ва оғози ҳисоби MNA' : 'Подтвердить и запустить MNA расчет'}</span>
+                      <span>{tx('Тасдиқ ва оғози ҳисоби MNA', 'Подтвердить и запустить MNA расчет', 'Confirm and run MNA calculation')}</span>
                     </button>
                   </div>
                 </>
@@ -897,11 +886,11 @@ export const PhotoCircuitAgent: React.FC = () => {
             <div className="flex items-center justify-between gap-2 mb-3 flex-wrap">
               <div className="flex items-center gap-2">
                 <span className="text-xs font-bold uppercase tracking-wider text-slate-500 dark:text-slate-400">
-                  {isTg ? '2. Нақша ва верификатсия' : '2. Схема и верификация'}
+                  {tx('2. Нақша ва верификатсия', '2. Схема и верификация', '2. Circuit and verification')}
                 </span>
                 {agentResult?.hasMistake && (
                   <span className="text-[10px] px-2 py-0.5 rounded-full font-bold bg-amber-100 text-amber-800 dark:bg-amber-950 dark:text-amber-300">
-                    {isTg ? 'Хато ислоҳ шуд' : 'Ошибка исправлена'}
+                    {tx('Хато ислоҳ шуд', 'Ошибка исправлена', 'Error fixed')}
                   </span>
                 )}
                 {agentResult?.originalNetlist && !isReviewing && (
@@ -912,7 +901,7 @@ export const PhotoCircuitAgent: React.FC = () => {
                     }}
                     className="text-[11px] text-sky-600 dark:text-sky-400 hover:underline font-semibold"
                   >
-                    ✏️ {isTg ? 'Ислоҳи унсурҳо' : 'Изменить компоненты'}
+                    ✏️ {tx('Ислоҳи унсурҳо', 'Изменить компоненты', 'Edit components')}
                   </button>
                 )}
               </div>
@@ -928,7 +917,7 @@ export const PhotoCircuitAgent: React.FC = () => {
                         : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
-                    {isTg ? 'Аввал (Хато)' : 'До (С ошибкой)'}
+                    {tx('Аввал (Хато)', 'До (С ошибкой)', 'Before (Error)')}
                   </button>
                   <button
                     onClick={() => setActiveTab('after')}
@@ -938,7 +927,7 @@ export const PhotoCircuitAgent: React.FC = () => {
                         : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white'
                     }`}
                   >
-                    {isTg ? 'Баъд (Ислоҳи бехатар)' : 'После (Исправлено)'}
+                    {tx('Баъд (Ислоҳи бехатар)', 'После (Исправлено)', 'After (Fixed)')}
                   </button>
                 </div>
               )}
@@ -1044,7 +1033,7 @@ export const PhotoCircuitAgent: React.FC = () => {
                   className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs font-bold bg-sky-600 hover:bg-sky-500 text-white shadow-xs transition-all active:scale-95"
                 >
                   <Zap className="w-3.5 h-3.5" />
-                  <span>{isTg ? 'Дар мизи корӣ кушоед' : 'Открыть на монтажном столе'}</span>
+                  <span>{tx('Дар мизи корӣ кушоед', 'Открыть на монтажном столе', 'Open on workbench')}</span>
                 </button>
               </div>
             </div>
@@ -1069,9 +1058,7 @@ export const PhotoCircuitAgent: React.FC = () => {
                       {agentResult.explanation.title}
                     </h3>
                     <div className="text-[11px] text-slate-500 dark:text-slate-400">
-                      {isTg
-                        ? 'Тавзеҳи соддакардашуда барои мактабҳои бе озмоишгоҳ'
-                        : 'Пошаговое объяснение учителя физики для школ без физкабинета'}
+                      {tx('Тавзеҳи соддакардашуда барои мактабҳои бе озмоишгоҳ', 'Пошаговое объяснение учителя физики для школ без физкабинета', 'Step-by-step physics teacher explanation for schools without a laboratory')}
                     </div>
                   </div>
                 </div>
@@ -1089,7 +1076,7 @@ export const PhotoCircuitAgent: React.FC = () => {
               {/* Formula & Derivation steps */}
               <div className="mt-3.5 p-3 rounded-xl bg-black/5 dark:bg-white/5 border border-black/5 dark:border-white/10">
                 <div className="text-[11px] font-bold text-slate-600 dark:text-slate-300 uppercase tracking-wider mb-2">
-                  {isTg ? 'Ҳисоби математикии формулаҳо:' : 'Математический расчёт по формулам:'}
+                  {tx('Ҳисоби математикии формулаҳо:', 'Математический расчёт по формулам:', 'Mathematical calculation from formulas:')}
                 </div>
                 <div className="flex flex-col gap-1 text-xs font-mono text-slate-800 dark:text-slate-200">
                   {agentResult.explanation.formulaSteps.map((step: string, sIdx: number) => (
@@ -1104,7 +1091,7 @@ export const PhotoCircuitAgent: React.FC = () => {
               <div className="mt-3.5 p-3 rounded-xl bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-200 dark:border-emerald-800 text-xs text-emerald-900 dark:text-emerald-200 flex items-start gap-2">
                 <Wrench className="w-4 h-4 text-emerald-600 dark:text-emerald-400 shrink-0 mt-0.5" />
                 <div>
-                  <strong className="font-bold">{isTg ? 'Чӣ бояд кард: ' : 'Как исправить: '}</strong>
+                  <strong className="font-bold">{tx('Чӣ бояд кард: ', 'Как исправить: ', 'How to fix: ')}</strong>
                   <span>{agentResult.explanation.howToFix}</span>
                 </div>
               </div>
