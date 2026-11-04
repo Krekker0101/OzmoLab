@@ -118,11 +118,6 @@ export const LandingPage: React.FC = () => {
                 <span>{t('landing.hero.eyebrow', language)}</span>
               </div>
 
-              <div className="lg:col-span-6 flex items-center justify-center">
-                <Suspense fallback={<div className="h-64 w-full max-w-xl rounded-3xl bg-slate-100/70 dark:bg-slate-900/70" />}>
-                  <Hero3DContainer />
-                </Suspense>
-              </div>
               {/* Крупный выразительный заголовок в точности как в дизайне референса */}
               <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-black tracking-tight leading-[1.08]">
                 <span className={isLight ? 'text-slate-950' : 'text-white'}>
@@ -225,6 +220,12 @@ export const LandingPage: React.FC = () => {
               </div>
             </div>
 
+            {/* Virtual physics laboratory follows the text block */}
+            <div className="lg:col-span-6 flex items-center justify-center">
+              <Suspense fallback={<div className="h-64 w-full max-w-xl rounded-3xl bg-slate-100/70 dark:bg-slate-900/70" />}>
+                <Hero3DContainer />
+              </Suspense>
+            </div>
           </div>
         </div>
       </section>
