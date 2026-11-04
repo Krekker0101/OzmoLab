@@ -204,8 +204,10 @@ export interface GlossaryTerm {
   id: string;
   term_ru: string;
   term_tg: string;
+  term_en: string;
   definition_ru: string;
   definition_tg: string;
+  definition_en: string;
   symbol: string;
   unit: string;
   verified: boolean;

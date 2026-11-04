@@ -523,7 +523,7 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
           {hasHazard ? (
             <>
               <AlertTriangle className="w-3.5 h-3.5" />
-              <span>{language === 'tg' ? 'Расиши кӯтоҳ!' : 'КЗ!'}</span>
+              <span>{language === 'tg' ? 'Расиши кӯтоҳ!' : language === 'ru' ? 'КЗ!' : 'Short Circuit!'}</span>
             </>
           ) : isClosed ? (
             <>
@@ -629,13 +629,13 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
           </span>
           {hoveredComp.type === 'switch' && (
             <span className="text-amber-400">
-              ({hoveredComp.state?.isOpen ? (language === 'tg' ? 'Кушода' : 'Разомкнут') : (language === 'tg' ? 'Пӯшида' : 'Замкнут')})
+              ({hoveredComp.state?.isOpen ? (language === 'tg' ? 'Кушода' : language === 'ru' ? 'Разомкнут' : 'Open') : (language === 'tg' ? 'Пӯшида' : language === 'ru' ? 'Замкнут' : 'Closed')})
             </span>
           )}
           {hoveredComp.values?.voltage && <span>{hoveredComp.values.voltage}V</span>}
           {hoveredComp.values?.resistance && <span>{hoveredComp.values.resistance}Ω</span>}
           <span className="text-slate-400 text-[10px]">
-            {language === 'tg' ? 'Барои кашидан бигиред' : 'Зажмите ЛКМ для перемещения'}
+            {language === 'tg' ? 'Барои кашидан бигиред' : language === 'ru' ? 'Зажмите ЛКМ для перемещения' : 'Drag to move'}
           </span>
         </div>
       )}

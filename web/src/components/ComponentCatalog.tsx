@@ -134,7 +134,7 @@ export const ComponentCatalog: React.FC = () => {
                     ? 'bg-slate-50/80 hover:bg-white border-slate-200/80 hover:border-sky-400 shadow-2xs hover:shadow-xs'
                     : 'bg-slate-800/60 hover:bg-slate-800 border-slate-700/60 hover:border-sky-500/50'
                 }`}
-                title={language === 'tg' ? 'Кашед ва ба мизи корӣ гузоред' : 'Перетащите на монтажный стол'}
+                title={language === 'tg' ? 'Кашед ва ба мизи корӣ гузоред' : language === 'ru' ? 'Перетащите на монтажный стол' : 'Drag to the workbench'}
               >
                 <div className="flex items-center gap-3">
                   <div
@@ -160,10 +160,10 @@ export const ComponentCatalog: React.FC = () => {
                       }`}
                     >
                       {comp.terminals.length > 0
-                        ? `${comp.terminals.length} ${language === 'tg' ? 'нуқта' : 'контакта'}`
+                        ? `${comp.terminals.length} ${language === 'tg' ? 'нуқта' : language === 'ru' ? 'контакта' : 'terminals'}`
                         : language === 'tg'
                           ? 'Унсури ғайрифаъол'
-                          : 'Пассивный элемент'}
+                          : language === 'ru' ? 'Пассивный элемент' : 'Passive component'}
                     </span>
                   </div>
                 </div>
@@ -198,7 +198,7 @@ export const ComponentCatalog: React.FC = () => {
                   isLight ? 'text-slate-500' : 'text-slate-400'
                 }`}
               >
-                {language === 'tg' ? 'Кори лабораторӣ' : 'Лабораторная работа'}
+                {language === 'tg' ? 'Кори лабораторӣ' : language === 'ru' ? 'Лабораторная работа' : 'Laboratory exercise'}
               </label>
               <select
                 value={activeLessonId || ''}
@@ -212,7 +212,7 @@ export const ComponentCatalog: React.FC = () => {
                 {activeLab.lessons.map((lesson) => (
                   <option key={lesson.id} value={lesson.id}>
                     {t(lesson.titleKey, language)} ({lesson.gradeLevel}{' '}
-                    {language === 'tg' ? 'с.' : 'кл.'})
+                    {language === 'tg' ? 'с.' : language === 'ru' ? 'кл.' : 'grade'})
                   </option>
                 ))}
               </select>

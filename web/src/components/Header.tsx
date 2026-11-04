@@ -130,7 +130,7 @@ export const Header: React.FC = () => {
             className="flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold rounded-lg bg-gradient-to-r from-sky-500/10 to-indigo-500/10 text-sky-700 dark:text-sky-300 border border-sky-300 dark:border-sky-800 hover:scale-105 transition-all shadow-xs"
           >
             <span>📸</span>
-            <span>{language === 'tg' ? 'Агенти акси занҷир (ИИ)' : 'Фото-в-Схему (ИИ)'}</span>
+            <span>{language === 'tg' ? 'Агенти акси занҷир (ИИ)' : language === 'ru' ? 'Фото-в-Схему (ИИ)' : 'Photo to Circuit (AI)'}</span>
           </button>
           <button
             onClick={() => setGlossaryOpen(true)}
@@ -187,7 +187,7 @@ export const Header: React.FC = () => {
                   ? 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700'
                   : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-300'
             }`}
-            title="Переключить 3D сцену (ThreeCanvasStub)"
+            title={language === 'en' ? 'Toggle 3D scene' : 'Переключить 3D сцену (ThreeCanvasStub)'}
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
             <span>3D</span>
@@ -204,7 +204,7 @@ export const Header: React.FC = () => {
             }`}
           >
             <span>📸</span>
-            <span>{language === 'tg' ? 'Агенти акси занҷир' : 'Фото-в-Схему (ИИ)'}</span>
+            <span>{language === 'tg' ? 'Агенти акси занҷир' : language === 'ru' ? 'Фото-в-Схему (ИИ)' : 'Photo to Circuit (AI)'}</span>
           </button>
 
           <button

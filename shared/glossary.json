@@ -8,7 +8,9 @@
     "symbol": "R",
     "unit": "Ом (Ω)",
     "verified": false,
-    "category": "circuits"
+    "category": "circuits",
+    "term_en": "Resistance",
+    "definition_en": "A physical quantity that describes how strongly a conductor opposes the flow of electric current."
   },
   {
     "id": "voltage",
@@ -19,7 +21,9 @@
     "symbol": "U",
     "unit": "Вольт (В / V)",
     "verified": false,
-    "category": "circuits"
+    "category": "circuits",
+    "term_en": "Voltage",
+    "definition_en": "The potential difference between two points in an electrical circuit that creates an electric field for charge movement."
   },
   {
     "id": "current",
@@ -30,7 +34,9 @@
     "symbol": "I",
     "unit": "Ампер (А / A)",
     "verified": false,
-    "category": "circuits"
+    "category": "circuits",
+    "term_en": "Current",
+    "definition_en": "The amount of electric charge passing through a conductor cross-section per unit of time."
   },
   {
     "id": "battery",
@@ -41,7 +47,9 @@
     "symbol": "E",
     "unit": "Вольт (В / V)",
     "verified": false,
-    "category": "components"
+    "category": "components",
+    "term_en": "Battery (Power Source)",
+    "definition_en": "A device that converts chemical energy into electrical energy to produce electromotive force."
   },
   {
     "id": "lamp",
@@ -52,7 +60,9 @@
     "symbol": "HL",
     "unit": "Ватт (Вт / W)",
     "verified": false,
-    "category": "components"
+    "category": "components",
+    "term_en": "Incandescent Lamp",
+    "definition_en": "A lighting device that converts electrical energy into visible light and heat by heating a filament."
   },
   {
     "id": "switch",
@@ -63,7 +73,9 @@
     "symbol": "SA",
     "unit": "-",
     "verified": false,
-    "category": "components"
+    "category": "components",
+    "term_en": "Switch",
+    "definition_en": "A switching device used to close or open an electrical circuit."
   },
   {
     "id": "ammeter",
@@ -74,7 +86,9 @@
     "symbol": "PA",
     "unit": "Ампер (А / A)",
     "verified": false,
-    "category": "instruments"
+    "category": "instruments",
+    "term_en": "Ammeter",
+    "definition_en": "A measuring instrument for determining electric current, connected in series in the circuit."
   },
   {
     "id": "voltmeter",
@@ -85,7 +99,9 @@
     "symbol": "PV",
     "unit": "Вольт (В / V)",
     "verified": false,
-    "category": "instruments"
+    "category": "instruments",
+    "term_en": "Voltmeter",
+    "definition_en": "A measuring instrument for determining voltage, connected in parallel with the load."
   },
   {
     "id": "circuit",
@@ -96,7 +112,9 @@
     "symbol": "-",
     "unit": "-",
     "verified": false,
-    "category": "circuits"
+    "category": "circuits",
+    "term_en": "Electrical Circuit",
+    "definition_en": "A set of devices and connecting conductors that forms a closed path for electric current."
   },
   {
     "id": "short_circuit",
@@ -107,7 +125,9 @@
     "symbol": "-",
     "unit": "-",
     "verified": false,
-    "category": "safety"
+    "category": "safety",
+    "term_en": "Short Circuit",
+    "definition_en": "An accidental connection with negligible resistance that causes a sharp increase in current."
   },
   {
     "id": "ohms_law",
@@ -118,7 +138,9 @@
     "symbol": "I = U / R",
     "unit": "-",
     "verified": false,
-    "category": "laws"
+    "category": "laws",
+    "term_en": "Ohm's Law",
+    "definition_en": "The current in a circuit section is directly proportional to voltage and inversely proportional to resistance (I = U / R)."
   },
   {
     "id": "resistor",
@@ -129,7 +151,9 @@
     "symbol": "R",
     "unit": "Ом (Ω)",
     "verified": false,
-    "category": "components"
+    "category": "components",
+    "term_en": "Resistor",
+    "definition_en": "A passive circuit component with fixed or adjustable electrical resistance."
   },
   {
     "id": "conductor",
@@ -140,7 +164,9 @@
     "symbol": "-",
     "unit": "-",
     "verified": false,
-    "category": "circuits"
+    "category": "circuits",
+    "term_en": "Conductor",
+    "definition_en": "A material containing many free charge carriers and conducting electric current."
   },
   {
     "id": "power",
@@ -151,6 +177,8 @@
     "symbol": "P",
     "unit": "Ватт (Вт / W)",
     "verified": false,
-    "category": "circuits"
+    "category": "circuits",
+    "term_en": "Electrical Power",
+    "definition_en": "The rate at which electrical energy is transferred or converted, equal to voltage multiplied by current (P = U ? I)."
   }
 ]

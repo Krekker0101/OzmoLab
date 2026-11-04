@@ -25,8 +25,10 @@ export const GlossaryModal: React.FC = () => {
       const matchesSearch =
         term.term_ru.toLowerCase().includes(searchQuery.toLowerCase()) ||
         term.term_tg.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        term.term_en.toLowerCase().includes(searchQuery.toLowerCase()) ||
         term.definition_ru.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        term.definition_tg.toLowerCase().includes(searchQuery.toLowerCase());
+        term.definition_tg.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        term.definition_en.toLowerCase().includes(searchQuery.toLowerCase());
 
       const matchesCategory =
         selectedCategory === 'all' || term.category === selectedCategory;
@@ -126,7 +128,7 @@ export const GlossaryModal: React.FC = () => {
                     : 'bg-slate-800 text-slate-400 hover:text-slate-200'
               }`}
             >
-              {language === 'tg' ? 'Занҷирҳо' : 'Цепи'}
+              {language === 'tg' ? 'Занҷирҳо' : language === 'ru' ? 'Цепи' : 'Circuits'}
             </button>
             <button
               onClick={() => setSelectedCategory('components')}
@@ -138,7 +140,7 @@ export const GlossaryModal: React.FC = () => {
                     : 'bg-slate-800 text-slate-400 hover:text-slate-200'
               }`}
             >
-              {language === 'tg' ? 'Унсурҳо' : 'Компоненты'}
+              {language === 'tg' ? 'Унсурҳо' : language === 'ru' ? 'Компоненты' : 'Components'}
             </button>
             <button
               onClick={() => setSelectedCategory('instruments')}
@@ -150,7 +152,7 @@ export const GlossaryModal: React.FC = () => {
                     : 'bg-slate-800 text-slate-400 hover:text-slate-200'
               }`}
             >
-              {language === 'tg' ? 'Асбобҳо' : 'Приборы'}
+              {language === 'tg' ? 'Асбобҳо' : language === 'ru' ? 'Приборы' : 'Instruments'}
             </button>
           </div>
         </div>
@@ -179,7 +181,7 @@ export const GlossaryModal: React.FC = () => {
                         isLight ? 'text-slate-800' : 'text-slate-200'
                       }`}
                     >
-                      {term.term_ru}
+                      {language === 'tg' ? term.term_tg : language === 'ru' ? term.term_ru : term.term_en}
                     </h4>
                   </div>
 
@@ -188,7 +190,7 @@ export const GlossaryModal: React.FC = () => {
                       isLight ? 'text-slate-600' : 'text-slate-300'
                     }`}
                   >
-                    {language === 'tg' ? term.definition_tg : term.definition_ru}
+                    {language === 'tg' ? term.definition_tg : language === 'ru' ? term.definition_ru : term.definition_en}
                   </p>
 
                   <div className="flex items-center gap-3 mt-2 text-[11px]">
@@ -231,7 +233,7 @@ export const GlossaryModal: React.FC = () => {
                           ? 'bg-amber-50 text-amber-800 border-amber-300'
                           : 'bg-amber-950/80 text-amber-300 border-amber-800/80'
                       }`}
-                      title="Ин тарҷума бояд аз ҷониби омӯзгори физика тафтиш шавад"
+                      title={language === 'en' ? 'This translation should be reviewed by a physics teacher' : 'Ин тарҷума бояд аз ҷониби омӯзгори физика тафтиш шавад'}
                     >
                       <AlertCircle className="w-3 h-3 text-amber-500" />
                       {t('glossary.badge.needs_review', language)}
@@ -246,7 +248,7 @@ export const GlossaryModal: React.FC = () => {
             <div className="p-8 text-center text-xs text-slate-500">
               {language === 'tg'
                 ? 'Истилоҳе ёфт нашуд. Ибораи ҷустуҷӯро иваз кунед.'
-                : 'Термины не найдены. Попробуйте изменить поисковый запрос.'}
+                : language === 'ru' ? 'Термины не найдены. Попробуйте изменить поисковый запрос.' : 'No terms found. Try changing your search.'}
             </div>
           )}
         </div>
@@ -262,7 +264,7 @@ export const GlossaryModal: React.FC = () => {
           <span>
             {language === 'tg'
               ? 'Тарҷумаҳои бо нишони зард ишорашуда барои санҷиши муаллимони мактаб пешбинӣ шудаанд.'
-              : 'Термины со значком проверки помечены как draft и предназначены для верификации учителями физики.'}
+              : language === 'ru' ? 'Термины со значком проверки помечены как draft и предназначены для верификации учителями физики.' : 'Terms with the verification badge are drafts awaiting review by physics teachers.'}
           </span>
           <button
             onClick={() => setGlossaryOpen(false)}

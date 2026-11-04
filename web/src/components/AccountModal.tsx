@@ -81,7 +81,7 @@ export const AccountModal: React.FC = () => {
                   isLight ? 'text-slate-900' : 'text-slate-100'
                 }`}
               >
-                {language === 'tg' ? 'Ҳисоби корбар ва дастовардҳо' : 'Личный кабинет и прогресс'}
+                {language === 'tg' ? 'Ҳисоби корбар ва дастовардҳо' : language === 'ru' ? 'Личный кабинет и прогресс' : 'Account and progress'}
               </h2>
               <p
                 className={`text-[11px] ${
@@ -91,10 +91,10 @@ export const AccountModal: React.FC = () => {
                 {formData.role === 'student'
                   ? language === 'tg'
                     ? 'Профили хонандаи мактаб'
-                    : 'Профиль учащегося'
+                    : language === 'ru' ? 'Профиль учащегося' : 'Student profile'
                   : language === 'tg'
                     ? 'Профили омӯзгори физика'
-                    : 'Профиль преподавателя'}
+                    : language === 'ru' ? 'Профиль преподавателя' : 'Teacher profile'}
               </p>
             </div>
           </div>
@@ -118,7 +118,7 @@ export const AccountModal: React.FC = () => {
                       : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
-                {language === 'tg' ? 'Профил' : 'Профиль'}
+                {language === 'tg' ? 'Профил' : language === 'ru' ? 'Профиль' : 'Profile'}
               </button>
               <button
                 onClick={() => setActiveTab('about')}
@@ -132,7 +132,7 @@ export const AccountModal: React.FC = () => {
                       : 'text-slate-400 hover:text-slate-200'
                 }`}
               >
-                {language === 'tg' ? 'Дар бораи лоиҳа' : 'О проекте'}
+                {language === 'tg' ? 'Дар бораи лоиҳа' : language === 'ru' ? 'О проекте' : 'About'}
               </button>
             </div>
 
@@ -164,7 +164,7 @@ export const AccountModal: React.FC = () => {
                 >
                   <div className="flex items-center gap-1.5 text-amber-500 mb-1">
                     <Zap className="w-4 h-4 fill-current" />
-                    <span className="text-[11px] font-bold uppercase">XP / Баллы</span>
+                    <span className="text-[11px] font-bold uppercase">{language === 'en' ? 'XP / Points' : 'XP / Баллы'}</span>
                   </div>
                   <span
                     className={`text-xl font-extrabold font-mono ${
@@ -185,7 +185,7 @@ export const AccountModal: React.FC = () => {
                   <div className="flex items-center gap-1.5 text-sky-500 mb-1">
                     <GraduationCap className="w-4 h-4" />
                     <span className="text-[11px] font-bold uppercase">
-                      {language === 'tg' ? 'Озмоишҳо' : 'Опыты'}
+                      {language === 'tg' ? 'Озмоишҳо' : language === 'ru' ? 'Опыты' : 'Experiments'}
                     </span>
                   </div>
                   <span
@@ -207,7 +207,7 @@ export const AccountModal: React.FC = () => {
                   <div className="flex items-center gap-1.5 text-emerald-500 mb-1">
                     <Award className="w-4 h-4" />
                     <span className="text-[11px] font-bold uppercase">
-                      {language === 'tg' ? 'Нишонҳо' : 'Медали'}
+                      {language === 'tg' ? 'Нишонҳо' : language === 'ru' ? 'Медали' : 'Badges'}
                     </span>
                   </div>
                   <span
@@ -227,7 +227,7 @@ export const AccountModal: React.FC = () => {
                     isLight ? 'text-slate-500' : 'text-slate-400'
                   }`}
                 >
-                  {language === 'tg' ? 'Дастовардҳои илмӣ' : 'Научные достижения'}
+                  {language === 'tg' ? 'Дастовардҳои илмӣ' : language === 'ru' ? 'Научные достижения' : 'Scientific achievements'}
                 </label>
                 <div className="flex flex-wrap gap-2">
                   {formData.badges.map((badge, idx) => (
@@ -255,7 +255,7 @@ export const AccountModal: React.FC = () => {
                         isLight ? 'text-slate-700' : 'text-slate-300'
                       }`}
                     >
-                      {language === 'tg' ? 'Ном ва насаб' : 'Имя и фамилия'}
+                      {language === 'tg' ? 'Ном ва насаб' : language === 'ru' ? 'Имя и фамилия' : 'Full name'}
                     </label>
                     <input
                       type="text"
@@ -275,7 +275,7 @@ export const AccountModal: React.FC = () => {
                         isLight ? 'text-slate-700' : 'text-slate-300'
                       }`}
                     >
-                      {language === 'tg' ? 'Нақш дар лоиҳа' : 'Роль в платформе'}
+                      {language === 'tg' ? 'Нақш дар лоиҳа' : language === 'ru' ? 'Роль в платформе' : 'Platform role'}
                     </label>
                     <select
                       value={formData.role}
@@ -292,10 +292,10 @@ export const AccountModal: React.FC = () => {
                       }`}
                     >
                       <option value="student">
-                        {language === 'tg' ? 'Хонанда (Ученик)' : 'Учащийся (Школьник)'}
+                        {language === 'tg' ? 'Хонанда (Ученик)' : language === 'ru' ? 'Учащийся (Школьник)' : 'Student'}
                       </option>
                       <option value="teacher">
-                        {language === 'tg' ? 'Омӯзгор (Учитель)' : 'Преподаватель (Учитель)'}
+                        {language === 'tg' ? 'Омӯзгор (Учитель)' : language === 'ru' ? 'Преподаватель (Учитель)' : 'Teacher'}
                       </option>
                     </select>
                   </div>
@@ -306,7 +306,7 @@ export const AccountModal: React.FC = () => {
                         isLight ? 'text-slate-700' : 'text-slate-300'
                       }`}
                     >
-                      {language === 'tg' ? 'Шаҳр ё минтақа' : 'Город или регион'}
+                      {language === 'tg' ? 'Шаҳр ё минтақа' : language === 'ru' ? 'Город или регион' : 'City or region'}
                     </label>
                     <select
                       value={formData.city}
@@ -331,7 +331,7 @@ export const AccountModal: React.FC = () => {
                         isLight ? 'text-slate-700' : 'text-slate-300'
                       }`}
                     >
-                      {language === 'tg' ? 'Мактаб ё литсей' : 'Школа или лицей'}
+                      {language === 'tg' ? 'Мактаб ё литсей' : language === 'ru' ? 'Школа или лицей' : 'School or lyceum'}
                     </label>
                     <input
                       type="text"
@@ -351,7 +351,7 @@ export const AccountModal: React.FC = () => {
                         isLight ? 'text-slate-700' : 'text-slate-300'
                       }`}
                     >
-                      {language === 'tg' ? 'Синф' : 'Класс'}
+                      {language === 'tg' ? 'Синф' : language === 'ru' ? 'Класс' : 'Grade'}
                     </label>
                     <select
                       value={formData.grade}
@@ -364,10 +364,10 @@ export const AccountModal: React.FC = () => {
                           : 'bg-slate-800 border-slate-700 text-slate-100'
                       }`}
                     >
-                      <option value={8}>8 {language === 'tg' ? 'синф' : 'класс'}</option>
-                      <option value={9}>9 {language === 'tg' ? 'синф' : 'класс'}</option>
-                      <option value={10}>10 {language === 'tg' ? 'синф' : 'класс'}</option>
-                      <option value={11}>11 {language === 'tg' ? 'синф' : 'класс'}</option>
+                      <option value={8}>8 {language === 'tg' ? 'синф' : language === 'ru' ? 'класс' : 'grade'}</option>
+                      <option value={9}>9 {language === 'tg' ? 'синф' : language === 'ru' ? 'класс' : 'grade'}</option>
+                      <option value={10}>10 {language === 'tg' ? 'синф' : language === 'ru' ? 'класс' : 'grade'}</option>
+                      <option value={11}>11 {language === 'tg' ? 'синф' : language === 'ru' ? 'класс' : 'grade'}</option>
                     </select>
                   </div>
                 </div>
@@ -376,7 +376,7 @@ export const AccountModal: React.FC = () => {
                   {savedSuccess ? (
                     <span className="flex items-center gap-1.5 text-xs text-emerald-600 font-semibold">
                       <CheckCircle2 className="w-4 h-4" />
-                      {language === 'tg' ? 'Маълумот сабт шуд!' : 'Профиль сохранён!'}
+                      {language === 'tg' ? 'Маълумот сабт шуд!' : language === 'ru' ? 'Профиль сохранён!' : 'Profile saved!'}
                     </span>
                   ) : (
                     <span />
@@ -386,7 +386,7 @@ export const AccountModal: React.FC = () => {
                     type="submit"
                     className="py-2.5 px-6 bg-sky-600 hover:bg-sky-500 text-white rounded-xl text-xs font-semibold transition-all shadow-sm active:scale-95"
                   >
-                    {language === 'tg' ? 'Сабти тағйирот' : 'Сохранить профиль'}
+                    {language === 'tg' ? 'Сабти тағйирот' : language === 'ru' ? 'Сохранить профиль' : 'Save profile'}
                   </button>
                 </div>
               </form>
@@ -420,7 +420,7 @@ export const AccountModal: React.FC = () => {
                   }`}
                 >
                   <h4 className="font-bold mb-1 text-amber-500">
-                    ⚡ {language === 'tg' ? 'Ҳисоббарории дақиқи физикӣ' : 'Строгая физическая модель'}
+                    ⚡ {language === 'tg' ? 'Ҳисоббарории дақиқи физикӣ' : language === 'ru' ? 'Строгая физическая модель' : 'Accurate physics calculations'}
                   </h4>
                   <p className={isLight ? 'text-slate-600' : 'text-slate-400'}>
                     {language === 'tg'
@@ -435,7 +435,7 @@ export const AccountModal: React.FC = () => {
                   }`}
                 >
                   <h4 className="font-bold mb-1 text-sky-500">
-                    🤖 {language === 'tg' ? 'Омӯзгори ҳушманд (ИИ)' : 'Сократический ИИ-наставник'}
+                    🤖 {language === 'tg' ? 'Омӯзгори ҳушманд (ИИ)' : language === 'ru' ? 'Сократический ИИ-наставник' : 'Socratic AI tutor'}
                   </h4>
                   <p className={isLight ? 'text-slate-600' : 'text-slate-400'}>
                     {language === 'tg'

@@ -152,7 +152,7 @@ export const LandingPage: React.FC = () => {
                   className="px-5 sm:px-6 py-3.5 bg-gradient-to-r from-sky-600 via-indigo-600 to-amber-500 hover:opacity-95 text-white rounded-xl text-sm sm:text-base font-bold transition-all shadow-lg shadow-indigo-600/25 active:scale-95 flex items-center gap-2 group cursor-pointer"
                 >
                   <span>📸</span>
-                  <span>{isTg ? 'Агенти акси занҷир' : 'Фото-в-Схему (ИИ)'}</span>
+                  <span>{isTg ? 'Агенти акси занҷир' : language === 'ru' ? 'Фото-в-Схему (ИИ)' : 'Photo to Circuit (AI)'}</span>
                   <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-white/25 uppercase font-black">
                     Meta AI
                   </span>
@@ -235,7 +235,7 @@ export const LandingPage: React.FC = () => {
               isLight ? 'text-blue-600' : 'text-sky-400'
             }`}
           >
-            {isTg ? 'Имкониятҳои платформа' : 'Возможности платформы'}
+            {isTg ? 'Имкониятҳои платформа' : language === 'ru' ? 'Возможности платформы' : 'Platform features'}
           </span>
           <h2
             className={`text-2xl sm:text-3xl font-black tracking-tight mt-1 ${
@@ -273,7 +273,7 @@ export const LandingPage: React.FC = () => {
               <Zap className="w-5 h-5" />
             </div>
             <h3 className={`text-sm font-bold mb-2 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-              {isTg ? 'Ҳисоби физикии Nodal' : 'Честный расчёт цепей'}
+              {isTg ? 'Ҳисоби физикии Nodal' : language === 'ru' ? 'Честный расчёт цепей' : 'Accurate circuit calculations'}
             </h3>
             <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
               {isTg
@@ -297,7 +297,7 @@ export const LandingPage: React.FC = () => {
               <GraduationCap className="w-5 h-5" />
             </div>
             <h3 className={`text-sm font-bold mb-2 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-              {isTg ? 'ИИ-наставники суқротӣ' : 'Сократический ИИ-наставник'}
+              {isTg ? 'ИИ-наставники суқротӣ' : language === 'ru' ? 'Сократический ИИ-наставник' : 'Socratic AI tutor'}
             </h3>
             <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
               {isTg
@@ -321,7 +321,7 @@ export const LandingPage: React.FC = () => {
               <WifiOff className="w-5 h-5" />
             </div>
             <h3 className={`text-sm font-bold mb-2 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-              {isTg ? 'Оффлайн-реҷаи PWA' : 'Работает без интернета'}
+              {isTg ? 'Оффлайн-реҷаи PWA' : language === 'ru' ? 'Работает без интернета' : 'Works offline'}
             </h3>
             <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
               {isTg
@@ -345,7 +345,7 @@ export const LandingPage: React.FC = () => {
               <BookOpen className="w-5 h-5" />
             </div>
             <h3 className={`text-sm font-bold mb-2 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-              {isTg ? 'Луғати санҷидашуда' : 'Верифицированный словарь'}
+              {isTg ? 'Луғати санҷидашуда' : language === 'ru' ? 'Верифицированный словарь' : 'Verified glossary'}
             </h3>
             <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
               {isTg
@@ -1026,7 +1026,7 @@ export const LandingPage: React.FC = () => {
                 isLight ? 'text-slate-600 hover:text-blue-600' : 'text-slate-400 hover:text-sky-400'
               }`}
             >
-              {isTg ? 'Озмоишгоҳ' : 'Лаборатория'}
+              {isTg ? 'Озмоишгоҳ' : language === 'ru' ? 'Лаборатория' : 'Laboratory'}
             </button>
             <button
               onClick={() => setGlossaryOpen(true)}
@@ -1034,7 +1034,7 @@ export const LandingPage: React.FC = () => {
                 isLight ? 'text-slate-600 hover:text-blue-600' : 'text-slate-400 hover:text-sky-400'
               }`}
             >
-              {isTg ? 'Луғат' : 'Глоссарий'}
+              {isTg ? 'Луғат' : language === 'ru' ? 'Глоссарий' : 'Glossary'}
             </button>
             <button
               onClick={() => setAccountOpen(true)}
@@ -1042,7 +1042,7 @@ export const LandingPage: React.FC = () => {
                 isLight ? 'text-slate-600 hover:text-blue-600' : 'text-slate-400 hover:text-sky-400'
               }`}
             >
-              {isTg ? 'Ҳисоби ман' : 'Аккаунт'}
+              {isTg ? 'Ҳисоби ман' : language === 'ru' ? 'Аккаунт' : 'Account'}
             </button>
           </div>
         </div>

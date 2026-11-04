@@ -124,7 +124,7 @@ export const InteractiveHeroBench: React.FC = () => {
               }`}
             >
               <Zap className={`w-3 h-3 ${isLight ? 'text-amber-500' : 'text-amber-400'}`} />
-              <span>{isTg ? 'Занҷири барқӣ' : 'Цепь тока'}</span>
+              <span>{isTg ? 'Занҷири барқӣ' : language === 'ru' ? 'Цепь тока' : 'Electrical circuit'}</span>
             </button>
 
             <button
@@ -140,7 +140,7 @@ export const InteractiveHeroBench: React.FC = () => {
               }`}
             >
               <Lightbulb className={`w-3 h-3 ${isLight ? 'text-emerald-600' : 'text-emerald-400'}`} />
-              <span>{isTg ? 'Оптика ва нур' : 'Оптика'}</span>
+              <span>{isTg ? 'Оптика ва нур' : language === 'ru' ? 'Оптика' : 'Optics and light'}</span>
             </button>
           </div>
 
@@ -153,7 +153,7 @@ export const InteractiveHeroBench: React.FC = () => {
             >
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className="hidden sm:inline">
-                {isTg ? 'Стенди интерактивӣ' : 'Интерактивный стенд'}
+                {isTg ? 'Стенди интерактивӣ' : language === 'ru' ? 'Интерактивный стенд' : 'Interactive bench'}
               </span>
             </span>
 
@@ -162,7 +162,7 @@ export const InteractiveHeroBench: React.FC = () => {
                 selectLab(mode === 'circuit' ? 'circuits-dc' : 'optics');
                 setCurrentView('lab');
               }}
-              title={isTg ? 'Гузариш ба озмоишгоҳ' : 'Открыть в лаборатории'}
+              title={isTg ? 'Гузариш ба озмоишгоҳ' : language === 'ru' ? 'Открыть в лаборатории' : 'Open in laboratory'}
               className={`flex items-center gap-1 px-2.5 py-1 rounded-md text-[10px] font-bold transition-all cursor-pointer ${
                 isLight
                   ? 'bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 shadow-2xs'
@@ -170,7 +170,7 @@ export const InteractiveHeroBench: React.FC = () => {
               }`}
             >
               <Maximize2 className="w-2.5 h-2.5" />
-              <span className="hidden sm:inline">{isTg ? 'Кушодан' : 'В лабораторию'}</span>
+              <span className="hidden sm:inline">{isTg ? 'Кушодан' : language === 'ru' ? 'В лабораторию' : 'Open laboratory'}</span>
             </button>
           </div>
         </div>
@@ -281,7 +281,7 @@ export const InteractiveHeroBench: React.FC = () => {
                       isLight ? 'text-slate-600' : 'text-slate-400'
                     }`}
                   >
-                    {isTg ? 'Манбаъ (9В)' : 'Источник (9В)'}
+                    {isTg ? 'Манбаъ (9В)' : language === 'ru' ? 'Источник (9В)' : 'Source (9 V)'}
                   </span>
                 </div>
 
@@ -339,7 +339,7 @@ export const InteractiveHeroBench: React.FC = () => {
                             : 'text-rose-400'
                       }`}
                     />
-                    {isSwitchClosed ? (isTg ? 'Калид пӯшида' : 'Замкнут') : (isTg ? 'Калид кушода' : 'Разомкнут')}
+                    {isSwitchClosed ? (isTg ? 'Калид пӯшида' : language === 'ru' ? 'Замкнут' : 'Closed') : (isTg ? 'Калид кушода' : language === 'ru' ? 'Разомкнут' : 'Open')}
                   </span>
                 </div>
 
@@ -390,7 +390,7 @@ export const InteractiveHeroBench: React.FC = () => {
                       isLight ? 'text-slate-600' : 'text-slate-400'
                     }`}
                   >
-                    {isTg ? 'Лампаи тафсон' : 'Лампа'} (10Ω)
+                    {isTg ? 'Лампаи тафсон' : language === 'ru' ? 'Лампа' : 'Incandescent lamp'} (10Ω)
                   </span>
                 </div>
 
@@ -405,7 +405,7 @@ export const InteractiveHeroBench: React.FC = () => {
                   >
                     <div className="flex justify-between items-center text-[9px] font-mono mb-0.5">
                       <span className={isLight ? 'text-slate-600 font-semibold' : 'text-slate-300'}>
-                        {isTg ? 'Реостат:' : 'Реостат:'}
+                        {isTg ? 'Реостат:' : language === 'ru' ? 'Реостат:' : 'Rheostat:'}
                       </span>
                       <span
                         className={`font-black ${
@@ -509,7 +509,7 @@ export const InteractiveHeroBench: React.FC = () => {
                       isLight ? 'text-slate-500' : 'text-slate-400'
                     }`}
                   >
-                    {isTg ? 'Қонуни Ом барои занҷир:' : 'Закон Ома для цепи:'}
+                    {isTg ? 'Қонуни Ом барои занҷир:' : language === 'ru' ? 'Закон Ома для цепи:' : "Ohm's law for the circuit:"}
                   </div>
                   <div
                     className={`text-xs font-mono font-black mt-0.5 ${
@@ -622,7 +622,7 @@ export const InteractiveHeroBench: React.FC = () => {
                       isLight ? 'text-slate-600' : 'text-slate-400'
                     }`}
                   >
-                    {isTg ? 'Шиша' : 'Стекло'}
+                    {isTg ? 'Шиша' : language === 'ru' ? 'Стекло' : 'Glass'}
                   </span>
                 </div>
 
@@ -650,7 +650,7 @@ export const InteractiveHeroBench: React.FC = () => {
                       isLight ? 'text-slate-700 font-semibold' : 'text-slate-300'
                     }`}
                   >
-                    <span>{isTg ? 'Кунҷи афтиши нур (α):' : 'Угол падения (α):'}</span>
+                    <span>{isTg ? 'Кунҷи афтиши нур (α):' : language === 'ru' ? 'Угол падения (α):' : 'Angle of incidence (α):'}</span>
                     <span
                       className={`font-black ${
                         isLight ? 'text-emerald-700' : 'text-emerald-400'
@@ -679,7 +679,7 @@ export const InteractiveHeroBench: React.FC = () => {
                       isLight ? 'text-slate-500' : 'text-slate-400'
                     }`}
                   >
-                    {isTg ? 'Қонуни Снеллиус:' : 'Закон Снеллиуса:'}
+                    {isTg ? 'Қонуни Снеллиус:' : language === 'ru' ? 'Закон Снеллиуса:' : "Snell's law:"}
                   </div>
                   <div
                     className={`font-mono font-black text-xs mt-0.5 ${
@@ -693,7 +693,7 @@ export const InteractiveHeroBench: React.FC = () => {
                       isLight ? 'text-slate-600' : 'text-slate-400'
                     }`}
                   >
-                    {isTg ? `Кунҷи шикаст: β ≈ ${refractAngle.toFixed(1)}°` : `Угол преломления: β ≈ ${refractAngle.toFixed(1)}°`}
+                    {isTg ? `Кунҷи шикаст: β ≈ ${refractAngle.toFixed(1)}°` : language === 'ru' ? `Угол преломления: β ≈ ${refractAngle.toFixed(1)}°` : `Refraction angle: β ≈ ${refractAngle.toFixed(1)}°`}
                   </div>
                 </div>
               </div>
@@ -710,7 +710,7 @@ export const InteractiveHeroBench: React.FC = () => {
           }`}
         >
           <span className="text-[11px] font-medium">
-            {isTg ? 'Ҳамаи ҳисобҳо дар браузер иҷро мешаванд' : 'Все расчёты производятся прямо в браузере'}
+            {isTg ? 'Ҳамаи ҳисобҳо дар браузер иҷро мешаванд' : language === 'ru' ? 'Все расчёты производятся прямо в браузере' : 'All calculations run directly in your browser'}
           </span>
           <button
             onClick={() => {
@@ -723,7 +723,7 @@ export const InteractiveHeroBench: React.FC = () => {
                 : 'text-sky-400 hover:text-sky-300'
             }`}
           >
-            <span>{isTg ? 'Ба озмоишгоҳи пурра' : 'Перейти к полному опыту'}</span>
+            <span>{isTg ? 'Ба озмоишгоҳи пурра' : language === 'ru' ? 'Перейти к полному опыту' : 'Open the full experiment'}</span>
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
         </div>
