@@ -6,6 +6,7 @@
  */
 
 import express from 'express';
+import os from 'os';
 import path from 'path';
 import {fileURLToPath} from 'url';
 import dotenv from 'dotenv';
@@ -15,6 +16,21 @@ dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+function getNetworkUrls(port: number): string[] {
+  const interfaces = os.networkInterfaces();
+  const addresses = new Set<string>();
+
+  for (const entries of Object.values(interfaces)) {
+    for (const entry of entries ?? []) {
+      if (entry.family === 'IPv4' && !entry.internal) {
+        addresses.add(`http://${entry.address}:${port}`);
+      }
+    }
+  }
+
+  return [...addresses];
+}
 
 async function startServer() {
   const app = express();
@@ -54,7 +70,10 @@ async function startServer() {
   }
 
   app.listen(PORT, '0.0.0.0', () => {
-    console.log(`[Ozmo Lab] Server running on http://0.0.0.0:${PORT}`);
+    console.log(`[Ozmo Lab] Local:   http://localhost:${PORT}`);
+    for (const url of getNetworkUrls(PORT)) {
+      console.log(`[Ozmo Lab] Network: ${url}`);
+    }
   });
 }
 
