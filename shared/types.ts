@@ -110,6 +110,7 @@ export interface SimulationResult {
 
 export interface LabState {
   labId: string;
+  language?: SupportedLanguage;
   components: CircuitComponent[];
   wires: Wire[];
   selectedComponentId: string | null;

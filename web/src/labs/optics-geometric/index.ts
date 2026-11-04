@@ -236,9 +236,14 @@ function simulateOptics(state: LabState): SimulationResult {
 }
 
 function describeOpticsState(state: LabState): AISummarySnapshot {
+  const language = state.language ?? 'ru';
   return {
     labId: 'optics-geometric',
-    summaryText: `Оптическая скамья с ${state.components.length} элементами (лазеры, линзы, экраны).`,
+    summaryText: language === 'en'
+      ? `Optical bench with ${state.components.length} components (lasers, lenses, and screens).`
+      : language === 'tg'
+        ? `Мизи оптикӣ бо ${state.components.length} унсур (лазерҳо, линзаҳо ва экранҳо).`
+        : `Оптическая скамья с ${state.components.length} элементами (лазеры, линзы, экраны).`,
     isCircuitComplete: state.components.length >= 2,
     hasHazard: false,
     activeComponentsCount: state.components.length,
@@ -246,7 +251,7 @@ function describeOpticsState(state: LabState): AISummarySnapshot {
       id: c.id,
       type: c.type,
       parameters: c.values,
-      stateText: 'на оптической оси',
+      stateText: language === 'en' ? 'on the optical axis' : language === 'tg' ? 'дар меҳвари оптикӣ' : 'на оптической оси',
     })),
     connectionsCount: state.wires.length,
   };

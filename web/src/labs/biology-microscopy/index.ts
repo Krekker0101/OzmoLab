@@ -226,13 +226,18 @@ function simulateBiology(state: LabState): SimulationResult {
 }
 
 function describeBiologyState(state: LabState): AISummarySnapshot {
+  const language = state.language ?? 'ru';
   const mic = state.components.find((c) => c.type === 'microscope');
   const slide = state.components.find((c) => c.type === 'slide_sample');
   const mag = mic?.values.magnification || 400;
 
   return {
     labId: 'biology-microscopy',
-    summaryText: `Биологический лабораторный стол: исследовано ${state.components.length} компонентов. Объектив: ${mag}x. Слайд: ${slide ? 'зафиксирован на предметном столике' : 'отсутствует'}.`,
+    summaryText: language === 'en'
+      ? `Biology workbench: ${state.components.length} components examined. Objective: ${mag}x. Slide: ${slide ? 'mounted on the stage' : 'not mounted'}.`
+      : language === 'tg'
+        ? `Мизи биология: ${state.components.length} унсур таҳқиқ шуд. Объектив: ${mag}x. Лавҳа: ${slide ? 'дар миз ҷойгир аст' : 'нест'}.`
+        : `Биологический лабораторный стол: исследовано ${state.components.length} компонентов. Объектив: ${mag}x. Слайд: ${slide ? 'зафиксирован на предметном столике' : 'отсутствует'}.`,
     isCircuitComplete: Boolean(mic && slide),
     hasHazard: false,
     activeComponentsCount: state.components.length,
@@ -240,7 +245,9 @@ function describeBiologyState(state: LabState): AISummarySnapshot {
       id: c.id,
       type: c.type,
       parameters: c.values,
-      stateText: c.type === 'microscope' ? `${c.values.magnification || 400}x` : 'в фокусе',
+      stateText: c.type === 'microscope'
+        ? `${c.values.magnification || 400}x`
+        : language === 'en' ? 'in focus' : language === 'tg' ? 'дар фокус' : 'в фокусе',
     })),
     connectionsCount: state.wires.length,
   };

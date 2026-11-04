@@ -36,7 +36,7 @@ export const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
   return (
     <div
       role="group"
-      aria-label="Интихоби забон / Выбор языка"
+      aria-label="Language selection"
       className={`inline-flex items-center gap-0.5 p-0.5 rounded-lg border transition-colors bg-slate-100 dark:bg-slate-800 border-slate-200 dark:border-slate-700 shadow-2xs ${className}`}
     >
       {showIcon && (

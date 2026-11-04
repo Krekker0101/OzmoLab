@@ -438,7 +438,7 @@ export const WorkbenchCanvas: React.FC = () => {
                 ? 'bg-sky-50 text-sky-700 border-sky-200 hover:bg-sky-100 shadow-2xs'
                 : 'bg-sky-950/60 text-sky-300 border-sky-800 hover:bg-sky-900/60'
             }`}
-            title="Загрузить пример схемы для этой лаборатории"
+            title={language === 'en' ? 'Load a sample circuit for this laboratory' : 'Загрузить пример схемы для этой лаборатории'}
           >
             <FolderOpen className="w-3.5 h-3.5" />
             <span>{t('workbench.btn.load_preset', language)}</span>
@@ -670,7 +670,7 @@ export const WorkbenchCanvas: React.FC = () => {
           <button
             onClick={runSimulation}
             className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition-all shadow-sm active:scale-95"
-            title="Запустить расчет физических законов (Space)"
+            title={language === 'en' ? 'Run the physics calculation (Space)' : 'Запустить расчет физических законов (Space)'}
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span>{t('workbench.btn.run', language)}</span>
@@ -795,7 +795,7 @@ export const WorkbenchCanvas: React.FC = () => {
                 {/* Правая часть: проверка закона Ома */}
                 <div
                   className="hidden lg:flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-slate-100 dark:bg-slate-800 text-[11px] font-mono text-slate-600 dark:text-slate-300 border border-slate-200 dark:border-slate-700"
-                  title="Расчёт по закону Ома для полной цепи"
+                  title={language === 'en' ? "Calculate using Ohm's law for the complete circuit" : 'Расчёт по закону Ома для полной цепи'}
                 >
                   <CheckCircle2 className="w-3 h-3 text-emerald-500" />
                   <span>{circuitPhysics.ohmsLaw.formula}</span>
@@ -1711,9 +1711,9 @@ export const WorkbenchCanvas: React.FC = () => {
                 <span className="w-2 h-2 rounded-full bg-emerald-400" />
                 <span>
                   {t(`organelle.${eyepieceSettings.selectedOrganelle}`, language)}:
-                  {eyepieceSettings.selectedOrganelle === 'nucleus' && ' Содержит ДНК и управляет делением клетки.'}
-                  {eyepieceSettings.selectedOrganelle === 'cell_wall' && ' Прочная оболочка из целлюлозы.'}
-                  {eyepieceSettings.selectedOrganelle === 'vacuole' && ' Резервуар клеточного сока.'}
+                  {eyepieceSettings.selectedOrganelle === 'nucleus' && ` ${language === 'en' ? 'Contains DNA and controls cell division.' : language === 'ru' ? 'Содержит ДНК и управляет делением клетки.' : 'ДНК дорад ва тақсимшавии ҳуҷайраро идора мекунад.'}`}
+                  {eyepieceSettings.selectedOrganelle === 'cell_wall' && ` ${language === 'en' ? 'A strong cellulose wall.' : language === 'ru' ? 'Прочная оболочка из целлюлозы.' : 'Пӯсти мустаҳкам аз селлюлоза.'}`}
+                  {eyepieceSettings.selectedOrganelle === 'vacuole' && ` ${language === 'en' ? 'A reservoir for cell sap.' : language === 'ru' ? 'Резервуар клеточного сока.' : 'Захираи шираи ҳуҷайра.'}`}
                 </span>
               </div>
             )}

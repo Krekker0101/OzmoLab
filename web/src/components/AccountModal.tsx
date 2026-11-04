@@ -164,7 +164,7 @@ export const AccountModal: React.FC = () => {
                 >
                   <div className="flex items-center gap-1.5 text-amber-500 mb-1">
                     <Zap className="w-4 h-4 fill-current" />
-                    <span className="text-[11px] font-bold uppercase">{language === 'en' ? 'XP / Points' : 'XP / Баллы'}</span>
+                    <span className="text-[11px] font-bold uppercase">{language === 'en' ? 'XP / Points' : language === 'ru' ? 'XP / Баллы' : 'XP / Холҳо'}</span>
                   </div>
                   <span
                     className={`text-xl font-extrabold font-mono ${
@@ -404,12 +404,12 @@ export const AccountModal: React.FC = () => {
                 <h3 className="font-bold text-sm text-sky-600 mb-2">
                   {language === 'tg'
                     ? 'Ҳадафи миллии «Озмо Лаб»'
-                    : 'Национальная миссия «Озмо Лаб»'}
+                    : language === 'ru' ? 'Национальная миссия «Озмо Лаб»' : 'The Ozmo Lab national mission'}
                 </h3>
                 <p>
                   {language === 'tg'
                     ? 'Озмо Лаб аввалин платформаи миллии озмоишгоҳҳои виртуалии интерактивӣ барои хонандагони синфҳои 8-11-и мактабҳои Тоҷикистон мебошад. Платформа камбуди асбобҳои воқеии лабораториро пурра ҷуброн намуда, ба ҳар як толибилм имкони гузаронидани таҷрибаҳои дақиқи физикӣ, электротехникӣ ва биологиро фароҳам меорад.'
-                    : 'Озмо Лаб — первая национальная образовательная платформа виртуальных лабораторий для школьников 8-11 классов Таджикистана. Она устраняет дефицит оборудования в кабинетах физики, позволяя каждому ученику безопасно и наглядно проводить полноценные научные эксперименты.'}
+                    : language === 'ru' ? 'Озмо Лаб — первая национальная образовательная платформа виртуальных лабораторий для школьников 8-11 классов Таджикистана. Она устраняет дефицит оборудования в кабинетах физики, позволяя каждому ученику безопасно и наглядно проводить полноценные научные эксперименты.' : 'Ozmo Lab is a national virtual laboratory platform for students in grades 8–11. It helps schools overcome limited equipment and lets every student perform safe, clear, and complete scientific experiments.'}
                 </p>
               </div>
 
@@ -425,7 +425,7 @@ export const AccountModal: React.FC = () => {
                   <p className={isLight ? 'text-slate-600' : 'text-slate-400'}>
                     {language === 'tg'
                       ? 'Ҳамаи схемаҳо бо усули потенсиалҳои гиреҳӣ (Nodal Analysis) ва қонунҳои Кирхгоф дар вақти воқеӣ ҳисоб карда мешаванд.'
-                      : 'Все расчеты токов и напряжений производятся честным решателем узловых потенциалов без захардкоженных таблиц.'}
+                      : language === 'ru' ? 'Все расчеты токов и напряжений производятся честным решателем узловых потенциалов без захардкоженных таблиц.' : 'All current and voltage values are calculated by a nodal solver rather than hardcoded lookup tables.'}
                   </p>
                 </div>
 
@@ -440,7 +440,7 @@ export const AccountModal: React.FC = () => {
                   <p className={isLight ? 'text-slate-600' : 'text-slate-400'}>
                     {language === 'tg'
                       ? 'Наставник ҷавоби тайёр намедиҳад, балки бо саволҳои роҳнамо фикрронии мустақилонаро меомӯзад.'
-                      : 'ИИ видит состояние схемы, не выдумывает цифры и обучает наводящими вопросами на таджикском и русском языках.'}
+                      : language === 'ru' ? 'ИИ видит состояние схемы, не выдумывает цифры и обучает наводящими вопросами на таджикском и русском языках.' : 'The AI reads the circuit state, does not invent measurements, and teaches through guiding questions in the selected language.'}
                   </p>
                 </div>
               </div>

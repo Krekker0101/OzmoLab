@@ -298,7 +298,11 @@ export const InteractiveHeroBench: React.FC = () => {
                           ? 'bg-emerald-950/80 border-emerald-500 shadow-emerald-950/50'
                           : 'bg-rose-950/60 border-rose-600/70 shadow-rose-950/30'
                     }`}
-                    title={isSwitchClosed ? 'Кушодани калид (Размыкание)' : 'Пӯшидани калид (Замыкание)'}
+                    title={
+                      isSwitchClosed
+                        ? language === 'tg' ? 'Кушодани калид' : language === 'ru' ? 'Разомкнуть' : 'Open switch'
+                        : language === 'tg' ? 'Пӯшидани калид' : language === 'ru' ? 'Замкнуть' : 'Close switch'
+                    }
                   >
                     {/* Контакты ножевого рубильника */}
                     <div
@@ -525,7 +529,9 @@ export const InteractiveHeroBench: React.FC = () => {
                   >
                     {isTg
                       ? `Ҷараён: ${displayCurrent} A · Қувва: ${(Number(displayCurrent) * lampVoltage).toFixed(2)} Вт`
-                      : `Ток: ${displayCurrent} A · Мощность лампы: ${(Number(displayCurrent) * lampVoltage).toFixed(2)} Вт`}
+                      : language === 'ru'
+                        ? `Ток: ${displayCurrent} A · Мощность лампы: ${(Number(displayCurrent) * lampVoltage).toFixed(2)} Вт`
+                        : `Current: ${displayCurrent} A · Lamp power: ${(Number(displayCurrent) * lampVoltage).toFixed(2)} W`}
                   </div>
                 </div>
               </div>

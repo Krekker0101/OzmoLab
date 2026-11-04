@@ -873,6 +873,7 @@ export const useLabStore = create<LabStoreState>((set, get) => {
       const currentStep = lesson.steps[activeStepIndex];
       const currentState: LabState = {
         labId: activeLab.id,
+        language,
         components,
         wires,
         selectedComponentId: null,

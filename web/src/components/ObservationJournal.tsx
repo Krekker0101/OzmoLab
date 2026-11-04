@@ -227,11 +227,61 @@ export const ObservationJournal: React.FC = () => {
 
   // Экспорт отчета об эксперименте
   const handleExportReport = () => {
+    const reportLabels = language === 'en'
+      ? {
+          title: 'Ozmo Lab — Laboratory Report',
+          heading: 'Ozmo Lab — Laboratory Report',
+          laboratory: 'Laboratory',
+          date: 'Date and time',
+          status: 'Status',
+          closed: 'Circuit closed',
+          open: 'Circuit open',
+          parameters: 'Experiment parameters',
+          current: 'Total current I',
+          resistance: 'Equivalent resistance R',
+          components: 'Component list',
+          type: 'Type',
+          id: 'ID',
+          values: 'Parameters',
+        }
+      : language === 'ru'
+        ? {
+            title: 'Озмо Лаб — Лабораторный отчет',
+            heading: 'Озмо Лаб (Ozmo Lab) — Отчет о лабораторной работе',
+            laboratory: 'Лаборатория',
+            date: 'Дата и время',
+            status: 'Статус',
+            closed: 'Цепь замкнута',
+            open: 'Цепь разомкнута',
+            parameters: 'Параметры эксперимента',
+            current: 'Общий ток I',
+            resistance: 'Эквивалентное сопротивление R',
+            components: 'Список компонентов',
+            type: 'Тип',
+            id: 'ID',
+            values: 'Параметры',
+          }
+        : {
+            title: 'Озмо Лаб — Ҳисоботи лабораторӣ',
+            heading: 'Озмо Лаб — Ҳисоботи лабораторӣ',
+            laboratory: 'Лаборатория',
+            date: 'Сана ва вақт',
+            status: 'Ҳолат',
+            closed: 'Занҷир пӯшида аст',
+            open: 'Занҷир кушода аст',
+            parameters: 'Параметрҳои таҷриба',
+            current: 'Ҷараёни умумӣ I',
+            resistance: 'Муқовимати эквивалентӣ R',
+            components: 'Рӯйхати унсурҳо',
+            type: 'Навъ',
+            id: 'ID',
+            values: 'Параметрҳо',
+          };
     const reportHtml = `
       <!DOCTYPE html>
       <html>
       <head>
-        <title>Озмо Лаб — Лабораторный отчет</title>
+        <title>${reportLabels.title}</title>
         <style>
           body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; padding: 32px; color: #1e293b; }
           h1 { color: #0284c7; }
@@ -242,16 +292,16 @@ export const ObservationJournal: React.FC = () => {
         </style>
       </head>
       <body>
-        <h1>Озмо Лаб (Ozmo Lab) — Отчет о лабораторной работе</h1>
-        <p><strong>Лаборатория:</strong> ${t(activeLab.titleKey, language)}</p>
-        <p><strong>Дата и время:</strong> ${new Date().toLocaleString()}</p>
-        <p><strong>Статус:</strong> <span class="badge">${simulationResult?.isClosedCircuit ? 'Цепь замкнута' : 'Цепь разомкнута'}</span></p>
-        <h3>Параметры эксперимента</h3>
-        <p>Общий ток I: <strong>${(simulationResult?.totalCurrent || 0).toFixed(2)} A</strong></p>
-        <p>Эквивалентное сопротивление R: <strong>${(simulationResult?.totalEquivalentResistance || 0).toFixed(1)} Ω</strong></p>
-        <h3>Список компонентов (${components.length})</h3>
+        <h1>${reportLabels.heading}</h1>
+        <p><strong>${reportLabels.laboratory}:</strong> ${t(activeLab.titleKey, language)}</p>
+        <p><strong>${reportLabels.date}:</strong> ${new Date().toLocaleString()}</p>
+        <p><strong>${reportLabels.status}:</strong> <span class="badge">${simulationResult?.isClosedCircuit ? reportLabels.closed : reportLabels.open}</span></p>
+        <h3>${reportLabels.parameters}</h3>
+        <p>${reportLabels.current}: <strong>${(simulationResult?.totalCurrent || 0).toFixed(2)} A</strong></p>
+        <p>${reportLabels.resistance}: <strong>${(simulationResult?.totalEquivalentResistance || 0).toFixed(1)} Ω</strong></p>
+        <h3>${reportLabels.components} (${components.length})</h3>
         <table>
-          <tr><th>Тип</th><th>ID</th><th>Параметры</th></tr>
+          <tr><th>${reportLabels.type}</th><th>${reportLabels.id}</th><th>${reportLabels.values}</th></tr>
           ${components.map((c) => `<tr><td>${c.type}</td><td>${c.id}</td><td>${JSON.stringify(c.values)}</td></tr>`).join('')}
         </table>
       </body>
@@ -451,7 +501,7 @@ export const ObservationJournal: React.FC = () => {
                       <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
                         {language === 'tg'
                           ? 'Тарҳрезии худкор ва гузоштани схема ба 2D ва 3D'
-                          : 'Синтез схем по описанию и выкладка в 2D и 3D'}
+                          : language === 'ru' ? 'Синтез схем по описанию и выкладка в 2D и 3D' : 'Automatically build and place circuits in 2D and 3D'}
                       </div>
                     </div>
                   </div>
@@ -673,7 +723,9 @@ export const ObservationJournal: React.FC = () => {
                           onClick={() => setIsConverterOpen(!isConverterOpen)}
                           className="text-[10px] text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 font-medium"
                         >
-                          {isConverterOpen ? 'Скрыть' : 'Показать'}
+                          {isConverterOpen
+                            ? language === 'tg' ? 'Пинҳон кардан' : language === 'ru' ? 'Скрыть' : 'Hide'
+                            : language === 'tg' ? 'Намоиш додан' : language === 'ru' ? 'Показать' : 'Show'}
                         </button>
                       </div>
 
@@ -760,10 +812,22 @@ export const ObservationJournal: React.FC = () => {
                             </div>
                             <div className="text-[9px] text-slate-400 font-sans">
                               {currentTargetScale.factor === 1
-                                ? `1 ${activeBaseUnit} — основная единица Международной системы СИ`
+                                ? language === 'en'
+                                  ? `1 ${activeBaseUnit} — the SI base unit`
+                                  : language === 'ru'
+                                    ? `1 ${activeBaseUnit} — основная единица Международной системы СИ`
+                                    : `1 ${activeBaseUnit} — воҳиди асосии СИ`
                                 : currentTargetScale.factor > 1
-                                  ? `1 ${currentTargetScale.symbol} = ${currentTargetScale.factor.toLocaleString()} ${activeBaseUnit} (умножение на ${currentTargetScale.factor})`
-                                  : `1 ${currentTargetScale.symbol} = ${currentTargetScale.factor} ${activeBaseUnit} (деление на ${Math.round(1 / currentTargetScale.factor).toLocaleString()})`}
+                                  ? language === 'en'
+                                    ? `1 ${currentTargetScale.symbol} = ${currentTargetScale.factor.toLocaleString()} ${activeBaseUnit} (multiply by ${currentTargetScale.factor})`
+                                    : language === 'ru'
+                                      ? `1 ${currentTargetScale.symbol} = ${currentTargetScale.factor.toLocaleString()} ${activeBaseUnit} (умножение на ${currentTargetScale.factor})`
+                                      : `1 ${currentTargetScale.symbol} = ${currentTargetScale.factor.toLocaleString()} ${activeBaseUnit} (зарб ба ${currentTargetScale.factor})`
+                                  : language === 'en'
+                                    ? `1 ${currentTargetScale.symbol} = ${currentTargetScale.factor} ${activeBaseUnit} (divide by ${Math.round(1 / currentTargetScale.factor).toLocaleString()})`
+                                    : language === 'ru'
+                                      ? `1 ${currentTargetScale.symbol} = ${currentTargetScale.factor} ${activeBaseUnit} (деление на ${Math.round(1 / currentTargetScale.factor).toLocaleString()})`
+                                      : `1 ${currentTargetScale.symbol} = ${currentTargetScale.factor} ${activeBaseUnit} (тақсим ба ${Math.round(1 / currentTargetScale.factor).toLocaleString()})`}
                             </div>
                           </div>
                         </div>
@@ -1440,7 +1504,7 @@ export const ObservationJournal: React.FC = () => {
                         sendTutorMessage(
                           language === 'tg'
                             ? 'Занҷири оддӣ бо лампа ва калид соз'
-                            : 'Собери простую цепь с лампой и ключом'
+                            : language === 'ru' ? 'Собери простую цепь с лампой и ключом' : 'Build a simple circuit with a lamp and switch'
                         )
                       }
                       disabled={isTutorLoading}
@@ -1454,7 +1518,7 @@ export const ObservationJournal: React.FC = () => {
                         sendTutorMessage(
                           language === 'tg'
                             ? 'Пайвасти мувозии ду лампа соз'
-                            : 'Собери параллельное соединение двух ламп'
+                            : language === 'ru' ? 'Собери параллельное соединение двух ламп' : 'Build a parallel circuit with two lamps'
                         )
                       }
                       disabled={isTutorLoading}
@@ -1468,7 +1532,7 @@ export const ObservationJournal: React.FC = () => {
                         sendTutorMessage(
                           language === 'tg'
                             ? 'Стенди санҷиши қонуни Омро бо амперметр ва волтметр соз'
-                            : 'Собери стенд для проверки закона Ома с амперметром и вольтметром'
+                            : language === 'ru' ? 'Собери стенд для проверки закона Ома с амперметром и вольтметром' : 'Build an Ohm’s law bench with an ammeter and voltmeter'
                         )
                       }
                       disabled={isTutorLoading}
@@ -1482,7 +1546,7 @@ export const ObservationJournal: React.FC = () => {
                         sendTutorMessage(
                           language === 'tg'
                             ? 'Тақсимкунандаи шиддат бо резисторҳо соз'
-                            : 'Собери делитель напряжения на резисторах'
+                            : language === 'ru' ? 'Собери делитель напряжения на резисторах' : 'Build a resistor voltage divider'
                         )
                       }
                       disabled={isTutorLoading}

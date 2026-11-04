@@ -244,7 +244,7 @@ export const LandingPage: React.FC = () => {
           >
             {isTg
               ? 'Таҷрибаи ҳақиқӣ бо технологияи муосир'
-              : 'Настоящая физика с цифровой точностью'}
+              : language === 'ru' ? 'Настоящая физика с цифровой точностью' : 'Real physics with digital precision'}
           </h2>
           <p
             className={`text-xs sm:text-sm mt-2 ${
@@ -253,7 +253,7 @@ export const LandingPage: React.FC = () => {
           >
             {isTg
               ? 'Ҳисоби дақиқи ҷараён ва шиддат бо усули потенсиалҳои гиреҳӣ, муаллими соҳибзеҳн ва кор бидуни интернет.'
-              : 'Физически корректный расчет узловых потенциалов, сократический ИИ-наставник и полная автономная работа в школах.'}
+              : language === 'ru' ? 'Физически корректный расчет узловых потенциалов, сократический ИИ-наставник и полная автономная работа в школах.' : 'Accurate nodal analysis, a Socratic AI tutor, and full offline operation for schools.'}
           </p>
         </div>
 
@@ -278,7 +278,7 @@ export const LandingPage: React.FC = () => {
             <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
               {isTg
                 ? 'Ҷараён, шиддат ва тавоноӣ аз рӯи қонунҳои воқеии Кирхгоф ва Ом бо ҳалкунандаи матритсавӣ ҳисоб карда мешаванд.'
-                : 'Показания приборов рассчитываются матричным методом узловых потенциалов в реальном времени.'}
+                : language === 'ru' ? 'Показания приборов рассчитываются матричным методом узловых потенциалов в реальном времени.' : 'Instrument readings are calculated in real time using matrix nodal analysis.'}
             </p>
           </div>
 
@@ -302,7 +302,7 @@ export const LandingPage: React.FC = () => {
             <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
               {isTg
                 ? 'Натиҷаи тайёрро намедиҳад, балки бо саволҳои роҳнамо фикрронии мустақилонаро меомӯзад.'
-                : 'Не подсказывает готовый ответ, а наводящими вопросами подталкивает школьника к открытию закона.'}
+                : language === 'ru' ? 'Не подсказывает готовый ответ, а наводящими вопросами подталкивает школьника к открытию закона.' : 'It does not give away the answer; guiding questions help students discover the law themselves.'}
             </p>
           </div>
 
@@ -326,7 +326,7 @@ export const LandingPage: React.FC = () => {
             <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
               {isTg
                 ? 'Ҳатто ҳангоми набудани интернет дар синфхонаҳо симулятор ва луғати илмӣ бемамониат кор мекунанд.'
-                : 'Сервис-воркер PWA кэширует симулятор и заготовленные подсказки для школ без стабильной связи.'}
+                : language === 'ru' ? 'Сервис-воркер PWA кэширует симулятор и заготовленные подсказки для школ без стабильной связи.' : 'The PWA service worker caches the simulator and prepared hints for schools with unreliable connectivity.'}
             </p>
           </div>
 
@@ -350,7 +350,7 @@ export const LandingPage: React.FC = () => {
             <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
               {isTg
                 ? 'Истилоҳоти физика ба забони тоҷикӣ мувофиқи қоидаҳои таълимӣ ва бо тасдиқи омӯзгорони ботаҷриба.'
-                : 'Точные физические и электротехнические термины на таджикском и русском с учительской модерацией.'}
+                : language === 'ru' ? 'Точные физические и электротехнические термины на таджикском и русском с учительской модерацией.' : 'Accurate physics and electrical engineering terms reviewed by teachers.'}
             </p>
           </div>
         </div>
@@ -372,7 +372,7 @@ export const LandingPage: React.FC = () => {
                 isLight ? 'text-blue-600' : 'text-sky-400'
               }`}
             >
-              {isTg ? 'Барои кӣ омода шудааст?' : 'Для кого создана лаборатория'}
+              {isTg ? 'Барои кӣ омода шудааст?' : language === 'ru' ? 'Для кого создана лаборатория' : 'Who is it for?'}
             </span>
             <h2
               className={`text-2xl sm:text-3xl font-black tracking-tight mt-1 ${
@@ -381,7 +381,7 @@ export const LandingPage: React.FC = () => {
             >
               {isTg
                 ? 'Қарор барои мактабҳо, хонандагон ва муаллимон'
-                : 'Решение для школ, учеников и учителей'}
+                : language === 'ru' ? 'Решение для школ, учеников и учителей' : 'A solution for schools, students, and teachers'}
             </h2>
           </div>
 
@@ -401,12 +401,12 @@ export const LandingPage: React.FC = () => {
                 <Users className="w-6 h-6" />
               </div>
               <h3 className={`text-base font-bold mb-2 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                {isTg ? 'Барои хонандагони 8–11 синф' : 'Для школьников 8–11 классов'}
+                {isTg ? 'Барои хонандагони 8–11 синф' : language === 'ru' ? 'Для школьников 8–11 классов' : 'For students in grades 8–11'}
               </h3>
               <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
                 {isTg
                   ? 'Ҷамъоварии бехатари занҷирҳо дар хона ё мактаб, бе хатари сӯхтани сим ва бо фаҳмиши ҳақиқии формулаҳои физикӣ.'
-                  : 'Безопасные опыты дома и на уроках, подготовка к олимпиадам и экзаменам без страха сломать дорогое оборудование.'}
+                  : language === 'ru' ? 'Безопасные опыты дома и на уроках, подготовка к олимпиадам и экзаменам без страха сломать дорогое оборудование.' : 'Run safe experiments at home or in class and prepare for exams without risking expensive equipment.'}
               </p>
             </div>
 
@@ -425,12 +425,12 @@ export const LandingPage: React.FC = () => {
                 <GraduationCap className="w-6 h-6" />
               </div>
               <h3 className={`text-base font-bold mb-2 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                {isTg ? 'Барои омӯзгорони физика' : 'Для учителей физики'}
+                {isTg ? 'Барои омӯзгорони физика' : language === 'ru' ? 'Для учителей физики' : 'For physics teachers'}
               </h3>
               <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
                 {isTg
                   ? 'Нишон додани таҷрибаҳои интерактивӣ дар проектор ё тахтаи электронӣ ва пайгирии дақиқи қадамҳои ҳар як хонанда.'
-                  : 'Демонстрация законов на интерактивной доске, готовые сценарии уроков и автоматический контроль выполнения шагов.'}
+                  : language === 'ru' ? 'Демонстрация законов на интерактивной доске, готовые сценарии уроков и автоматический контроль выполнения шагов.' : 'Demonstrate laws on an interactive board with ready lesson scenarios and automatic step tracking.'}
               </p>
             </div>
 
@@ -449,12 +449,12 @@ export const LandingPage: React.FC = () => {
                 <School className="w-6 h-6" />
               </div>
               <h3 className={`text-base font-bold mb-2 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                {isTg ? 'Барои мактабҳо ва литсейҳо' : 'Для лицеев и школ'}
+                {isTg ? 'Барои мактабҳо ва литсейҳо' : language === 'ru' ? 'Для лицеев и школ' : 'For schools and lyceums'}
               </h3>
               <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
                 {isTg
                   ? 'Озмоишгоҳи муосир бидуни хароҷоти зиёд барои маводҳои масрафӣ ва таҷҳизоти гаронбаҳои физикӣ.'
-                  : 'Оснащение кабинетов естественных наук виртуальной практической базой, доступной на любом компьютере.'}
+                  : language === 'ru' ? 'Оснащение кабинетов естественных наук виртуальной практической базой, доступной на любом компьютере.' : 'Give science classrooms a virtual practical platform that works on any computer.'}
               </p>
             </div>
           </div>
@@ -469,7 +469,7 @@ export const LandingPage: React.FC = () => {
               isLight ? 'text-blue-600' : 'text-sky-400'
             }`}
           >
-            {isTg ? 'Озмоишҳо ва модулҳои фаъол' : 'Эксперименты и темы исследований'}
+            {isTg ? 'Озмоишҳо ва модулҳои фаъол' : language === 'ru' ? 'Эксперименты и темы исследований' : 'Experiments and active modules'}
           </span>
           <h2
             className={`text-2xl sm:text-3xl font-black tracking-tight mt-1 ${
@@ -478,7 +478,7 @@ export const LandingPage: React.FC = () => {
           >
             {isTg
               ? 'Кадом озмоишгоҳҳо ҳозир фаъоланд?'
-              : 'Готовые лаборатории для практических работ'}
+              : language === 'ru' ? 'Готовые лаборатории для практических работ' : 'Ready-to-use laboratories for practical work'}
           </h2>
         </div>
 
@@ -501,7 +501,7 @@ export const LandingPage: React.FC = () => {
                   }`}
                 >
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  {isTg ? '100% ОМОДА АСТ' : '100% ГОТОВО'}
+                  {isTg ? '100% ОМОДА АСТ' : language === 'ru' ? '100% ГОТОВО' : '100% READY'}
                 </span>
                 <span className="text-xs font-bold font-mono text-slate-500">8–10 кл.</span>
               </div>
@@ -515,12 +515,12 @@ export const LandingPage: React.FC = () => {
               </div>
 
               <h3 className={`text-base font-bold mb-2 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                {isTg ? 'Занҷирҳои ҷараёни доимӣ' : 'Цепи постоянного тока'}
+                {isTg ? 'Занҷирҳои ҷараёни доимӣ' : language === 'ru' ? 'Цепи постоянного тока' : 'DC circuits'}
               </h3>
               <p className={`text-xs leading-relaxed mb-4 ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
                 {isTg
                   ? 'Қонуни Ом, пайвасти пайдарпай ва мутавозӣ, лампаи тафсон, батарея ва асбобҳои ченак.'
-                  : 'Закон Ома, последовательное и параллельное включение, короткое замыкание, лампа и вольтметр.'}
+                  : language === 'ru' ? 'Закон Ома, последовательное и параллельное включение, короткое замыкание, лампа и вольтметр.' : 'Ohm’s law, series and parallel connections, short circuits, lamps, and voltmeters.'}
               </p>
             </div>
 
@@ -528,7 +528,7 @@ export const LandingPage: React.FC = () => {
               onClick={() => handleLaunchLab('circuits-dc')}
               className="w-full py-2.5 px-4 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer"
             >
-              <span>{isTg ? 'Оғози озмоиш' : 'Открыть лабораторию'}</span>
+              <span>{isTg ? 'Оғози озмоиш' : language === 'ru' ? 'Открыть лабораторию' : 'Open laboratory'}</span>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -551,7 +551,7 @@ export const LandingPage: React.FC = () => {
                   }`}
                 >
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  {isTg ? 'МОДУЛ ФАЪОЛ АСТ' : 'МОДУЛЬ ГОТОВ'}
+                  {isTg ? 'МОДУЛ ФАЪОЛ АСТ' : language === 'ru' ? 'МОДУЛЬ ГОТОВ' : 'MODULE READY'}
                 </span>
                 <span className="text-xs font-bold font-mono text-slate-500">8–9 кл.</span>
               </div>
@@ -565,12 +565,12 @@ export const LandingPage: React.FC = () => {
               </div>
 
               <h3 className={`text-base font-bold mb-2 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                {isTg ? 'Оптикаи геометрӣ ва нур' : 'Геометрическая оптика'}
+                {isTg ? 'Оптикаи геометрӣ ва нур' : language === 'ru' ? 'Геометрическая оптика' : 'Geometrical optics'}
               </h3>
               <p className={`text-xs leading-relaxed mb-4 ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
                 {isTg
                   ? 'Шикаст ва инъикоси нури лазер, линзаҳои фурӯзон ва парокандакунанда, қонуни Снеллиус.'
-                  : 'Преломление луча, закон Снеллиуса, линзы, призмы и расчет фокусного расстояния.'}
+                  : language === 'ru' ? 'Преломление луча, закон Снеллиуса, линзы, призмы и расчет фокусного расстояния.' : 'Refraction, Snell’s law, lenses, prisms, and focal-length calculations.'}
               </p>
             </div>
 
@@ -578,7 +578,7 @@ export const LandingPage: React.FC = () => {
               onClick={() => handleLaunchLab('optics-geometric')}
               className="w-full py-2.5 px-4 bg-amber-600 hover:bg-amber-500 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer"
             >
-              <span>{isTg ? 'Оғози озмоиш' : 'Открыть оптику'}</span>
+              <span>{isTg ? 'Оғози озмоиш' : language === 'ru' ? 'Открыть оптику' : 'Open optics'}</span>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -601,7 +601,7 @@ export const LandingPage: React.FC = () => {
                   }`}
                 >
                   <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
-                  {isTg ? 'МОДУЛ ФАЪОЛ АСТ' : 'МОДУЛЬ ГОТОВ'}
+                  {isTg ? 'МОДУЛ ФАЪОЛ АСТ' : language === 'ru' ? 'МОДУЛЬ ГОТОВ' : 'MODULE READY'}
                 </span>
                 <span className="text-xs font-bold font-mono text-slate-500">9–11 кл.</span>
               </div>
@@ -615,12 +615,12 @@ export const LandingPage: React.FC = () => {
               </div>
 
               <h3 className={`text-base font-bold mb-2 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                {isTg ? 'Микроскопия ва ҳуҷайрашиносӣ' : 'Микроскопия и цитология'}
+                {isTg ? 'Микроскопия ва ҳуҷайрашиносӣ' : language === 'ru' ? 'Микроскопия и цитология' : 'Microscopy and cytology'}
               </h3>
               <p className={`text-xs leading-relaxed mb-4 ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
                 {isTg
                   ? 'Сохти ҳуҷайраи растанӣ, микропрепаратҳо, линзаҳои микроскоп ва калонкунӣ то 1000x.'
-                  : 'Исследование клеток растений и животных, виртуальный микроскоп с зумом до 1000x.'}
+                  : language === 'ru' ? 'Исследование клеток растений и животных, виртуальный микроскоп с зумом до 1000x.' : 'Study plant and animal cells with a virtual microscope and up to 1000× magnification.'}
               </p>
             </div>
 
@@ -628,7 +628,7 @@ export const LandingPage: React.FC = () => {
               onClick={() => handleLaunchLab('biology-microscopy')}
               className="w-full py-2.5 px-4 bg-emerald-600 hover:bg-emerald-500 text-white rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer"
             >
-              <span>{isTg ? 'Оғози озмоиш' : 'Открыть микроскоп'}</span>
+              <span>{isTg ? 'Оғози озмоиш' : language === 'ru' ? 'Открыть микроскоп' : 'Open microscope'}</span>
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
@@ -651,14 +651,14 @@ export const LandingPage: React.FC = () => {
                 isLight ? 'text-blue-600' : 'text-sky-400'
               }`}
             >
-              {isTg ? 'Қадам ба қадам' : 'Простой процесс'}
+              {isTg ? 'Қадам ба қадам' : language === 'ru' ? 'Простой процесс' : 'Step by step'}
             </span>
             <h2
               className={`text-2xl sm:text-3xl font-black tracking-tight mt-1 ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
-              {isTg ? 'Чӣ тавр дар Озмо Лаб таҷриба мегузаронанд?' : 'Как это работает?'}
+              {isTg ? 'Чӣ тавр дар Озмо Лаб таҷриба мегузаронанд?' : language === 'ru' ? 'Как это работает?' : 'How does it work?'}
             </h2>
           </div>
 
@@ -672,12 +672,12 @@ export const LandingPage: React.FC = () => {
                 1
               </div>
               <h3 className={`text-base font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                {isTg ? 'Унсурҳоро интихоб кунед' : 'Выберите приборы'}
+                {isTg ? 'Унсурҳоро интихоб кунед' : language === 'ru' ? 'Выберите приборы' : 'Choose components'}
               </h3>
               <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
                 {isTg
                   ? 'Манбаъҳои барқ, лампаҳо, калид ва асбобҳои ченакро ба мизи озмоишӣ илова кунед.'
-                  : 'Перетащите батарею, резисторы, ключ и приборы из каталога на монтажный стол.'}
+                  : language === 'ru' ? 'Перетащите батарею, резисторы, ключ и приборы из каталога на монтажный стол.' : 'Drag a battery, resistors, a switch, and instruments from the catalog to the workbench.'}
               </p>
             </div>
 
@@ -690,12 +690,12 @@ export const LandingPage: React.FC = () => {
                 2
               </div>
               <h3 className={`text-base font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                {isTg ? 'Симҳоро пайваст намоед' : 'Соедините цепь'}
+                {isTg ? 'Симҳоро пайваст намоед' : language === 'ru' ? 'Соедините цепь' : 'Connect the circuit'}
               </h3>
               <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
                 {isTg
                   ? 'Бо пахши терминалҳо сим кашед ва калидро пӯшед, то ҷараёни барқ ба ҳаракат ояд.'
-                  : 'Соедините контакты проводами в один клик и замкните выключатель.'}
+                  : language === 'ru' ? 'Соедините контакты проводами в один клик и замкните выключатель.' : 'Connect contacts with wires in one click and close the switch.'}
               </p>
             </div>
 
@@ -708,12 +708,12 @@ export const LandingPage: React.FC = () => {
                 3
               </div>
               <h3 className={`text-base font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                {isTg ? 'Натиҷаро омӯзед ва пурсед' : 'Получите анализ ИИ'}
+                {isTg ? 'Натиҷаро омӯзед ва пурсед' : language === 'ru' ? 'Получите анализ ИИ' : 'Review the AI analysis'}
               </h3>
               <p className={`text-xs leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
                 {isTg
                   ? 'Нишондоди приборҳоро бинед ва аз ИИ-муаллим маслиҳат ё тафтиши схемаро дархост кунед.'
-                  : 'Наблюдайте реальные показания амперметра и обратитесь к ИИ-наставнику за подсказкой.'}
+                  : language === 'ru' ? 'Наблюдайте реальные показания амперметра и обратитесь к ИИ-наставнику за подсказкой.' : 'Review live ammeter readings and ask the AI tutor for a hint.'}
               </p>
             </div>
           </div>
@@ -729,14 +729,14 @@ export const LandingPage: React.FC = () => {
                 isLight ? 'text-blue-600' : 'text-sky-400'
               }`}
             >
-              {isTg ? 'Барномаи таълимӣ' : 'Учебный план'}
+              {isTg ? 'Барномаи таълимӣ' : language === 'ru' ? 'Учебный план' : 'Curriculum'}
             </span>
             <h2
               className={`text-2xl sm:text-3xl font-black tracking-tight mt-1 ${
                 isLight ? 'text-slate-900' : 'text-white'
               }`}
             >
-              {isTg ? 'Мавзӯъҳо аз рӯи синфҳои мактабӣ' : 'Темы исследований для 8–11 классов'}
+              {isTg ? 'Мавзӯъҳо аз рӯи синфҳои мактабӣ' : language === 'ru' ? 'Темы исследований для 8–11 классов' : 'Topics for grades 8–11'}
             </h2>
           </div>
 
@@ -744,7 +744,7 @@ export const LandingPage: React.FC = () => {
             onClick={() => handleLaunchLab('circuits-dc')}
             className="self-start sm:self-auto px-4 py-2 bg-blue-600 hover:bg-blue-500 text-white rounded-xl text-xs font-bold transition-all shadow-sm flex items-center gap-1.5 cursor-pointer"
           >
-            <span>{isTg ? 'Ба озмоишгоҳ' : 'Открыть симулятор'}</span>
+            <span>{isTg ? 'Ба озмоишгоҳ' : language === 'ru' ? 'Открыть симулятор' : 'Open simulator'}</span>
             <ArrowRight className="w-4 h-4" />
           </button>
         </div>
@@ -763,25 +763,25 @@ export const LandingPage: React.FC = () => {
                   isLight ? 'bg-blue-50 text-blue-700 border border-blue-200/70' : 'bg-blue-950 text-blue-300'
                 }`}
               >
-                8 {isTg ? 'синф' : 'класс'}
+                8 {isTg ? 'синф' : language === 'ru' ? 'класс' : 'grade'}
               </span>
-              <span className="text-[11px] text-slate-500 font-semibold">4 {isTg ? 'мавзӯъ' : 'темы'}</span>
+              <span className="text-[11px] text-slate-500 font-semibold">4 {isTg ? 'мавзӯъ' : language === 'ru' ? 'темы' : 'topics'}</span>
             </div>
             <h3 className={`text-sm font-bold mb-2 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-              {isTg ? 'Асосҳои ҷараёни барқ' : 'Основы электричества'}
+              {isTg ? 'Асосҳои ҷараёни барқ' : language === 'ru' ? 'Основы электричества' : 'Fundamentals of electricity'}
             </h3>
             <ul className={`text-xs space-y-2 ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
               <li className="flex items-start gap-1.5">
                 <span className="text-blue-500 font-bold">•</span>
-                <span>{isTg ? 'Сарчашмаҳои ҷараён ва занҷир' : 'Источники тока и простая цепь'}</span>
+                <span>{isTg ? 'Сарчашмаҳои ҷараён ва занҷир' : language === 'ru' ? 'Источники тока и простая цепь' : 'Current sources and simple circuits'}</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <span className="text-blue-500 font-bold">•</span>
-                <span>{isTg ? 'Қонуни Ом: I = U / R' : 'Закон Ома для участка цепи'}</span>
+                <span>{isTg ? 'Қонуни Ом: I = U / R' : language === 'ru' ? 'Закон Ома для участка цепи' : "Ohm's law for a circuit section"}</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <span className="text-blue-500 font-bold">•</span>
-                <span>{isTg ? 'Ченкунӣ бо амперметр ва волтметр' : 'Измерение тока и напряжения'}</span>
+                <span>{isTg ? 'Ченкунӣ бо амперметр ва волтметр' : language === 'ru' ? 'Измерение тока и напряжения' : 'Measuring current and voltage'}</span>
               </li>
             </ul>
           </div>
@@ -799,25 +799,25 @@ export const LandingPage: React.FC = () => {
                   isLight ? 'bg-indigo-50 text-indigo-700 border border-indigo-200/70' : 'bg-indigo-950 text-indigo-300'
                 }`}
               >
-                9 {isTg ? 'синф' : 'класс'}
+                9 {isTg ? 'синф' : language === 'ru' ? 'класс' : 'grade'}
               </span>
-              <span className="text-[11px] text-slate-500 font-semibold">5 {isTg ? 'мавзӯъ' : 'тем'}</span>
+              <span className="text-[11px] text-slate-500 font-semibold">5 {isTg ? 'мавзӯъ' : language === 'ru' ? 'тем' : 'topics'}</span>
             </div>
             <h3 className={`text-sm font-bold mb-2 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-              {isTg ? 'Пайвасти ноқилҳо ва оптика' : 'Соединение проводников'}
+              {isTg ? 'Пайвасти ноқилҳо ва оптика' : language === 'ru' ? 'Соединение проводников' : 'Conductors and optics'}
             </h3>
             <ul className={`text-xs space-y-2 ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
               <li className="flex items-start gap-1.5">
                 <span className="text-indigo-500 font-bold">•</span>
-                <span>{isTg ? 'Пайвасти пайдарпайи резисторҳо' : 'Последовательное соединение'}</span>
+                <span>{isTg ? 'Пайвасти пайдарпайи резисторҳо' : language === 'ru' ? 'Последовательное соединение' : 'Series connection'}</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <span className="text-indigo-500 font-bold">•</span>
-                <span>{isTg ? 'Пайвасти мутавозии шохаҳо' : 'Параллельное соединение'}</span>
+                <span>{isTg ? 'Пайвасти мутавозии шохаҳо' : language === 'ru' ? 'Параллельное соединение' : 'Parallel connection'}</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <span className="text-indigo-500 font-bold">•</span>
-                <span>{isTg ? 'Шикасти нур дар линзаҳо' : 'Преломление света в линзах'}</span>
+                <span>{isTg ? 'Шикасти нур дар линзаҳо' : language === 'ru' ? 'Преломление света в линзах' : 'Refraction in lenses'}</span>
               </li>
             </ul>
           </div>
@@ -835,25 +835,25 @@ export const LandingPage: React.FC = () => {
                   isLight ? 'bg-amber-50 text-amber-700 border border-amber-200/70' : 'bg-amber-950 text-amber-300'
                 }`}
               >
-                10 {isTg ? 'синф' : 'класс'}
+                10 {isTg ? 'синф' : language === 'ru' ? 'класс' : 'grade'}
               </span>
-              <span className="text-[11px] text-slate-500 font-semibold">4 {isTg ? 'мавзӯъ' : 'темы'}</span>
+              <span className="text-[11px] text-slate-500 font-semibold">4 {isTg ? 'мавзӯъ' : language === 'ru' ? 'темы' : 'topics'}</span>
             </div>
             <h3 className={`text-sm font-bold mb-2 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-              {isTg ? 'Электромагнетизм ва қувва' : 'Электродинамика и ЭДС'}
+              {isTg ? 'Электромагнетизм ва қувва' : language === 'ru' ? 'Электродинамика и ЭДС' : 'Electrodynamics and EMF'}
             </h3>
             <ul className={`text-xs space-y-2 ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
               <li className="flex items-start gap-1.5">
                 <span className="text-amber-500 font-bold">•</span>
-                <span>{isTg ? 'Қонуни Ом барои занҷири пурра' : 'Закон Ома для полной цепи'}</span>
+                <span>{isTg ? 'Қонуни Ом барои занҷири пурра' : language === 'ru' ? 'Закон Ома для полной цепи' : "Ohm's law for a complete circuit"}</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <span className="text-amber-500 font-bold">•</span>
-                <span>{isTg ? 'Муқовимати дарунии батарея' : 'Внутреннее сопротивление'}</span>
+                <span>{isTg ? 'Муқовимати дарунии батарея' : language === 'ru' ? 'Внутреннее сопротивление' : 'Internal resistance'}</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <span className="text-amber-500 font-bold">•</span>
-                <span>{isTg ? 'Тавоноии барқӣ: P = I · U' : 'Мощность и закон Джоуля'}</span>
+                <span>{isTg ? 'Тавоноии барқӣ: P = I · U' : language === 'ru' ? 'Мощность и закон Джоуля' : 'Electrical power and Joule’s law'}</span>
               </li>
             </ul>
           </div>
@@ -871,25 +871,25 @@ export const LandingPage: React.FC = () => {
                   isLight ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/70' : 'bg-emerald-950 text-emerald-300'
                 }`}
               >
-                11 {isTg ? 'синф' : 'класс'}
+                11 {isTg ? 'синф' : language === 'ru' ? 'класс' : 'grade'}
               </span>
-              <span className="text-[11px] text-slate-500 font-semibold">3 {isTg ? 'мавзӯъ' : 'темы'}</span>
+              <span className="text-[11px] text-slate-500 font-semibold">3 {isTg ? 'мавзӯъ' : language === 'ru' ? 'темы' : 'topics'}</span>
             </div>
             <h3 className={`text-sm font-bold mb-2 ${isLight ? 'text-slate-900' : 'text-white'}`}>
-              {isTg ? 'Оптика ва микросохтҳо' : 'Оптика и квантовая физика'}
+              {isTg ? 'Оптика ва микросохтҳо' : language === 'ru' ? 'Оптика и квантовая физика' : 'Optics and microscopic structures'}
             </h3>
             <ul className={`text-xs space-y-2 ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
               <li className="flex items-start gap-1.5">
                 <span className="text-emerald-500 font-bold">•</span>
-                <span>{isTg ? 'Дисперсия ва инъикоси куллӣ' : 'Дисперсия и преломление'}</span>
+                <span>{isTg ? 'Дисперсия ва инъикоси куллӣ' : language === 'ru' ? 'Дисперсия и преломление' : 'Dispersion and refraction'}</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <span className="text-emerald-500 font-bold">•</span>
-                <span>{isTg ? 'Асбобҳои мураккаби оптикӣ' : 'Оптические системы'}</span>
+                <span>{isTg ? 'Асбобҳои мураккаби оптикӣ' : language === 'ru' ? 'Оптические системы' : 'Optical systems'}</span>
               </li>
               <li className="flex items-start gap-1.5">
                 <span className="text-emerald-500 font-bold">•</span>
-                <span>{isTg ? 'Сохти ҳуҷайра дар биология' : 'Клеточные микроструктуры'}</span>
+                <span>{isTg ? 'Сохти ҳуҷайра дар биология' : language === 'ru' ? 'Клеточные микроструктуры' : 'Cellular microstructures'}</span>
               </li>
             </ul>
           </div>
@@ -919,12 +919,12 @@ export const LandingPage: React.FC = () => {
               <div className="absolute inset-0 bg-gradient-to-t from-slate-950/80 via-transparent to-transparent flex items-end p-6">
                 <div className="text-white space-y-1">
                   <span className="text-xs font-bold uppercase text-amber-400">
-                    {isTg ? 'Таҷҳизоти ҳақиқӣ дар экрани шумо' : 'Прецизионное оборудование на экране'}
+                    {isTg ? 'Таҷҳизоти ҳақиқӣ дар экрани шумо' : language === 'ru' ? 'Прецизионное оборудование на экране' : 'Precision equipment on your screen'}
                   </span>
                   <p className="text-sm font-semibold">
                     {isTg
                       ? 'Лампаи тафсон, батареяи 9V ва мултиметри рақамӣ'
-                      : 'Лампа накаливания, батарея 9V и цифровой мультиметр'}
+                      : language === 'ru' ? 'Лампа накаливания, батарея 9V и цифровой мультиметр' : 'Incandescent lamp, 9 V battery, and digital multimeter'}
                   </p>
                 </div>
               </div>
@@ -936,7 +936,7 @@ export const LandingPage: React.FC = () => {
                   isLight ? 'text-amber-700' : 'text-amber-400'
                 }`}
               >
-                {isTg ? 'Бехатарӣ ва самаранокӣ' : 'Преимущества платформы'}
+                {isTg ? 'Бехатарӣ ва самаранокӣ' : language === 'ru' ? 'Преимущества платформы' : 'Safety and efficiency'}
               </span>
 
               <h2
@@ -946,7 +946,7 @@ export const LandingPage: React.FC = () => {
               >
                 {isTg
                   ? 'Таҷрибаҳои бехатар бидуни хатари сӯхтани симҳо'
-                  : 'Безопасные эксперименты без риска испортить приборы'}
+                  : language === 'ru' ? 'Безопасные эксперименты без риска испортить приборы' : 'Safe experiments without risking equipment'}
               </h2>
 
               <div className="space-y-4">
@@ -962,12 +962,12 @@ export const LandingPage: React.FC = () => {
                   </div>
                   <div>
                     <h4 className={`text-sm font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                      {isTg ? 'Бехатарии комил ҳангоми хатогиҳо' : 'Абсолютная безопасность'}
+                      {isTg ? 'Бехатарии комил ҳангоми хатогиҳо' : language === 'ru' ? 'Абсолютная безопасность' : 'Complete safety when mistakes happen'}
                     </h4>
                     <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
                       {isTg
                         ? 'Ҳангоми кӯтоҳпайвастшавӣ система сабаби физикиро фаҳмонад, бидуни зарар ба таҷҳизоти воқеӣ.'
-                        : 'При коротком замыкании система мягко информирует о перегрузке, позволяя безопасно ошибаться.'}
+                        : language === 'ru' ? 'При коротком замыкании система мягко информирует о перегрузке, позволяя безопасно ошибаться.' : 'When a short circuit occurs, the system explains the overload so students can learn safely.'}
                     </p>
                   </div>
                 </div>
@@ -984,12 +984,12 @@ export const LandingPage: React.FC = () => {
                   </div>
                   <div>
                     <h4 className={`text-sm font-bold ${isLight ? 'text-slate-900' : 'text-white'}`}>
-                      {isTg ? 'Фаъолият бидуни интернет (Оффлайн PWA)' : 'Работает без интернета (PWA)'}
+                      {isTg ? 'Фаъолият бидуни интернет (Оффлайн PWA)' : language === 'ru' ? 'Работает без интернета (PWA)' : 'Works without internet (PWA)'}
                     </h4>
                     <p className={`text-xs mt-1 leading-relaxed ${isLight ? 'text-slate-600' : 'text-slate-400'}`}>
                       {isTg
                         ? 'Дар мактабҳои ноҳияҳо ва деҳот ҳатто ҳангоми қатъ шудани интернет тамоми симулятсия кор мекунад.'
-                        : 'Даже при слабой или отсутствующей связи симулятор и локальный наставник остаются полностью активными.'}
+                        : language === 'ru' ? 'Даже при слабой или отсутствующей связи симулятор и локальный наставник остаются полностью активными.' : 'Even with a weak or missing connection, the simulator and local tutor remain fully active.'}
                     </p>
                   </div>
                 </div>

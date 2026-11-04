@@ -550,19 +550,30 @@ function simulateCircuitsDC(state: LabState): SimulationResult {
  * Проекция состояния цепи для ИИ-наставника
  */
 function describeCircuitsState(state: LabState): AISummarySnapshot {
+  const language = state.language ?? 'ru';
   const result = state.simulationResult;
   const activeComponentsCount = state.components.length;
   const connectionsCount = state.wires.length;
 
   const componentsDesc = state.components.map((c) => {
     const simState = result?.componentStates[c.id];
-    let stateText = 'отключен';
+    const isEnglish = language === 'en';
+    const isTajik = language === 'tg';
+    let stateText = isEnglish ? 'inactive' : isTajik ? 'ғайрифаъол' : 'отключен';
     if (c.type === 'switch') {
-      stateText = c.state.isOpen ? 'разомкнут' : 'замкнут';
+      stateText = c.state.isOpen
+        ? isEnglish ? 'open' : isTajik ? 'кушода' : 'разомкнут'
+        : isEnglish ? 'closed' : isTajik ? 'пӯшида' : 'замкнут';
     } else if (c.type === 'lamp') {
-      stateText = c.state.illuminated ? `горит (яркость ${Math.round((c.state.brightness || 0) * 100)}%)` : 'не горит';
+      stateText = c.state.illuminated
+        ? isEnglish
+          ? `on (brightness ${Math.round((c.state.brightness || 0) * 100)}%)`
+          : isTajik
+            ? `фурӯзон (равшанӣ ${Math.round((c.state.brightness || 0) * 100)}%)`
+            : `горит (яркость ${Math.round((c.state.brightness || 0) * 100)}%)`
+        : isEnglish ? 'off' : isTajik ? 'хомӯш' : 'не горит';
     } else if (simState && simState.current > 0) {
-      stateText = `активен, ток: ${simState.current}A`;
+      stateText = isEnglish ? `active, current: ${simState.current} A` : isTajik ? `фаъол, ҷараён: ${simState.current} A` : `активен, ток: ${simState.current}A`;
     }
 
     return {
@@ -578,13 +589,23 @@ function describeCircuitsState(state: LabState): AISummarySnapshot {
   const isClosed = result?.isClosedCircuit ?? false;
   const hasShort = result?.hasShortCircuit ?? false;
 
-  let summaryText = `Схема содержит ${activeComponentsCount} компонентов и ${connectionsCount} проводов.`;
+  const isEnglish = language === 'en';
+  const isTajik = language === 'tg';
+  let summaryText = isEnglish
+    ? `The circuit contains ${activeComponentsCount} components and ${connectionsCount} wires.`
+    : isTajik
+      ? `Схема ${activeComponentsCount} унсур ва ${connectionsCount} сим дорад.`
+      : `Схема содержит ${activeComponentsCount} компонентов и ${connectionsCount} проводов.`;
   if (hasShort) {
-    summaryText += ' ВНИМАНИЕ: Зафиксировано короткое замыкание!';
+    summaryText += isEnglish ? ' WARNING: A short circuit was detected!' : isTajik ? ' ДИҚҚАТ: Расиши кӯтоҳ ошкор шуд!' : ' ВНИМАНИЕ: Зафиксировано короткое замыкание!';
   } else if (isClosed) {
-    summaryText += ` Цепь замкнута, суммарный ток составляет ${result?.totalCurrent}A, эквивалентное сопротивление ${result?.totalEquivalentResistance}Ω.`;
+    summaryText += isEnglish
+      ? ` The circuit is closed; total current is ${result?.totalCurrent} A and equivalent resistance is ${result?.totalEquivalentResistance} Ω.`
+      : isTajik
+        ? ` Занҷир пӯшида аст; ҷараёни умумӣ ${result?.totalCurrent} A ва муқовимати эквивалентӣ ${result?.totalEquivalentResistance} Ω мебошад.`
+        : ` Цепь замкнута, суммарный ток составляет ${result?.totalCurrent}A, эквивалентное сопротивление ${result?.totalEquivalentResistance}Ω.`;
   } else {
-    summaryText += ' Цепь разомкнута (ток равен нулю).';
+    summaryText += isEnglish ? ' The circuit is open (current is zero).' : isTajik ? ' Занҷир кушода аст (ҷараён ба сифр баробар аст).' : ' Цепь разомкнута (ток равен нулю).';
   }
 
   return {

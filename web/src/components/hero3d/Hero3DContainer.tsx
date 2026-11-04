@@ -579,7 +579,9 @@ export const Hero3DContainer: React.FC<Hero3DContainerProps> = ({
                     }`}
                   >
                     <Power className="w-3.5 h-3.5" />
-                    <span>{isSwitchClosed ? (isTg ? 'Пӯшида' : 'Замкнуто') : isTg ? 'Кушода' : 'Разомкнуто'}</span>
+                    <span>{isSwitchClosed
+                      ? isTg ? 'Пӯшида' : language === 'ru' ? 'Замкнуто' : 'Closed'
+                      : isTg ? 'Кушода' : language === 'ru' ? 'Разомкнуто' : 'Open'}</span>
                   </button>
                 </div>
               </>
@@ -609,7 +611,7 @@ export const Hero3DContainer: React.FC<Hero3DContainerProps> = ({
                       : 'bg-emerald-950/60 border-emerald-800 text-emerald-300'
                   }`}
                 >
-                  {isTg ? 'Шикасти оптикӣ' : 'Дисперсия в призме'}
+                  {isTg ? 'Шикасти оптикӣ' : language === 'ru' ? 'Дисперсия в призме' : 'Optical refraction'}
                 </div>
               </>
             ) : (
@@ -643,7 +645,7 @@ export const Hero3DContainer: React.FC<Hero3DContainerProps> = ({
                       : 'bg-purple-950/60 border-purple-800 text-purple-300'
                   }`}
                 >
-                  {isTg ? 'Эпидермиси пиёз' : 'Клетки кожицы лука'}
+                  {isTg ? 'Эпидермиси пиёз' : language === 'ru' ? 'Клетки кожицы лука' : 'Onion epidermis cells'}
                 </div>
               </>
             )}
@@ -654,7 +656,7 @@ export const Hero3DContainer: React.FC<Hero3DContainerProps> = ({
             <div className={`text-[11px] ${isLight ? 'text-slate-500' : 'text-slate-400'}`}>
               {isTg
                 ? 'Тамоми равандҳои физикӣ дар браузер ҳисоб мешаванд'
-                : 'Все процессы рассчитываются в реальном времени'}
+                : language === 'ru' ? 'Все процессы рассчитываются в реальном времени' : 'All physical processes are calculated in real time'}
             </div>
 
             <button
@@ -662,7 +664,9 @@ export const Hero3DContainer: React.FC<Hero3DContainerProps> = ({
               disabled={isFlying}
               className="px-5 py-2.5 bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white rounded-xl text-xs sm:text-sm font-bold transition-all shadow-lg shadow-blue-600/25 active:scale-95 flex items-center gap-2 group cursor-pointer"
             >
-              <span>{isFlying ? (isTg ? 'Гузариш...' : 'Переход...') : t('hero3d.fly_to_lab', language)}</span>
+              <span>{isFlying
+                ? isTg ? 'Гузариш...' : language === 'ru' ? 'Переход...' : 'Opening...'
+                : t('hero3d.fly_to_lab', language)}</span>
               <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
             </button>
           </div>

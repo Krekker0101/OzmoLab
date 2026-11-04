@@ -69,7 +69,7 @@ export const GlossaryModal: React.FC = () => {
             >
               {language === 'tg'
                 ? 'Истилоҳоти муҳимми физика ва электротехника барои мактабҳои Тоҷикистон'
-                : 'Научно-технические термины физики и электротехники для школ Таджикистана'}
+                : language === 'ru' ? 'Научно-технические термины физики и электротехники для школ Таджикистана' : 'Scientific and technical physics and electrical engineering terms for schools'}
             </p>
           </div>
           <button
@@ -173,7 +173,7 @@ export const GlossaryModal: React.FC = () => {
                         isLight ? 'text-sky-700' : 'text-sky-400'
                       }`}
                     >
-                      {term.term_tg}
+                      {language === 'tg' ? term.term_tg : language === 'ru' ? term.term_ru : term.term_en}
                     </h3>
                     <span className="text-xs text-slate-400">/</span>
                     <h4
@@ -233,7 +233,7 @@ export const GlossaryModal: React.FC = () => {
                           ? 'bg-amber-50 text-amber-800 border-amber-300'
                           : 'bg-amber-950/80 text-amber-300 border-amber-800/80'
                       }`}
-                      title={language === 'en' ? 'This translation should be reviewed by a physics teacher' : 'Ин тарҷума бояд аз ҷониби омӯзгори физика тафтиш шавад'}
+                      title={language === 'en' ? 'This translation should be reviewed by a physics teacher' : language === 'ru' ? 'Перевод должен быть проверен учителем физики' : 'Ин тарҷума бояд аз ҷониби омӯзгори физика тафтиш шавад'}
                     >
                       <AlertCircle className="w-3 h-3 text-amber-500" />
                       {t('glossary.badge.needs_review', language)}

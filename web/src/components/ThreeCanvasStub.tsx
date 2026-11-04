@@ -434,7 +434,7 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
           <p className="text-xs text-slate-500 max-w-sm mb-4">
             {language === 'tg'
               ? 'Барои дидани ҳамаи унсурҳо дар 3D ва истифодаи муҳаррики физикӣ тугмаи зерро пахш намоед.'
-              : 'Включите 3D режим, чтобы симулировать физику твердых тел, гравитацию и натяжение проводов в реальном времени.'}
+              : language === 'ru' ? 'Включите 3D режим, чтобы симулировать физику твердых тел, гравитацию и натяжение проводов в реальном времени.' : 'Enable 3D mode to simulate rigid-body physics, gravity, and wire tension in real time.'}
           </p>
           <button
             onClick={() => handleToggleEnabled(true)}
@@ -456,7 +456,7 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
               ? 'bg-white/95 border-sky-200 text-sky-800 hover:bg-sky-50 shadow-sky-500/15'
               : 'bg-slate-900/95 border-sky-700 text-sky-300 hover:bg-slate-800 shadow-black/50'
           }`}
-          title="Включить интерактивную 3D лабораторию"
+          title={language === 'en' ? 'Enable interactive 3D laboratory' : 'Включить интерактивную 3D лабораторию'}
         >
           <div className="relative">
             <Sparkles className="w-4 h-4 text-amber-500 animate-pulse" />
@@ -553,7 +553,7 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
                 ? 'bg-sky-600 text-white'
                 : 'text-slate-600 dark:text-slate-300 hover:bg-slate-200/50'
             }`}
-            title="Изометрия"
+            title={language === 'en' ? 'Isometric view' : 'Изометрия'}
           >
             3D
           </button>
@@ -564,7 +564,7 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
                 ? 'bg-sky-600 text-white'
                 : 'text-slate-600 dark:text-slate-300 hover:bg-slate-200/50'
             }`}
-            title="Вид сверху"
+            title={language === 'en' ? 'Top view' : 'Вид сверху'}
           >
             Top
           </button>
@@ -575,7 +575,7 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
                 ? 'bg-sky-600 text-white'
                 : 'text-slate-600 dark:text-slate-300 hover:bg-slate-200/50'
             }`}
-            title="Вид спереди"
+            title={language === 'en' ? 'Front view' : 'Вид спереди'}
           >
             Front
           </button>
@@ -590,7 +590,9 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
                 ? 'bg-white/90 border-slate-200 text-slate-600 hover:bg-slate-100'
                 : 'bg-slate-900/90 border-slate-700 text-slate-300 hover:bg-slate-800'
             }`}
-            title={windowMode === 'fullscreen' ? 'Свернуть в окно' : 'На весь экран'}
+            title={windowMode === 'fullscreen'
+              ? language === 'en' ? 'Restore window' : 'Свернуть в окно'
+              : language === 'en' ? 'Fullscreen' : 'На весь экран'}
           >
             {windowMode === 'fullscreen' ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
           </button>
@@ -605,7 +607,7 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
           className={`p-1.5 rounded-lg border backdrop-blur-md hover:bg-red-500 hover:text-white transition-all shadow-sm ${
             isLight ? 'bg-white/90 border-slate-200 text-slate-600' : 'bg-slate-900/90 border-slate-700 text-slate-300'
           }`}
-          title="Скрыть 3D сцену (выключить is3DEnabled)"
+          title={language === 'en' ? 'Hide 3D scene' : 'Скрыть 3D сцену (выключить is3DEnabled)'}
         >
           <X className="w-4 h-4" />
         </button>
@@ -656,10 +658,10 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
               {isHudCollapsed
                 ? language === 'tg'
                   ? 'Кушодани панели идоракунӣ'
-                  : 'Показать панель 3D физики'
+                  : language === 'ru' ? 'Показать панель 3D физики' : 'Show 3D physics panel'
                 : language === 'tg'
                   ? 'Пинҳон кардани панел'
-                  : 'Свернуть панель'}
+                  : language === 'ru' ? 'Свернуть панель' : 'Collapse panel'}
             </span>
           </button>
         </div>
@@ -680,7 +682,7 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
                     ? 'bg-amber-600 hover:bg-amber-500 text-white'
                     : 'bg-emerald-600 hover:bg-emerald-500 text-white'
                 }`}
-                title="Запуск / приостановка физической симуляции"
+                title={language === 'en' ? 'Start / pause physics simulation' : 'Запуск / приостановка физической симуляции'}
               >
                 {isPhysicsRunning ? <Pause className="w-3.5 h-3.5" /> : <Play className="w-3.5 h-3.5" />}
                 <span>
@@ -701,7 +703,7 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
                       ? 'bg-slate-100 border-slate-200 text-slate-500'
                       : 'bg-slate-800 border-slate-700 text-slate-400'
                 }`}
-                title="Переключение гравитации"
+                title={language === 'en' ? 'Toggle gravity' : 'Переключение гравитации'}
               >
                 <Zap className="w-3.5 h-3.5 text-sky-500" />
                 <span>
@@ -722,7 +724,7 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
                       ? 'bg-slate-100 border-slate-200 text-slate-500'
                       : 'bg-slate-800 border-slate-700 text-slate-400'
                 }`}
-                title="Упругие связи проводов между деталями"
+                title={language === 'en' ? 'Elastic wire connections between components' : 'Упругие связи проводов между деталями'}
               >
                 <Boxes className="w-3.5 h-3.5 text-purple-500" />
                 <span>{t('physics3d.btn.wires', language)}</span>
@@ -737,7 +739,7 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
                     ? 'bg-amber-50 border-amber-200 text-amber-700 hover:bg-amber-100'
                     : 'bg-amber-950/40 border-amber-800 text-amber-300 hover:bg-amber-900/50'
                 }`}
-                title="Применить кинетический импульс ко всем деталям"
+                title={language === 'en' ? 'Apply a kinetic impulse to all components' : 'Применить кинетический импульс ко всем деталям'}
               >
                 <Sparkles className="w-3.5 h-3.5 text-amber-500" />
                 <span>{t('physics3d.btn.shake', language)}</span>
@@ -750,7 +752,7 @@ export const ThreeCanvasStub: React.FC<ThreeCanvasStubProps> = ({
                     ? 'bg-slate-100 border-slate-200 text-slate-700 hover:bg-slate-200'
                     : 'bg-slate-800 border-slate-700 text-slate-300 hover:bg-slate-700'
                 }`}
-                title="Вернуть детали на позиции 2D стола"
+                title={language === 'en' ? 'Reset components to their 2D workbench positions' : 'Вернуть детали на позиции 2D стола'}
               >
                 <RotateCcw className="w-3.5 h-3.5 text-slate-400" />
                 <span>{t('physics3d.btn.reset', language)}</span>

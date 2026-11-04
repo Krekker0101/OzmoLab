@@ -187,7 +187,7 @@ export const Header: React.FC = () => {
                   ? 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700'
                   : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-300'
             }`}
-            title={language === 'en' ? 'Toggle 3D scene' : 'Переключить 3D сцену (ThreeCanvasStub)'}
+            title={language === 'en' ? 'Toggle 3D scene' : language === 'ru' ? 'Переключить 3D сцену (ThreeCanvasStub)' : 'Гузариши саҳнаи 3D'}
           >
             <Sparkles className="w-3.5 h-3.5 text-amber-400" />
             <span>3D</span>
