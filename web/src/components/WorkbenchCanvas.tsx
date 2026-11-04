@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @license
  * SPDX-License-Identifier: Apache-2.0
  * Озмо Лаб (Ozmo Lab) — Центральная рабочая область (2D SVG Монтажный стол & 3D Лаборатория)
