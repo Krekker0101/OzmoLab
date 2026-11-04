@@ -237,7 +237,7 @@ export const WorkbenchCanvas: React.FC = () => {
     return coords;
   }, [components]);
 
-  const handleMouseMove = (e: React.MouseEvent<SVGSVGElement>) => {
+  const handlePointerMove = (e: React.PointerEvent<SVGSVGElement>) => {
     if (!svgRef.current) return;
     const rect = svgRef.current.getBoundingClientRect();
     const x = e.clientX - rect.left;
@@ -271,20 +271,25 @@ export const WorkbenchCanvas: React.FC = () => {
     }
   };
 
-  const handleMouseUp = () => {
+  const handlePointerUp = (e?: React.PointerEvent<SVGSVGElement>) => {
+    if (e && svgRef.current?.hasPointerCapture(e.pointerId)) {
+      svgRef.current.releasePointerCapture(e.pointerId);
+    }
     setDraggingCompId(null);
     setDraggingTool(null);
   };
 
-  const handleComponentMouseDown = (
-    e: React.MouseEvent,
+  const handleComponentPointerDown = (
+    e: React.PointerEvent<SVGGElement>,
     compId: string,
     compX: number,
     compY: number
   ) => {
     e.stopPropagation();
+    e.preventDefault();
     selectComponent(compId);
     if (!svgRef.current) return;
+    svgRef.current.setPointerCapture(e.pointerId);
     const rect = svgRef.current.getBoundingClientRect();
     const clickX = e.clientX - rect.left;
     const clickY = e.clientY - rect.top;
@@ -292,8 +297,13 @@ export const WorkbenchCanvas: React.FC = () => {
     setDraggingCompId(compId);
   };
 
-  const handleTerminalClick = (e: React.MouseEvent, compId: string, terminalId: string) => {
+  const handleTerminalPointerDown = (
+    e: React.PointerEvent<SVGGElement>,
+    compId: string,
+    terminalId: string
+  ) => {
     e.stopPropagation();
+    e.preventDefault();
     const clickedRef: TerminalRef = {componentId: compId, terminalId};
 
     if (!activeConnectingTerminal) {
@@ -809,8 +819,10 @@ export const WorkbenchCanvas: React.FC = () => {
           <svg
             ref={svgRef}
             className="w-full h-full cursor-default"
-            onMouseMove={handleMouseMove}
-            onMouseUp={handleMouseUp}
+            onPointerMove={handlePointerMove}
+            onPointerUp={handlePointerUp}
+            onPointerCancel={handlePointerUp}
+            style={{touchAction: 'none'}}
           >
             <defs>
               {/* Шаблон сетки координатного стола */}
@@ -999,7 +1011,7 @@ export const WorkbenchCanvas: React.FC = () => {
                 <g
                   key={comp.id}
                   transform={`translate(${comp.x}, ${comp.y}) rotate(${rotation}, ${CARD_WIDTH / 2}, ${CARD_HEIGHT / 2})`}
-                  onMouseDown={(e) => handleComponentMouseDown(e, comp.id, comp.x, comp.y)}
+                  onPointerDown={(e) => handleComponentPointerDown(e, comp.id, comp.x, comp.y)}
                   className="cursor-move"
                 >
                   {/* Фоновый контейнер карточки */}
@@ -1452,8 +1464,8 @@ export const WorkbenchCanvas: React.FC = () => {
                   {comp.type !== 'laser_source' && (
                     <g
                       transform="translate(14, 50)"
-                      onClick={(e) =>
-                        handleTerminalClick(
+                      onPointerDown={(e) =>
+                        handleTerminalPointerDown(
                           e,
                           comp.id,
                           comp.type === 'battery'
@@ -1467,7 +1479,7 @@ export const WorkbenchCanvas: React.FC = () => {
                       }
                       className="cursor-pointer group"
                     >
-                      <circle cx="0" cy="0" r="8" fill="transparent" />
+                      <circle cx="0" cy="0" r="22" fill="transparent" />
                       <circle
                         cx="0"
                         cy="0"
@@ -1492,8 +1504,8 @@ export const WorkbenchCanvas: React.FC = () => {
                   {comp.type !== 'optical_screen' && comp.type !== 'microscope' && comp.type !== 'slide_sample' && (
                     <g
                       transform={`translate(${CARD_WIDTH - 14}, 50)`}
-                      onClick={(e) =>
-                        handleTerminalClick(
+                      onPointerDown={(e) =>
+                        handleTerminalPointerDown(
                           e,
                           comp.id,
                           comp.type === 'battery'
@@ -1507,7 +1519,7 @@ export const WorkbenchCanvas: React.FC = () => {
                       }
                       className="cursor-pointer group"
                     >
-                      <circle cx="0" cy="0" r="8" fill="transparent" />
+                      <circle cx="0" cy="0" r="22" fill="transparent" />
                       <circle
                         cx="0"
                         cy="0"
@@ -1532,8 +1544,8 @@ export const WorkbenchCanvas: React.FC = () => {
                   {(comp.type === 'microscope' || comp.type === 'slide_sample') && (
                     <g
                       transform={`translate(${CARD_WIDTH / 2}, 70)`}
-                      onClick={(e) =>
-                        handleTerminalClick(
+                      onPointerDown={(e) =>
+                        handleTerminalPointerDown(
                           e,
                           comp.id,
                           comp.type === 'microscope' ? 'stage' : 'mount'
@@ -1541,7 +1553,7 @@ export const WorkbenchCanvas: React.FC = () => {
                       }
                       className="cursor-pointer group"
                     >
-                      <circle cx="0" cy="0" r="8" fill="transparent" />
+                      <circle cx="0" cy="0" r="22" fill="transparent" />
                       <circle
                         cx="0"
                         cy="0"
@@ -1562,8 +1574,10 @@ export const WorkbenchCanvas: React.FC = () => {
           {showRuler && (
             <div
               style={{left: rulerPos.x, top: rulerPos.y}}
-              onMouseDown={(e) => {
+              onPointerDown={(e) => {
                 e.stopPropagation();
+                e.preventDefault();
+                e.currentTarget.setPointerCapture(e.pointerId);
                 setDraggingTool('ruler');
                 setToolDragOffset({x: e.clientX - rulerPos.x, y: e.clientY - rulerPos.y});
               }}
@@ -1601,8 +1615,10 @@ export const WorkbenchCanvas: React.FC = () => {
           {showProtractor && (
             <div
               style={{left: protractorPos.x, top: protractorPos.y}}
-              onMouseDown={(e) => {
+              onPointerDown={(e) => {
                 e.stopPropagation();
+                e.preventDefault();
+                e.currentTarget.setPointerCapture(e.pointerId);
                 setDraggingTool('protractor');
                 setToolDragOffset({x: e.clientX - protractorPos.x, y: e.clientY - protractorPos.y});
               }}

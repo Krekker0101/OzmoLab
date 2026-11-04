@@ -352,7 +352,7 @@ export class Workbench3DSceneManager {
   bindEvents() {
     const el = this.renderer.domElement;
 
-    const onPointerMove = (e: MouseEvent) => {
+    const onPointerMove = (e: PointerEvent) => {
       const rect = el.getBoundingClientRect();
       this.mouse.x = ((e.clientX - rect.left) / rect.width) * 2 - 1;
       this.mouse.y = -((e.clientY - rect.top) / rect.height) * 2 + 1;
@@ -400,8 +400,9 @@ export class Workbench3DSceneManager {
       }
     };
 
-    const onPointerDown = (e: MouseEvent) => {
-      if (e.button !== 0) return; // только ЛКМ
+    const onPointerDown = (e: PointerEvent) => {
+      if (e.button !== 0 && e.pointerType !== 'touch') return;
+      el.setPointerCapture(e.pointerId);
       this.raycaster.setFromCamera(this.mouse, this.camera);
 
       for (const [id, item] of this.componentMeshes) {
@@ -429,16 +430,18 @@ export class Workbench3DSceneManager {
       }
     };
 
-    const onPointerUp = () => {
+    const onPointerUp = (e: PointerEvent) => {
+      if (el.hasPointerCapture(e.pointerId)) el.releasePointerCapture(e.pointerId);
       if (this.draggingComponentId) {
         this.draggingComponentId = null;
         this.controls.enabled = true;
       }
     };
 
-    el.addEventListener('mousemove', onPointerMove);
-    el.addEventListener('mousedown', onPointerDown);
-    window.addEventListener('mouseup', onPointerUp);
+    el.addEventListener('pointermove', onPointerMove);
+    el.addEventListener('pointerdown', onPointerDown);
+    el.addEventListener('pointerup', onPointerUp);
+    el.addEventListener('pointercancel', onPointerUp);
 
     const onResize = () => {
       if (this.isDestroyed || !this.container) return;
@@ -450,6 +453,7 @@ export class Workbench3DSceneManager {
       this.renderer.setSize(w, h);
     };
     window.addEventListener('resize', onResize);
+    el.style.touchAction = 'none';
   }
 
   tick = () => {
