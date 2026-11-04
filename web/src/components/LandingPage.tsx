@@ -6,7 +6,7 @@
  * и тёмная темы без глитчей и инверсий.
  */
 
-import React from 'react';
+import React, {lazy, Suspense} from 'react';
 import {
   Activity,
   ArrowRight,
@@ -40,8 +40,9 @@ import {
 } from 'lucide-react';
 import {useLabStore} from '../store/useLabStore.ts';
 import {InteractiveHeroBench} from './InteractiveHeroBench.tsx';
-import {Hero3DContainer} from './hero3d/Hero3DContainer.tsx';
 import {t} from '../../../shared/i18n.ts';
+
+const Hero3DContainer = lazy(() => import('./hero3d/Hero3DContainer.tsx').then((module) => ({default: module.Hero3DContainer})));
 
 // Ссылки на фото-витрину реального оборудования лаборатории
 const CIRCUIT_SHOWCASE_IMAGE = '/src/assets/images/circuit_optics_showcase_1792867169782.jpg';
@@ -118,7 +119,9 @@ export const LandingPage: React.FC = () => {
               </div>
 
               <div className="lg:col-span-6 flex items-center justify-center">
-                <Hero3DContainer />
+                <Suspense fallback={<div className="h-64 w-full max-w-xl rounded-3xl bg-slate-100/70 dark:bg-slate-900/70" />}>
+                  <Hero3DContainer />
+                </Suspense>
               </div>
               {/* Крупный выразительный заголовок в точности как в дизайне референса */}
               <h1 className="text-4xl sm:text-5xl lg:text-[3.25rem] font-black tracking-tight leading-[1.08]">

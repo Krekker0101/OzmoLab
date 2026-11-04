@@ -4,17 +4,18 @@
  * Озмо Лаб (Ozmo Lab) — Главный компонент приложения
  */
 
-import React, {useEffect, useRef, useState} from 'react';
+import React, {lazy, Suspense, useEffect, useRef, useState} from 'react';
 import '../web/src/labs/init.ts';
 import {Header} from '../web/src/components/Header.tsx';
-import {ComponentCatalog} from '../web/src/components/ComponentCatalog.tsx';
 import {WorkbenchCanvas} from '../web/src/components/WorkbenchCanvas.tsx';
-import {ObservationJournal} from '../web/src/components/ObservationJournal.tsx';
 import {GlossaryModal} from '../web/src/components/GlossaryModal.tsx';
 import {AccountModal} from '../web/src/components/AccountModal.tsx';
-import {LandingPage} from '../web/src/components/LandingPage.tsx';
-import {PhotoCircuitAgent} from '../web/src/components/PhotoCircuitAgent/PhotoCircuitAgent.tsx';
 import {useLabStore} from '../web/src/store/useLabStore.ts';
+
+const ComponentCatalog = lazy(() => import('../web/src/components/ComponentCatalog.tsx').then((module) => ({default: module.ComponentCatalog})));
+const ObservationJournal = lazy(() => import('../web/src/components/ObservationJournal.tsx').then((module) => ({default: module.ObservationJournal})));
+const LandingPage = lazy(() => import('../web/src/components/LandingPage.tsx').then((module) => ({default: module.LandingPage})));
+const PhotoCircuitAgent = lazy(() => import('../web/src/components/PhotoCircuitAgent/PhotoCircuitAgent.tsx').then((module) => ({default: module.PhotoCircuitAgent})));
 
 export default function App() {
   const {theme, currentView, language} = useLabStore();
@@ -78,6 +79,7 @@ export default function App() {
       <Header />
 
       {/* 2. Основная рабочая область: Главная страница, фото-агент либо интерактивная лаборатория */}
+      <Suspense fallback={<div className="flex min-h-0 flex-1 items-center justify-center text-sm text-slate-500">Loading lab…</div>}>
       {currentView === 'landing' ? (
         <LandingPage />
       ) : currentView === 'photo-agent' ? (
@@ -144,6 +146,7 @@ export default function App() {
           </div>
         </div>
       )}
+      </Suspense>
 
       {/* Модальное окно научного глоссария с учительской верификацией */}
       <GlossaryModal />

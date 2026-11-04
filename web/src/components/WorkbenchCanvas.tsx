@@ -4,7 +4,7 @@
  * Озмо Лаб (Ozmo Lab) — Центральная рабочая область (2D SVG Монтажный стол & 3D Лаборатория)
  */
 
-import React, {useState, useRef, useMemo, useEffect} from 'react';
+import React, {lazy, Suspense, useState, useRef, useMemo, useEffect} from 'react';
 import {
   Activity,
   Boxes,
@@ -38,8 +38,6 @@ import {
 import {useLabStore} from '../store/useLabStore.ts';
 import {t} from '../../../shared/i18n.ts';
 import {TerminalRef} from '../../../shared/types.ts';
-import {Workbench3DView} from './hero3d/workbench3d/Workbench3DView.tsx';
-import {ThreeCanvasStub} from './ThreeCanvasStub.tsx';
 import {useWorkbenchPhysics} from '../hooks/useWorkbenchPhysics.ts';
 import {
   formatVoltage,
@@ -51,6 +49,17 @@ import {
 const GRID_SIZE = 20;
 const CARD_WIDTH = 164;
 const CARD_HEIGHT = 96;
+
+const Workbench3DView = lazy(() =>
+  import('./hero3d/workbench3d/Workbench3DView.tsx').then((module) => ({
+    default: module.Workbench3DView,
+  }))
+);
+const ThreeCanvasStub = lazy(() =>
+  import('./ThreeCanvasStub.tsx').then((module) => ({
+    default: module.ThreeCanvasStub,
+  }))
+);
 
 function computeOrthogonalPath(p1: {x: number; y: number}, p2: {x: number; y: number}): string {
   const dx = p2.x - p1.x;
@@ -692,11 +701,15 @@ export const WorkbenchCanvas: React.FC = () => {
       {/* Центральный вид: либо 3D лаборатория, либо 3D физический движок ThreeCanvasStub, либо 2D интерактивный SVG стол */}
       {benchView === '3d' ? (
         <div className="flex-1 w-full h-full relative">
-          <Workbench3DView />
+          <Suspense fallback={<div className="flex h-full items-center justify-center text-xs text-slate-500">Loading 3D lab…</div>}>
+            <Workbench3DView />
+          </Suspense>
         </div>
       ) : benchView === '3d-physics' ? (
         <div className="flex-1 w-full h-full relative">
-          <ThreeCanvasStub labId={activeLab.id} is3DEnabled={true} />
+          <Suspense fallback={<div className="flex h-full items-center justify-center text-xs text-slate-500">Loading physics engine…</div>}>
+            <ThreeCanvasStub labId={activeLab.id} is3DEnabled={true} />
+          </Suspense>
         </div>
       ) : (
         <div

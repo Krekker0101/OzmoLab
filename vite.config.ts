@@ -34,6 +34,7 @@ export default defineConfig(() => {
         },
         workbox: {
           globPatterns: ['**/*.{js,css,html,ico,png,svg,json}'],
+          globIgnores: ['**/Workbench3D*.js', '**/ThreeCanvasStub*.js'],
           maximumFileSizeToCacheInBytes: 6 * 1024 * 1024,
         },
       }),
