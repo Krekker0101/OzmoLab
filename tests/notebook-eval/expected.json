@@ -1,0 +1,21 @@
+[
+  {
+    "id": "notebook_01_com_problems.png",
+    "filename": "notebook_01_com_problems.png",
+    "description": "Handwritten Centre of Mass problem set: Prob 1 (1D: m at x=1, 2m at x=4 => 3); Prob 2 (1D: m at 0, 3m at d => 3d/4); Prob 3 (2D square: 3m at (0,0), 4m at (a,0), m at (a,a), 2m at (0,a) => (a/2, 3a/10))",
+    "expectedCategory": "supported_problem",
+    "expectedProblemType": "centre_of_mass",
+    "expectedAnswer": "3",
+    "expected2DAnswer": "(a/2, 3a/10)",
+    "notes": "Real student handwriting with English labels and mathematical derivations."
+  },
+  {
+    "id": "notebook_02_mixed_notes.png",
+    "filename": "notebook_02_mixed_notes.png",
+    "description": "Mixed Bengali-English conceptual lecture notes: spinning particle, projectile motion, formulas F_net=m*a_com, P=m*v_com, qualitative rod and disc sketches",
+    "expectedCategory": "other_notes",
+    "expectedProblemType": null,
+    "expectedAnswer": "N/A (Conceptual notes, not a discrete numerical problem)",
+    "notes": "Must be classified as other_notes or low-confidence notes without hallucinating nonexistent numerical coordinates."
+  }
+]

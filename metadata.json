@@ -1,0 +1,6 @@
+{
+  "name": "Озмо Лаб (Ozmo Lab)",
+  "description": "Платформа виртуальных лабораторий по физике, электротехнике и биологии с ИИ-наставником для школьников Таджикистана на таджикском и русском языках.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

@@ -1,0 +1,21 @@
+# Render Blueprint for Ozmo Lab (Озмо Лаб)
+# Free Web Service Deployment
+# Docs: https://render.com/docs/blueprint-spec
+
+services:
+  - type: web
+    name: ozmo-lab
+    env: node
+    plan: free
+    region: frankfurt # Frankfurt or Oregon (free tier available)
+    buildCommand: npm install && npm run build
+    startCommand: npm start
+    healthCheckPath: /health
+    autoDeploy: true
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: PORT
+        value: 10000
+      - key: BASETEN_API_KEY
+        sync: false # User enters their secret key in the Render Dashboard; never committed to git

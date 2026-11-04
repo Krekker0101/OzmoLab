@@ -1,0 +1,69 @@
+[
+  {
+    "id": "photo_01_open_circuit_voltmeters.png",
+    "filename": "photo_01_open_circuit_voltmeters.png",
+    "description": "Textbook Question 9: 6V battery, open switch, lamp, and 4 voltmeters (A, B, C, D) measuring segments",
+    "topology": "series",
+    "expectedVerdict": "open circuit",
+    "expectedComponents": [
+      {
+        "type": "battery",
+        "value": 6.0,
+        "label": "6V DC Battery"
+      },
+      {
+        "type": "switch",
+        "isOpen": true,
+        "label": "Open Switch"
+      },
+      {
+        "type": "lamp",
+        "label": "Incandescent Lamp"
+      },
+      {
+        "type": "voltmeter",
+        "label": "Voltmeter A (across lamp)"
+      },
+      {
+        "type": "voltmeter",
+        "label": "Voltmeter B (across open switch)"
+      },
+      {
+        "type": "voltmeter",
+        "label": "Voltmeter C (across battery)"
+      },
+      {
+        "type": "voltmeter",
+        "label": "Voltmeter D (across bottom wire)"
+      }
+    ],
+    "notes": "With switch open, loop current is 0A. Voltmeter A = 0V, B = 6V, C = 6V, D = 0V."
+  },
+  {
+    "id": "photo_02_handdrawn_ohm.png",
+    "filename": "photo_02_handdrawn_ohm.png",
+    "description": "Hand-drawn Ohm's Law circuit: Battery, Ammeter A in series, Resistor R, Voltmeter V in parallel across R",
+    "topology": "series",
+    "expectedVerdict": "works",
+    "expectedComponents": [
+      {
+        "type": "battery",
+        "value": 9.0,
+        "label": "DC Battery"
+      },
+      {
+        "type": "resistor",
+        "label": "Resistor R"
+      },
+      {
+        "type": "ammeter",
+        "label": "Ammeter A (in series)"
+      },
+      {
+        "type": "voltmeter",
+        "label": "Voltmeter V (in parallel across R)"
+      }
+    ],
+    "notes": "Standard Ohm's law setup. Ammeter in series loop with battery and resistor; Voltmeter in parallel across resistor R. Wires are excluded from discrete component counts and evaluated via topology."
+  }
+]

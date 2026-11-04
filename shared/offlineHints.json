@@ -1,0 +1,42 @@
+{
+  "SHORT_CIRCUIT": {
+    "tg": "Огоҳӣ! Дар схемаи шумо кӯтоҳпайвастшавӣ (кӯтоҳшавии хатарнок) ба амал омадааст! Қутбҳои батарея бидуни муқовимат (резистор ё лампа) ба ҳам пайваст шудаанд. Калидро кушоед ва лампа ё резистор илова намоед, то ҷараён муътадил гардад.",
+    "ru": "Внимание! В вашей схеме обнаружено короткое замыкание! Полюса батареи соединены напрямую без нагрузки (лампы или резистора). Немедленно разомкните ключ и включите в цепь потребитель тока.",
+    "en": "Warning! A short circuit was detected in your schematic! The battery terminals are connected directly with no load (lamp or resistor). Open the switch immediately and insert a load or current-limiting resistor."
+  },
+  "OPEN_CIRCUIT": {
+    "tg": "Занҷири барқии шумо кушода (разомкнута) аст ва ҷараён ҳаракат намекунад. Санҷед, ки оё калид (хомӯшкунак) пӯшида аст ва оё симҳо аз қутби мусбат (+) то манфӣ (-) роҳи пурраи сарбаста ташкил медиҳанд?",
+    "ru": "Ваша электрическая цепь разомкнута, ток равен нулю. Проверьте: замкнут ли ключ и образуют ли соединительные провода непрерывный путь от положительного полюса (+) к отрицательному (-)?",
+    "en": "Your electrical circuit is open; current equals zero. Check whether the switch is closed and if the connecting wires form an unbroken loop from the positive (+) to the negative (-) terminal."
+  },
+  "EMPTY_CIRCUIT": {
+    "tg": "Мизи кории шумо холӣ аст. Барои сар кардани таҷриба аввал аз менюи чап манбаи ҷараён (батарея) ва лампа ё резисторро ба миз гузоред.",
+    "ru": "На рабочем столе пока нет элементов. Чтобы начать опыт, добавьте из левого каталога источник питания (батарею) и лампу или резистор.",
+    "en": "Your workbench is empty. To start the experiment, add a DC voltage source (battery) and a lamp or resistor from the catalog on the left."
+  },
+  "CIRCUIT_OK": {
+    "tg": "Офарин! Занҷир дуруст ва сарбаста васл шудааст, ҷараёни барқ мегузарад. Қонуни Омро ба хотир оред: I = U / R. Чӣ тавр метавонед шиддати ҷараёнро ду баробар зиёд кунед?",
+    "ru": "Отлично! Схема собрана правильно, цепь замкнута и ток течёт. Вспомните закон Ома: I = U / R. Как изменится сила тока, если увеличить сопротивление цепи?",
+    "en": "Well done! The circuit is assembled correctly, the loop is closed, and current flows. Recall Ohm's Law: I = U / R. How would current change if circuit resistance is increased?"
+  },
+  "HINT_BATTERY_LAMP": {
+    "tg": "Барои гирифтани нур аз лампа, як сими онро ба қутби мусбати батарея ва сими дуюмашро ба воситаи калид ба қутби манфӣ пайваст намоед.",
+    "ru": "Чтобы зажечь лампу, соедините один её контакт с плюсом батареи, а второй через ключ подведите к минусу батареи.",
+    "en": "To illuminate the lamp, connect one contact to the positive terminal of the battery, and connect the second through a switch to the negative terminal."
+  },
+  "AMMETER_INCORRECT": {
+    "tg": "Огоҳӣ оид ба амперметр! Амперметр бояд ҳамеша пайдарпай (последовательно) дар буриши ноқил васл карда шавад, на мутавозӣ (параллельно).",
+    "ru": "Внимание по амперметру! Амперметр всегда подключается в цепь последовательно, в разрыв провода, а не параллельно нагрузке.",
+    "en": "Ammeter connection warning! An ammeter must always be connected in series in the break of a conductor, never in parallel across a load."
+  },
+  "VOLTMETER_INCORRECT": {
+    "tg": "Волтметр барои чениши шиддат бояд мутавозӣ (параллельно) ба ду нуқтаи унсур пайваст карда шавад.",
+    "ru": "Вольтметр для измерения напряжения подключается параллельно к двум выводам исследуемого элемента.",
+    "en": "A voltmeter for measuring potential difference must be connected in parallel across the two terminals of the element under test."
+  },
+  "OFF_TOPIC": {
+    "tg": "Ман танҳо омӯзгори физика ва электротехника ҳастам. Лутфан, саволҳоро оид ба дарс ва схемаҳои барқӣ диҳед.",
+    "ru": "Я виртуальный наставник по физике и электротехнике. Пожалуйста, задавайте вопросы по текущему опыту и законам физики.",
+    "en": "I am a virtual tutor for physics and electrical engineering. Please ask questions about the ongoing lab experiment and physical laws."
+  }
+}

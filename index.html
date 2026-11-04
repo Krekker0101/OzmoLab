@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script>
+      (function() {
+        try {
+          var nativeFetch = window.fetch ? window.fetch.bind(window) : undefined;
+          var customFetch = nativeFetch;
+          var desc = Object.getOwnPropertyDescriptor(window, 'fetch');
+          if (!desc || desc.configurable) {
+            Object.defineProperty(window, 'fetch', {
+              get: function() { return customFetch; },
+              set: function(val) { customFetch = val; },
+              configurable: true,
+              enumerable: true
+            });
+          }
+          if (typeof Window !== 'undefined' && Window.prototype) {
+            var protoDesc = Object.getOwnPropertyDescriptor(Window.prototype, 'fetch');
+            if (protoDesc && protoDesc.configurable) {
+              Object.defineProperty(Window.prototype, 'fetch', {
+                get: function() { return customFetch; },
+                set: function(val) { customFetch = val; },
+                configurable: true,
+                enumerable: true
+              });
+            }
+          }
+        } catch (_) {}
+      })();
+    </script>
+    <title>Озмо Лаб — Платформа виртуальных лабораторий</title>
+    <meta name="description" content="Платформа виртуальных лабораторий по физике, электротехнике и биологии с ИИ-наставником для школьников Таджикистана на таджикском и русском языках." />
+    <meta property="og:title" content="Озмо Лаб — Платформа виртуальных лабораторий" />
+    <meta property="og:description" content="Платформа виртуальных лабораторий по физике, электротехнике и биологии с ИИ-наставником для школьников Таджикистана на таджикском и русском языках." />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
+

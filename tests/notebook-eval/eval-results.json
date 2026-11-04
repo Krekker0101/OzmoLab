@@ -1,0 +1,55 @@
+{
+  "results": [
+    {
+      "photoId": "notebook_01_com_problems.png",
+      "description": "Handwritten Centre of Mass problem set: Prob 1 (1D: m at x=1, 2m at x=4 => 3); Prob 2 (1D: m at 0, 3m at d => 3d/4); Prob 3 (2D square: 3m at (0,0), 4m at (a,0), m at (a,a), 2m at (0,a) => (a/2, 3a/10))",
+      "routerCategory": "supported_problem",
+      "expectedCategory": "supported_problem",
+      "categoryCorrect": true,
+      "problemType": "centre_of_mass",
+      "expectedProblemType": "centre_of_mass",
+      "problemTypeCorrect": true,
+      "extractionValid": true,
+      "isConfident": true,
+      "computedAnswer": "(a/2, 3a/10)",
+      "expectedAnswer": "3",
+      "solverVerdictMatch": true,
+      "promptTokens": 1703,
+      "completionTokens": 2446,
+      "totalTokens": 4149,
+      "latencyMs": 12886,
+      "retried": false,
+      "extractedFieldsSummary": "COM 2D (4 masses: 3m@(0,0), 4m@(1,0), 1m@(1,1), 2m@(0,1))"
+    },
+    {
+      "photoId": "notebook_02_mixed_notes.png",
+      "description": "Mixed Bengali-English conceptual lecture notes: spinning particle, projectile motion, formulas F_net=m*a_com, P=m*v_com, qualitative rod and disc sketches",
+      "routerCategory": "other_notes",
+      "expectedCategory": "other_notes",
+      "categoryCorrect": true,
+      "problemType": null,
+      "expectedProblemType": null,
+      "problemTypeCorrect": true,
+      "extractionValid": true,
+      "isConfident": false,
+      "computedAnswer": "None (Correctly identified as notes)",
+      "expectedAnswer": "N/A (Conceptual notes, not a discrete numerical problem)",
+      "solverVerdictMatch": true,
+      "promptTokens": 1672,
+      "completionTokens": 1142,
+      "totalTokens": 2814,
+      "latencyMs": 8993,
+      "retried": false,
+      "extractedFieldsSummary": "Category: other_notes"
+    }
+  ],
+  "summary": {
+    "totalPhotos": 2,
+    "routerAccuracy": 1,
+    "extractionValidRate": 1,
+    "avgLatencyMs": 10940,
+    "avgTokens": 3482,
+    "totalTokens": 6963,
+    "retriesCount": 0
+  }
+}
