@@ -5,7 +5,7 @@
  */
 
 import React, {useState, useEffect} from 'react';
-import {BookOpen, FlaskConical, Globe, Home, Moon, Sun, User, Wifi, WifiOff} from 'lucide-react';
+import {BookOpen, FlaskConical, Globe, Home, Moon, Sparkles, Sun, User, Wifi, WifiOff} from 'lucide-react';
 import {useLabStore} from '../store/useLabStore.ts';
 import {t} from '../../../shared/i18n.ts';
 import {LabRegistry} from '../labs/registry.ts';
@@ -24,6 +24,8 @@ export const Header: React.FC = () => {
     setCurrentView,
     setAccountOpen,
     userProfile,
+    is3DModeEnabled,
+    toggle3DMode,
   } = useLabStore();
   const [isOnline, setIsOnline] = useState<boolean>(navigator.onLine);
 
@@ -174,6 +176,21 @@ export const Header: React.FC = () => {
               );
             })}
           </div>
+
+          <button
+            onClick={toggle3DMode}
+            className={`flex items-center gap-1.5 px-2.5 py-1 text-xs font-bold rounded-lg border transition-all whitespace-nowrap shrink-0 active:scale-95 ${
+              is3DModeEnabled
+                ? 'bg-purple-600 hover:bg-purple-500 text-white border-purple-500 shadow-xs'
+                : isLight
+                  ? 'bg-slate-100 hover:bg-slate-200 border-slate-200 text-slate-700'
+                  : 'bg-slate-800 hover:bg-slate-700 border-slate-700 text-slate-300'
+            }`}
+            title={language === 'en' ? 'Toggle 3D scene' : language === 'ru' ? 'Переключить 3D сцену' : 'Гузариши саҳнаи 3D'}
+          >
+            <Sparkles className="w-3.5 h-3.5 text-amber-400" />
+            <span>3D</span>
+          </button>
 
           <button
             onClick={() => setCurrentView('photo-agent')}

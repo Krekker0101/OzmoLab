@@ -13,12 +13,11 @@ import {ObservationJournal} from '../web/src/components/ObservationJournal.tsx';
 import {GlossaryModal} from '../web/src/components/GlossaryModal.tsx';
 import {AccountModal} from '../web/src/components/AccountModal.tsx';
 import {LandingPage} from '../web/src/components/LandingPage.tsx';
-import {ThreeCanvasStub} from '../web/src/components/ThreeCanvasStub.tsx';
 import {PhotoCircuitAgent} from '../web/src/components/PhotoCircuitAgent/PhotoCircuitAgent.tsx';
 import {useLabStore} from '../web/src/store/useLabStore.ts';
 
 export default function App() {
-  const {theme, currentView, is3DModeEnabled, set3DModeEnabled, activeLabId} = useLabStore();
+  const {theme, currentView} = useLabStore();
   const isLight = theme === 'light';
   useEffect(() => {
     // Синхронизация класса dark на <html> для точного контроля темы
@@ -65,15 +64,6 @@ export default function App() {
           {/* Правая колонка: Телеметрия и ИИ-наставник */}
           <ObservationJournal />
         </div>
-      )}
-
-      {/* Three.js 3D Viewport (интерактивный 3D-модуль симулятора с физическим движком) */}
-      {currentView === 'lab' && (
-        <ThreeCanvasStub
-          labId={activeLabId || 'circuits-dc'}
-          is3DEnabled={is3DModeEnabled}
-          onToggle3D={set3DModeEnabled}
-        />
       )}
 
       {/* Модальное окно научного глоссария с учительской верификацией */}

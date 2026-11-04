@@ -1,4 +1,4 @@
-/**
+﻿/**
  * @license
  * SPDX-License-Identifier: Apache-2.0
  * Озмо Лаб (Ozmo Lab) — Центральная рабочая область (2D SVG Монтажный стол & 3D Лаборатория)
@@ -38,6 +38,8 @@ import {
 import {useLabStore} from '../store/useLabStore.ts';
 import {t} from '../../../shared/i18n.ts';
 import {TerminalRef} from '../../../shared/types.ts';
+import {Workbench3DView} from './hero3d/workbench3d/Workbench3DView.tsx';
+import {ThreeCanvasStub} from './ThreeCanvasStub.tsx';
 import {useWorkbenchPhysics} from '../hooks/useWorkbenchPhysics.ts';
 import {
   formatVoltage,
@@ -112,6 +114,7 @@ export const WorkbenchCanvas: React.FC = () => {
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
   const [showGrid, setShowGrid] = useState<boolean>(true);
   const [isSnapEnabled, setIsSnapEnabled] = useState<boolean>(true);
+  const [benchView, setBenchView] = useState<'2d' | '3d' | '3d-physics'>('2d');
   const [showProtocolModal, setShowProtocolModal] = useState<boolean>(false);
 
   // Физический движок Matter.js
@@ -375,6 +378,58 @@ export const WorkbenchCanvas: React.FC = () => {
             role="separator"
           />
 
+          {/* Переключатель 2D / 3D представления */}
+          <div
+            className={`flex items-center rounded-lg p-0.5 border ${
+              isLight ? 'bg-slate-100 border-slate-200' : 'bg-slate-800 border-slate-700'
+            }`}
+          >
+            <button
+              onClick={() => setBenchView('2d')}
+              className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all ${
+                benchView === '2d'
+                  ? isLight
+                    ? 'bg-white text-sky-700 shadow-2xs'
+                    : 'bg-slate-700 text-sky-300 shadow-sm'
+                  : isLight
+                    ? 'text-slate-600 hover:text-slate-900'
+                    : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              {t('workbench.tab.2d', language)}
+            </button>
+            <button
+              onClick={() => setBenchView('3d')}
+              className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 ${
+                benchView === '3d'
+                  ? isLight
+                    ? 'bg-white text-sky-700 shadow-2xs'
+                    : 'bg-slate-700 text-sky-300 shadow-sm'
+                  : isLight
+                    ? 'text-slate-600 hover:text-slate-900'
+                    : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+              <span>{t('workbench.tab.3d', language)}</span>
+            </button>
+            <button
+              onClick={() => setBenchView('3d-physics')}
+              className={`px-2.5 py-1 text-xs font-semibold rounded-md transition-all flex items-center gap-1.5 ${
+                benchView === '3d-physics'
+                  ? isLight
+                    ? 'bg-white text-purple-700 shadow-2xs'
+                    : 'bg-slate-700 text-purple-300 shadow-sm'
+                  : isLight
+                    ? 'text-slate-600 hover:text-slate-900'
+                    : 'text-slate-400 hover:text-slate-200'
+              }`}
+            >
+              <Activity className="w-3.5 h-3.5 text-purple-500" />
+              <span>{t('workbench.tab.3d_physics', language)}</span>
+            </button>
+          </div>
+
           {/* Загрузить пример (Preset) */}
           <button
             onClick={loadPreset}
@@ -623,7 +678,17 @@ export const WorkbenchCanvas: React.FC = () => {
         </div>
       </header>
 
-      <div
+      {/* Центральный вид: либо 3D лаборатория, либо 3D физический движок ThreeCanvasStub, либо 2D интерактивный SVG стол */}
+      {benchView === '3d' ? (
+        <div className="flex-1 w-full h-full relative">
+          <Workbench3DView />
+        </div>
+      ) : benchView === '3d-physics' ? (
+        <div className="flex-1 w-full h-full relative">
+          <ThreeCanvasStub labId={activeLab.id} is3DEnabled={true} />
+        </div>
+      ) : (
+        <div
           className={`flex-1 relative overflow-hidden transition-colors ${
             isDragOver ? (isLight ? 'bg-sky-50/50 ring-2 ring-sky-500 inset-0' : 'bg-sky-950/20 ring-2 ring-sky-500') : ''
           }`}
@@ -1570,6 +1635,7 @@ export const WorkbenchCanvas: React.FC = () => {
             </div>
           )}
         </div>
+      )}
 
       {/* РЕЖИМ ОКУЛЯРА МИКРОСКОПА (БИОЛОГИЯ) */}
       {isEyepieceOpen && (
