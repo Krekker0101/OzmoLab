@@ -1030,7 +1030,7 @@ export const useLabStore = create<LabStoreState>((set, get) => {
           }
         }
 
-        // Автоматически выкладываем синтезированную схему на верстак (2D и 3D)
+        // Автоматически выкладываем синтезированную схему на верстак
         if (finalCircuit) {
           get().applySynthesizedCircuit(finalCircuit);
         }
@@ -1093,8 +1093,10 @@ export const useLabStore = create<LabStoreState>((set, get) => {
           get().applySynthesizedCircuit(synthCircuit);
           synthReply =
             language === 'tg'
-              ? `Ман ҳамчун ИИ-Омӯзгор ва Созанда схемаи дархостшударо («${synthCircuit.title}») таҳлил ва ба таври худкор ба мизи кории 2D ва 3D гузоштам!\n${synthCircuit.description}\n\nҲамаи ${synthCircuit.components.length} унсур васл ва ҷараён ҳисоб карда шуд.`
-              : `Я как ИИ-Наставник и Создатель спроектировал и автоматически выложил схему «${synthCircuit.title}» на ваш 2D и 3D верстак!\n${synthCircuit.description}\n\nВсе ${synthCircuit.components.length} компонентов и ${synthCircuit.wires.length} проводов соединены, цепь смоделирована и готова к опытам!`;
+              ? `Ман ҳамчун ИИ-Омӯзгор ва Созанда схемаи дархостшударо («${synthCircuit.title}») таҳлил ва ба таври худкор ба мизи корӣ гузоштам!\n${synthCircuit.description}\n\nҲамаи ${synthCircuit.components.length} унсур васл ва ҷараён ҳисоб карда шуд.`
+              : language === 'ru'
+                ? `Я как ИИ-Наставник и Создатель спроектировал и автоматически выложил схему «${synthCircuit.title}» на монтажный стол!\n${synthCircuit.description}\n\nВсе ${synthCircuit.components.length} компонентов и ${synthCircuit.wires.length} проводов соединены, цепь смоделирована и готова к опытам!`
+                : `As an AI Tutor and Builder, I designed the requested circuit and placed it on the workbench!\n${synthCircuit.description}\n\nAll ${synthCircuit.components.length} components and ${synthCircuit.wires.length} wires are connected, and the circuit is ready for experiments!`;
         }
 
         set((state) => ({

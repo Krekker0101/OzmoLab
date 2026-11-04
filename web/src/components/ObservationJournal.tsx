@@ -500,8 +500,8 @@ export const ObservationJournal: React.FC = () => {
                       </div>
                       <div className="text-[10px] text-slate-500 dark:text-slate-400 truncate">
                         {language === 'tg'
-                          ? 'Тарҳрезии худкор ва гузоштани схема ба 2D ва 3D'
-                          : language === 'ru' ? 'Синтез схем по описанию и выкладка в 2D и 3D' : 'Automatically build and place circuits in 2D and 3D'}
+                          ? 'Тарҳрезии худкор ва гузоштани схема ба мизи корӣ'
+                          : language === 'ru' ? 'Синтез схем по описанию и выкладка на монтажный стол' : 'Automatically build and place circuits on the workbench'}
                       </div>
                     </div>
                   </div>
@@ -1444,7 +1444,7 @@ export const ObservationJournal: React.FC = () => {
                             className="w-full py-1.5 px-2.5 rounded-lg text-xs font-bold flex items-center justify-center gap-1.5 bg-gradient-to-r from-indigo-600 to-sky-600 hover:from-indigo-500 hover:to-sky-500 text-white shadow-xs transition-all cursor-pointer"
                           >
                             <Sparkles className="w-3.5 h-3.5 text-amber-300" />
-                            <span>Выложить на верстак (2D & 3D)</span>
+                            <span>Выложить на верстак</span>
                           </button>
                         </div>
                       )}

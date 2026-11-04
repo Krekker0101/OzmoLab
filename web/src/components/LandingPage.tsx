@@ -40,7 +40,6 @@ import {
 } from 'lucide-react';
 import {useLabStore} from '../store/useLabStore.ts';
 import {InteractiveHeroBench} from './InteractiveHeroBench.tsx';
-import {Hero3DContainer} from './hero3d/Hero3DContainer.tsx';
 import {t} from '../../../shared/i18n.ts';
 
 // Ссылки на фото-витрину реального оборудования лаборатории
@@ -104,7 +103,7 @@ export const LandingPage: React.FC = () => {
         />
 
         <div className="max-w-7xl mx-auto px-6 relative z-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+          <div className="grid grid-cols-1 gap-10 items-center">
             {/* Левая колонка: Заголовок, описание, кнопки, иконки */}
             <div className="lg:col-span-6 space-y-6">
               {/* Надзаголовок-бейдж */}
@@ -219,10 +218,6 @@ export const LandingPage: React.FC = () => {
               </div>
             </div>
 
-            {/* Правая колонка: ПРЕМИАЛЬНЫЙ 3D ИНТЕРАКТИВНЫЙ СТЕНД THREE.JS */}
-            <div className="lg:col-span-6 flex items-center justify-center">
-              <Hero3DContainer />
-            </div>
           </div>
         </div>
       </section>
