@@ -24,6 +24,7 @@ button,
   -ms-overflow-style: none;
   scroll-snap-type: x proximity;
   overscroll-behavior-inline: contain;
+  mask-image: linear-gradient(to right, transparent, black 12px, black calc(100% - 12px), transparent);
 }
 
 .touch-scroll-strip::-webkit-scrollbar {

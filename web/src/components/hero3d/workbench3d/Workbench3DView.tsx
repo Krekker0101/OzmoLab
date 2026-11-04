@@ -29,6 +29,7 @@ import {
   Sparkles,
   Thermometer,
   Trash2,
+  X,
   Zap,
 } from 'lucide-react';
 import {useLabStore} from '../../../store/useLabStore.ts';
@@ -73,6 +74,13 @@ export const Workbench3DView: React.FC = () => {
   const [hoveredComp, setHoveredComp] = useState<CircuitComponent | null>(null);
   const [activeTab, setActiveTab] = useState<'components' | 'instruments' | 'reactions' | 'mechanisms'>('components');
   const [cameraPreset, setCameraPreset] = useState<'iso' | 'top' | 'front'>('iso');
+  const [showInteractionHint, setShowInteractionHint] = useState(() => {
+    try {
+      return sessionStorage.getItem('ozmo-3d-hint-dismissed') !== '1';
+    } catch {
+      return true;
+    }
+  });
 
   // =========================================================================
   // СОСТОЯНИЕ РЕАКЦИЙ (ХИМИКО-ФИЗИЧЕСКАЯ СТАНЦИЯ)
@@ -433,9 +441,9 @@ export const Workbench3DView: React.FC = () => {
       <div ref={mountRef} className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing" />
 
       {/* ВЕРХНЯЯ ПАНЕЛЬ ИНСТРУМЕНТОВ 3D СТОЛА */}
-      <div className="relative z-10 p-3 flex flex-wrap items-center justify-between gap-2 pointer-events-none">
+      <div className="relative z-10 flex flex-wrap items-center justify-between gap-2 p-2 sm:p-3 pointer-events-none">
         {/* Левая группа: Режимы и добавление элементов */}
-        <div className="flex items-center gap-1.5 p-1 rounded-xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/90 dark:border-slate-800 shadow-md pointer-events-auto">
+        <div className="touch-scroll-strip flex max-w-full items-center gap-1.5 overflow-x-auto rounded-xl border border-slate-200/90 bg-white/90 p-1 backdrop-blur-md shadow-md pointer-events-auto dark:border-slate-800 dark:bg-slate-900/90">
           <button
             onClick={() => setActiveTab('components')}
             className={`px-3 py-1.5 text-xs font-bold rounded-lg flex items-center gap-1.5 transition-all ${
@@ -492,7 +500,7 @@ export const Workbench3DView: React.FC = () => {
         </div>
 
         {/* Правая группа: Ракурс камеры и запуск расчета */}
-        <div className="flex items-center gap-2 pointer-events-auto">
+        <div className="touch-scroll-strip flex max-w-full items-center gap-2 overflow-x-auto pointer-events-auto">
           {/* Переключение ракурса камеры */}
           <div className="flex items-center p-1 rounded-xl bg-white/90 dark:bg-slate-900/90 backdrop-blur-md border border-slate-200/90 dark:border-slate-800 shadow-md">
             <button
@@ -527,7 +535,7 @@ export const Workbench3DView: React.FC = () => {
           {/* Кнопка автоматического соединения цепи проводами */}
           <button
             onClick={handleAutoWireCircuit}
-            className="px-3 py-2 bg-amber-500 hover:bg-amber-400 text-slate-950 font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-md active:scale-95 transition-all cursor-pointer"
+            className="hidden min-h-11 shrink-0 items-center gap-1.5 rounded-xl bg-amber-500 px-3 py-2 text-xs font-bold text-slate-950 shadow-md transition-all hover:bg-amber-400 active:scale-95 cursor-pointer sm:flex"
             title="Автоматически соединить компоненты и приборы лабораторными проводами"
           >
             <Zap className="w-3.5 h-3.5 fill-current" />
@@ -537,10 +545,29 @@ export const Workbench3DView: React.FC = () => {
           {/* Запуск расчета физики */}
           <button
             onClick={runSimulation}
-            className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs rounded-xl flex items-center gap-1.5 shadow-lg active:scale-95 transition-all cursor-pointer"
+            className="hidden min-h-11 shrink-0 items-center gap-1.5 rounded-xl bg-emerald-600 px-3.5 py-2 text-xs font-bold text-white shadow-lg transition-all hover:bg-emerald-500 active:scale-95 cursor-pointer sm:flex"
           >
             <Play className="w-3.5 h-3.5 fill-current" />
             <span>{t('workbench.btn.run', language)}</span>
+          </button>
+        </div>
+
+        <div className="touch-scroll-strip safe-bottom absolute inset-x-2 bottom-2 z-20 flex gap-2 overflow-x-auto rounded-2xl border border-slate-200/80 bg-white/90 p-2 shadow-lg backdrop-blur-md dark:border-slate-800 dark:bg-slate-900/90 sm:hidden">
+          <button
+            type="button"
+            onClick={handleAutoWireCircuit}
+            className="min-h-11 min-w-11 flex-1 shrink-0 rounded-xl bg-amber-500 px-3 text-xs font-bold text-slate-950 shadow-md active:scale-95"
+          >
+            <Zap className="mx-auto h-4 w-4 fill-current" />
+            <span className="sr-only">Connect circuit</span>
+          </button>
+          <button
+            type="button"
+            onClick={runSimulation}
+            className="min-h-11 min-w-11 flex-1 shrink-0 rounded-xl bg-emerald-600 px-3 text-xs font-bold text-white shadow-md active:scale-95"
+          >
+            <Play className="mx-auto h-4 w-4 fill-current" />
+            <span className="sr-only">Calculate</span>
           </button>
         </div>
       </div>
@@ -1013,9 +1040,11 @@ export const Workbench3DView: React.FC = () => {
       </div>
 
       {/* НИЖНЯЯ СТАТУСНАЯ ПОДСКАЗКА */}
-      <div className="absolute bottom-3 left-1/2 -translate-x-1/2 z-10 px-4 py-1.5 rounded-full bg-slate-900/80 text-white/90 backdrop-blur-md border border-slate-700 text-xs shadow-lg flex items-center gap-2 pointer-events-none">
-        <Sparkles className="w-3.5 h-3.5 text-amber-400" />
-        <span>
+      {showInteractionHint && (
+      <div className="absolute bottom-24 left-2 right-2 z-10 mx-auto max-w-md rounded-2xl border border-slate-700 bg-slate-900/90 px-3 py-2 text-xs text-white/90 shadow-lg backdrop-blur-md sm:bottom-3 sm:left-1/2 sm:right-auto sm:-translate-x-1/2 sm:rounded-full">
+        <div className="flex items-start gap-2">
+          <Sparkles className="mt-0.5 h-3.5 w-3.5 shrink-0 text-amber-400" />
+          <span className="min-w-0 flex-1">
           {hoveredComp
             ? language === 'en'
               ? `Selected: ${hoveredComp.type} • Drag with the left mouse button to move`
@@ -1027,8 +1056,25 @@ export const Workbench3DView: React.FC = () => {
               : language === 'ru'
                 ? 'Кликните по рубильнику для замыкания • Вращайте сцену ЛКМ • Масштабируйте колесом мыши'
                 : 'Барои бастани занҷир ба калид клик кунед • Барои гардиш бо муш кашед • Барои масштаб чархро истифода баред'}
-        </span>
+          </span>
+          <button
+            type="button"
+            aria-label="Dismiss hint"
+            onClick={() => {
+              setShowInteractionHint(false);
+              try {
+                sessionStorage.setItem('ozmo-3d-hint-dismissed', '1');
+              } catch {
+                // Session storage is optional in private browsing contexts.
+              }
+            }}
+            className="min-h-7 min-w-7 shrink-0 rounded-full text-slate-300 hover:bg-white/10"
+          >
+            <X className="mx-auto h-3.5 w-3.5" />
+          </button>
+        </div>
       </div>
+      )}
     </div>
   );
 };
