@@ -120,6 +120,9 @@ export const WorkbenchCanvas: React.FC = () => {
   const [mousePos, setMousePos] = useState<{x: number; y: number}>({x: 0, y: 0});
   const [draggingCompId, setDraggingCompId] = useState<string | null>(null);
   const [dragOffset, setDragOffset] = useState<{x: number; y: number}>({x: 0, y: 0});
+  const connectingPointerId = useRef<number | null>(null);
+  const longPressTimer = useRef<number | null>(null);
+  const longPressTriggered = useRef(false);
   const [isDragOver, setIsDragOver] = useState<boolean>(false);
   const [showGrid, setShowGrid] = useState<boolean>(true);
   const [isSnapEnabled, setIsSnapEnabled] = useState<boolean>(true);
@@ -253,7 +256,7 @@ export const WorkbenchCanvas: React.FC = () => {
     const y = e.clientY - rect.top;
     setMousePos({x, y});
 
-    if (draggingCompId) {
+    if (draggingCompId && !longPressTriggered.current) {
       const rawX = x - dragOffset.x;
       const rawY = y - dragOffset.y;
       const targetX = isSnapEnabled ? Math.round(rawX / GRID_SIZE) * GRID_SIZE : rawX;
@@ -281,8 +284,36 @@ export const WorkbenchCanvas: React.FC = () => {
   };
 
   const handlePointerUp = (e?: React.PointerEvent<SVGSVGElement>) => {
+    if (longPressTimer.current !== null) {
+      window.clearTimeout(longPressTimer.current);
+      longPressTimer.current = null;
+    }
+    if (e && activeConnectingTerminal && connectingPointerId.current === e.pointerId) {
+      const rect = svgRef.current?.getBoundingClientRect();
+      const pointerPosition = rect
+        ? {x: e.clientX - rect.left, y: e.clientY - rect.top}
+        : mousePos;
+      const nearest = [...terminalCoordinates.entries()]
+        .filter(([key]) => key !== `${activeConnectingTerminal.componentId}:${activeConnectingTerminal.terminalId}`)
+        .map(([key, position]) => ({
+          key,
+          distance: Math.hypot(position.x - pointerPosition.x, position.y - pointerPosition.y),
+        }))
+        .sort((a, b) => a.distance - b.distance)[0];
+
+      if (nearest && nearest.distance <= 36) {
+        const [componentId, terminalId] = nearest.key.split(':');
+        finishConnectingTerminal({componentId, terminalId});
+      } else {
+        cancelConnecting();
+      }
+    }
     if (e && svgRef.current?.hasPointerCapture(e.pointerId)) {
       svgRef.current.releasePointerCapture(e.pointerId);
+    }
+    connectingPointerId.current = null;
+    if (longPressTriggered.current) {
+      setDraggingCompId(null);
     }
     setDraggingCompId(null);
     setDraggingTool(null);
@@ -304,6 +335,13 @@ export const WorkbenchCanvas: React.FC = () => {
     const clickY = e.clientY - rect.top;
     setDragOffset({x: clickX - compX, y: clickY - compY});
     setDraggingCompId(compId);
+    longPressTriggered.current = false;
+    if (e.pointerType === 'touch') {
+      longPressTimer.current = window.setTimeout(() => {
+        longPressTriggered.current = true;
+        rotateComponent(compId);
+      }, 650);
+    }
   };
 
   const handleTerminalPointerDown = (
@@ -317,8 +355,11 @@ export const WorkbenchCanvas: React.FC = () => {
 
     if (!activeConnectingTerminal) {
       startConnectingTerminal(clickedRef);
+      connectingPointerId.current = e.pointerId;
+      svgRef.current?.setPointerCapture(e.pointerId);
     } else {
       finishConnectingTerminal(clickedRef);
+      connectingPointerId.current = null;
     }
   };
 
@@ -1071,15 +1112,20 @@ export const WorkbenchCanvas: React.FC = () => {
                   {/* Кнопка удаления */}
                   {isSelected && (
                     <g
-                      transform={`translate(${CARD_WIDTH - 20}, 4)`}
+                      transform={`translate(${CARD_WIDTH - 28}, -4)`}
+                      onPointerDown={(e) => {
+                        e.stopPropagation();
+                        e.preventDefault();
+                      }}
                       onClick={(e) => {
                         e.stopPropagation();
                         removeComponent(comp.id);
                       }}
                       className="cursor-pointer hover:opacity-80"
                     >
-                      <circle cx="8" cy="8" r="8" fill="#ef4444" />
-                      <path d="M 5 5 L 11 11 M 11 5 L 5 11" stroke="#ffffff" strokeWidth="1.5" />
+                      <circle cx="14" cy="14" r="22" fill="transparent" />
+                      <circle cx="14" cy="14" r="10" fill="#ef4444" />
+                      <path d="M 10 10 L 18 18 M 18 10 L 10 18" stroke="#ffffff" strokeWidth="1.5" />
                     </g>
                   )}
 

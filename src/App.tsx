@@ -21,8 +21,8 @@ export default function App() {
   const {theme, currentView, language} = useLabStore();
   const [mobilePanel, setMobilePanel] = useState<'catalog' | 'workbench' | 'journal'>('workbench');
   const [mobileSheetSnap, setMobileSheetSnap] = useState<'peek' | 'half' | 'full'>('half');
-  const [sheetStartY, setSheetStartY] = useState<number | null>(null);
   const mobileSheetRef = useRef<HTMLDivElement>(null);
+  const sheetStartY = useRef<number | null>(null);
   const isLight = theme === 'light';
   useEffect(() => {
     // Синхронизация класса dark на <html> для точного контроля темы
@@ -54,6 +54,29 @@ export default function App() {
     return () => window.removeEventListener('keydown', handleEscape);
   }, [mobilePanel]);
 
+  const handleSheetPointerDown = (event: React.PointerEvent<HTMLDivElement>) => {
+    sheetStartY.current = event.clientY;
+    event.currentTarget.setPointerCapture(event.pointerId);
+  };
+
+  const handleSheetPointerUp = (event: React.PointerEvent<HTMLDivElement>) => {
+    if (sheetStartY.current === null) return;
+    const delta = event.clientY - sheetStartY.current;
+    sheetStartY.current = null;
+    if (event.currentTarget.hasPointerCapture(event.pointerId)) {
+      event.currentTarget.releasePointerCapture(event.pointerId);
+    }
+
+    if (delta > 80) {
+      if (mobileSheetSnap === 'full') setMobileSheetSnap('half');
+      else if (mobileSheetSnap === 'half') setMobileSheetSnap('peek');
+      else setMobilePanel('workbench');
+    } else if (delta < -80) {
+      if (mobileSheetSnap === 'peek') setMobileSheetSnap('half');
+      else if (mobileSheetSnap === 'half') setMobileSheetSnap('full');
+    }
+  };
+
   useEffect(() => {
     const viewport = window.visualViewport;
     if (!viewport) return;
@@ -74,6 +97,7 @@ export default function App() {
       className={`flex h-[100dvh] min-h-screen w-full min-w-0 flex-col overflow-hidden font-sans select-none transition-colors duration-200 motion-safe:scroll-smooth ${
         isLight ? 'bg-white text-slate-800' : 'bg-slate-950 text-slate-100'
       }`}
+      style={{height: 'var(--visual-viewport-height)'}}
     >
       {/* 1. Верхняя панель (Top Bar Contract: 3 зоны) */}
       <Header />
@@ -128,17 +152,22 @@ export default function App() {
                       ? 'h-full'
                       : 'h-[62%]'
               }`}
-              onPointerDown={(event) => {
-                if (mobilePanel !== 'workbench') setSheetStartY(event.clientY);
-              }}
-              onPointerUp={(event) => {
-                if (sheetStartY === null || mobilePanel === 'workbench') return;
-                const delta = event.clientY - sheetStartY;
-                if (delta > 80) setMobileSheetSnap('peek');
-                if (delta < -80) setMobileSheetSnap('full');
-                setSheetStartY(null);
-              }}
             >
+              {mobilePanel !== 'workbench' && (
+                <div
+                  className="safe-top flex h-8 shrink-0 touch-none items-center justify-center bg-transparent"
+                  onPointerDown={handleSheetPointerDown}
+                  onPointerUp={handleSheetPointerUp}
+                  onPointerCancel={() => {
+                    sheetStartY.current = null;
+                  }}
+                  role="button"
+                  tabIndex={0}
+                  aria-label="Drag sheet"
+                >
+                  <span className="h-1.5 w-12 rounded-full bg-slate-300 dark:bg-slate-700" />
+                </div>
+              )}
               {mobilePanel === 'catalog' && <ComponentCatalog />}
               {mobilePanel === 'workbench' && <WorkbenchCanvas />}
               {mobilePanel === 'journal' && <ObservationJournal />}
