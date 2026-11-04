@@ -4,7 +4,7 @@
  * Озмо Лаб (Ozmo Lab) — Главный компонент приложения
  */
 
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import '../web/src/labs/init.ts';
 import {Header} from '../web/src/components/Header.tsx';
 import {ComponentCatalog} from '../web/src/components/ComponentCatalog.tsx';
@@ -19,6 +19,9 @@ import {useLabStore} from '../web/src/store/useLabStore.ts';
 export default function App() {
   const {theme, currentView, language} = useLabStore();
   const [mobilePanel, setMobilePanel] = useState<'catalog' | 'workbench' | 'journal'>('workbench');
+  const [mobileSheetSnap, setMobileSheetSnap] = useState<'peek' | 'half' | 'full'>('half');
+  const [sheetStartY, setSheetStartY] = useState<number | null>(null);
+  const mobileSheetRef = useRef<HTMLDivElement>(null);
   const isLight = theme === 'light';
   useEffect(() => {
     // Синхронизация класса dark на <html> для точного контроля темы
@@ -38,6 +41,31 @@ export default function App() {
         console.warn('[PWA] Service worker registration ignored:', err);
       });
     }
+  }, []);
+
+  useEffect(() => {
+    if (mobilePanel === 'workbench') return;
+    mobileSheetRef.current?.focus();
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') setMobilePanel('workbench');
+    };
+    window.addEventListener('keydown', handleEscape);
+    return () => window.removeEventListener('keydown', handleEscape);
+  }, [mobilePanel]);
+
+  useEffect(() => {
+    const viewport = window.visualViewport;
+    if (!viewport) return;
+    const updateViewportHeight = () => {
+      document.documentElement.style.setProperty('--visual-viewport-height', `${viewport.height}px`);
+    };
+    updateViewportHeight();
+    viewport.addEventListener('resize', updateViewportHeight);
+    viewport.addEventListener('scroll', updateViewportHeight);
+    return () => {
+      viewport.removeEventListener('resize', updateViewportHeight);
+      viewport.removeEventListener('scroll', updateViewportHeight);
+    };
   }, []);
 
   return (
@@ -84,7 +112,31 @@ export default function App() {
           </div>
 
           <div className="min-h-0 flex-1 overflow-hidden lg:hidden">
-            <div className="flex h-full min-h-0 flex-col transition-opacity duration-200">
+            <div
+              ref={mobileSheetRef}
+              tabIndex={-1}
+              role={mobilePanel === 'workbench' ? undefined : 'dialog'}
+              aria-label={mobilePanel === 'catalog' ? 'Components' : 'Observations'}
+              className={`flex min-h-0 flex-col transition-[height,opacity] duration-300 ${
+                mobilePanel === 'workbench'
+                  ? 'h-full'
+                  : mobileSheetSnap === 'peek'
+                    ? 'h-[28%]'
+                    : mobileSheetSnap === 'full'
+                      ? 'h-full'
+                      : 'h-[62%]'
+              }`}
+              onPointerDown={(event) => {
+                if (mobilePanel !== 'workbench') setSheetStartY(event.clientY);
+              }}
+              onPointerUp={(event) => {
+                if (sheetStartY === null || mobilePanel === 'workbench') return;
+                const delta = event.clientY - sheetStartY;
+                if (delta > 80) setMobileSheetSnap('peek');
+                if (delta < -80) setMobileSheetSnap('full');
+                setSheetStartY(null);
+              }}
+            >
               {mobilePanel === 'catalog' && <ComponentCatalog />}
               {mobilePanel === 'workbench' && <WorkbenchCanvas />}
               {mobilePanel === 'journal' && <ObservationJournal />}

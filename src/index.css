@@ -5,6 +5,7 @@
 /* Базовые стили для плавной прокрутки и типографики */
 html {
   scroll-behavior: smooth;
+  --visual-viewport-height: 100dvh;
 }
 
 body {
