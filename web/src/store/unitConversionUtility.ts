@@ -254,7 +254,7 @@ export function autoConvertPhysicalValue(
   if (chosenScale.factor === 1) {
     explanation = `1 ${baseUnit} = 1 ${baseUnit}`;
   } else if (chosenScale.factor > 1) {
-    explanation = `1 ${chosenScale.symbol} = ${chosenScale.factor.toLocaleString()} ${baseUnit}`;
+    explanation = `1 ${chosenScale.symbol} = ${chosenScale.factor.toLocaleString('en-US')} ${baseUnit}`;
   } else {
     explanation = `1 ${chosenScale.symbol} = ${chosenScale.factor} ${baseUnit}`;
   }

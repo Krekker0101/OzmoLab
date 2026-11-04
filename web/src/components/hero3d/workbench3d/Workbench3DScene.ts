@@ -77,6 +77,11 @@ export class Workbench3DSceneManager {
   clock = new THREE.Clock();
   frameId = 0;
   isDestroyed = false;
+  isVisible = true;
+  isLowPower = false;
+  frameSamples = 0;
+  sampleStartedAt = performance.now();
+  visibilityObserver: IntersectionObserver | null = null;
 
   constructor(container: HTMLElement, isLight: boolean, callbacks: Workbench3DCallbacks) {
     this.container = container;
@@ -85,16 +90,17 @@ export class Workbench3DSceneManager {
 
     const width = container.clientWidth || 900;
     const height = container.clientHeight || 600;
+    const isMobile = window.matchMedia('(pointer: coarse)').matches || width < 640;
 
     // 1. Рендерер с поддержкой ACESFilmic и мягких теней
-    this.renderer = new THREE.WebGLRenderer({antialias: true, alpha: true, powerPreference: 'high-performance'});
+    this.renderer = new THREE.WebGLRenderer({antialias: !isMobile, alpha: true, powerPreference: 'high-performance'});
     this.renderer.setSize(width, height);
-    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, isMobile ? 1.5 : 2));
     this.renderer.outputColorSpace = THREE.SRGBColorSpace;
     this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
     this.renderer.toneMappingExposure = isLight ? 0.95 : 1.15;
     this.renderer.shadowMap.enabled = true;
-    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.shadowMap.type = isMobile ? THREE.BasicShadowMap : THREE.PCFSoftShadowMap;
 
     container.appendChild(this.renderer.domElement);
 
@@ -141,6 +147,11 @@ export class Workbench3DSceneManager {
 
     // 7. Подключение событий
     this.bindEvents();
+    this.visibilityObserver = new IntersectionObserver(([entry]) => {
+      this.isVisible = entry.isIntersecting;
+      if (this.isVisible && !this.frameId) this.tick();
+    }, {threshold: 0.01});
+    this.visibilityObserver.observe(container);
 
     // 8. Запуск цикла
     this.tick();
@@ -457,7 +468,10 @@ export class Workbench3DSceneManager {
   }
 
   tick = () => {
-    if (this.isDestroyed) return;
+    if (this.isDestroyed || !this.isVisible || document.hidden) {
+      this.frameId = 0;
+      return;
+    }
 
     const delta = this.clock.getDelta();
     this.controls.update();
@@ -466,12 +480,21 @@ export class Workbench3DSceneManager {
     this.updateWiresInternal();
 
     this.renderer.render(this.scene, this.camera);
+    this.frameSamples++;
+    const elapsed = performance.now() - this.sampleStartedAt;
+    if (elapsed >= 1000) {
+      if (this.frameSamples < 30 && !this.isLowPower) this.setPerformanceMode(true);
+      this.frameSamples = 0;
+      this.sampleStartedAt = performance.now();
+    }
     this.frameId = requestAnimationFrame(this.tick);
   };
 
   dispose() {
     this.isDestroyed = true;
     cancelAnimationFrame(this.frameId);
+    this.visibilityObserver?.disconnect();
+    this.visibilityObserver = null;
 
     for (const [, item] of this.componentMeshes) {
       item.handle.dispose();
@@ -489,5 +512,12 @@ export class Workbench3DSceneManager {
     if (this.renderer.domElement.parentElement) {
       this.renderer.domElement.parentElement.removeChild(this.renderer.domElement);
     }
+  }
+
+  setPerformanceMode(lowPower: boolean) {
+    this.isLowPower = lowPower;
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, lowPower ? 1 : 1.5));
+    this.renderer.shadowMap.enabled = !lowPower;
+    this.renderer.shadowMap.needsUpdate = true;
   }
 }

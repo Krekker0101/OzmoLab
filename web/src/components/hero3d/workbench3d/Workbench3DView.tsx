@@ -74,6 +74,7 @@ export const Workbench3DView: React.FC = () => {
   const [hoveredComp, setHoveredComp] = useState<CircuitComponent | null>(null);
   const [activeTab, setActiveTab] = useState<'components' | 'instruments' | 'reactions' | 'mechanisms'>('components');
   const [cameraPreset, setCameraPreset] = useState<'iso' | 'top' | 'front'>('iso');
+  const [lowPowerMode, setLowPowerMode] = useState(false);
   const [showInteractionHint, setShowInteractionHint] = useState(() => {
     try {
       return sessionStorage.getItem('ozmo-3d-hint-dismissed') !== '1';
@@ -213,6 +214,10 @@ export const Workbench3DView: React.FC = () => {
   useEffect(() => {
     sceneManagerRef.current?.syncComponents(components, simulationResult, selectedComponentId);
   }, [components, simulationResult, selectedComponentId]);
+
+  useEffect(() => {
+    sceneManagerRef.current?.setPerformanceMode(lowPowerMode);
+  }, [lowPowerMode]);
 
   useEffect(() => {
     sceneManagerRef.current?.syncWires(wires);
@@ -531,6 +536,19 @@ export const Workbench3DView: React.FC = () => {
               Фронт
             </button>
           </div>
+          <button
+            type="button"
+            onClick={() => setLowPowerMode((enabled) => !enabled)}
+            className={`min-h-11 shrink-0 rounded-xl border px-3 text-xs font-bold transition-colors ${
+              lowPowerMode
+                ? 'border-emerald-500 bg-emerald-500/15 text-emerald-700 dark:text-emerald-300'
+                : 'border-slate-200 bg-white/90 text-slate-600 dark:border-slate-800 dark:bg-slate-900/90 dark:text-slate-300'
+            }`}
+            aria-pressed={lowPowerMode}
+            title="Reduce 3D effects and rendering cost"
+          >
+            Eco
+          </button>
 
           {/* Кнопка автоматического соединения цепи проводами */}
           <button
