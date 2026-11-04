@@ -28,7 +28,7 @@ const hints = offlineHints as unknown as OfflineHintStructure;
 /**
  * Проверка на попытку выхода за пределы темы или извлечения системного промпта
  */
-export function checkSafetyAndGuardrails(message: string, language: 'tg' | 'ru'): string | null {
+export function checkSafetyAndGuardrails(message: string, language: 'tg' | 'ru' | 'en'): string | null {
   const lower = message.toLowerCase();
 
   // Попытка извлечения системного промпта
@@ -42,7 +42,9 @@ export function checkSafetyAndGuardrails(message: string, language: 'tg' | 'ru')
   ) {
     return language === 'tg'
       ? 'Ман омӯзгори физикаи Озмо Лаб ҳастам. Дастурҳои дохилии омӯзгор маҳрамона буда, барои таълими фанни физика равона шудаанд. Биёед ба озмоиш баргардем!'
-      : 'Я виртуальный наставник по физике Озмо Лаб. Служебные инструкции являются закрытыми и служат для методической помощи. Давайте вернемся к нашей электрической цепи!';
+      : language === 'ru'
+        ? 'Я виртуальный наставник по физике Озмо Лаб. Служебные инструкции являются закрытыми и служат для методической помощи. Давайте вернемся к нашей электрической цепи!'
+        : 'I am Ozmo Lab’s virtual physics tutor. Internal teaching instructions are private and support physics education. Let’s return to the electrical circuit.';
   }
 
   // Вопросы вне курса физики
@@ -139,7 +141,9 @@ export function generateOfflineTutorReply(payload: ValidatedTutorRequest): strin
 
   return lang === 'tg'
     ? 'Салом! Ман омодаам дар васл кардани схема ба шумо кумак кунам. Саволи худро диҳед ё тугмаи «Схемаамро санҷ»-ро пахш намоед.'
-    : 'Здравствуйте! Я готов помочь вам с практической работой. Задайте вопрос или нажмите кнопку «Проверь мою схему».';
+    : lang === 'ru'
+      ? 'Здравствуйте! Я готов помочь вам с практической работой. Задайте вопрос или нажмите кнопку «Проверь мою схему».'
+      : 'Hello! I am ready to help with your practical work. Ask a question or click “Check my circuit”.';
 }
 
 /**

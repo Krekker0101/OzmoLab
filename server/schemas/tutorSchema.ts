@@ -7,7 +7,7 @@
 import {z} from 'zod';
 
 export const tutorRequestSchema = z.object({
-  language: z.enum(['tg', 'ru']).default('tg'),
+  language: z.enum(['tg', 'ru', 'en']).default('tg'),
   message: z.string().trim().min(1, 'Сообщение не может быть пустым').max(500, 'Сообщение не должно превышать 500 символов'),
   actionType: z.enum(['chat', 'hint', 'check_circuit']).default('chat'),
   lessonId: z.string().max(100).optional().nullable(),

@@ -752,6 +752,7 @@ export function generateTeacherExplanation(
 ): AgentExplanation {
   const warnings = originalSolution.warnings;
   const isTg = lang === 'tg';
+  const isEn = lang === 'en';
 
   // Case 1: LED Burnout without Resistor
   if (warnings.some((w) => w.code === 'LED_BURNOUT_NO_RESISTOR')) {
@@ -765,6 +766,25 @@ export function generateTeacherExplanation(
     const currentMilliAmps = (safeI * 1000).toFixed(1);
 
     if (isTg) {
+      if (isEn) {
+        return {
+          language: 'en',
+          title: 'Diagnosis: the LED will burn out without a current-limiting resistor',
+          summary: 'The LED is connected directly to a 9 V source without a series resistor.',
+          whatWentWrong: `The battery provides ${vBat} V while the LED drop is only ${vLed} V. The excess voltage causes a dangerous current surge that can destroy the LED junction.`,
+          physicsLaw: "Ohm's law: I = ΔU / R; Joule heating: P = I² · R",
+          formulaSteps: [
+            `1. Resistor voltage: U_R = ${vBat} V - ${vLed} V = ${vBat - vLed} V`,
+            '2. Safe LED current: approximately 20 mA',
+            `3. Required resistance: R = ${vBat - vLed} V / 0.02 A = ${((vBat - vLed) / 0.02).toFixed(0)} Ω`,
+            `4. Select the nearest standard value: ${rVal} Ω`,
+            `5. MNA verification: I = ${currentMilliAmps} mA; the LED operates safely.`,
+          ],
+          howToFix: `Connect a ${rVal} Ω resistor in series between the battery positive terminal and the LED anode.`,
+          safetyNote: 'Never connect an LED directly to a voltage source without a current-limiting resistor.',
+        };
+      }
+
       return {
         language: 'tg',
         title: 'Огоҳӣ: Диоди рӯшноӣдиҳанда (LED) бе муқовимат месӯзад!',
@@ -783,6 +803,23 @@ export function generateTeacherExplanation(
         howToFix:
           `Дар пайдарпай байни қутби мусбати батарея ва аноди диод муқовимати ${rVal} Ом пайваст кунед.`,
         safetyNote: 'Ҳеҷ гоҳ диодро бе муқовимати маҳдудкунанда ба манбаи шиддат васл накунед!',
+      };
+    }
+
+    if (isEn) {
+      return {
+        language: 'en',
+        title: 'Danger: short circuit across the power source',
+        summary: 'The positive and negative battery terminals are connected without a useful load.',
+        whatWentWrong: 'The external resistance approaches zero, causing the current to rise to a dangerous level.',
+        physicsLaw: 'Ohm’s law for a complete circuit: I = ε / (R_external + r_internal)',
+        formulaSteps: [
+          '1. External resistance: R_external ≈ 0 Ω',
+          '2. Short-circuit current: I = 9 V / 0.2 Ω = 45 A',
+          '3. This current can rapidly heat the battery and wires and create a fire hazard.',
+        ],
+        howToFix: 'Remove the shorting wire and connect a load such as a lamp or resistor between the source terminals.',
+        safetyNote: 'A short circuit can rapidly heat batteries and wires.',
       };
     }
 
@@ -810,6 +847,22 @@ export function generateTeacherExplanation(
   // Case 2: Direct Short Circuit
   if (warnings.some((w) => w.code === 'SHORT_CIRCUIT')) {
     if (isTg) {
+      if (isEn) {
+        return {
+          language: 'en',
+          title: 'Open circuit: no current flows',
+          summary: 'A break or an open switch was detected in the circuit.',
+          whatWentWrong: 'Current cannot flow because the conductive path back to the source is interrupted.',
+          physicsLaw: 'Condition for DC current: a closed loop of conductors.',
+          formulaSteps: [
+            '1. Open-gap resistance: R_open → ∞',
+            '2. Current: I = U / R = 0 A',
+            '3. Source voltage may be present across the switch, but no current flows through the load.',
+          ],
+          howToFix: 'Close the switch or restore the broken wire connection.',
+        };
+      }
+
       return {
         language: 'tg',
         title: 'Хатар: Расиши кӯтоҳ (КЗ) дар қутбҳои батарея!',
@@ -823,6 +876,22 @@ export function generateTeacherExplanation(
         ],
         howToFix: 'Ноқили расиши кӯтоҳро канда, ба занҷир истеъмолкунанда (лампа ё муқовимат) пайваст кунед.',
         safetyNote: 'Ҳангоми расиши кӯтоҳ батарея ва симҳо метавонанд одамро сӯзонанд!',
+      };
+    }
+
+    if (isEn) {
+      return {
+        language: 'en',
+        title: 'Incorrect polarity: the LED is connected in reverse',
+        summary: 'An LED conducts primarily in one direction and is blocked when reverse-biased.',
+        whatWentWrong: 'The anode is connected to the negative terminal and the cathode to the positive terminal, so the p-n junction is blocked.',
+        physicsLaw: 'Rectifying behavior of a semiconductor p-n junction.',
+        formulaSteps: [
+          '1. Reverse voltage blocks charge carriers.',
+          '2. Reverse resistance is extremely high.',
+          '3. Current is approximately zero and the LED does not light; excessive reverse voltage can damage it.',
+        ],
+        howToFix: 'Swap the LED leads: connect the longer anode lead to the positive side through a resistor.',
       };
     }
 
@@ -845,6 +914,22 @@ export function generateTeacherExplanation(
   // Case 3: Open Circuit / Switch
   if (warnings.some((w) => w.code === 'OPEN_CIRCUIT')) {
     if (isTg) {
+      if (isEn) {
+        return {
+          language: 'en',
+          title: 'Excellent! The electrical circuit is assembled correctly and safely',
+          summary: 'All components are compatible, currents are within their rated ranges, and there are no overloads.',
+          whatWentWrong: 'No topology errors were detected.',
+          physicsLaw: "Ohm's and Kirchhoff's laws are satisfied.",
+          formulaSteps: [
+            `1. Total source current: I_total = ${originalSolution.totalCurrent} A`,
+            `2. Equivalent resistance: R_eq = ${originalSolution.totalEquivalentResistance} Ω`,
+            '3. Indicators and lamps operate within their calculated conditions.',
+          ],
+          howToFix: 'The circuit is ready for the experiment; no changes are required.',
+        };
+      }
+
       return {
         language: 'tg',
         title: 'Маълумот: Занҷир кушода аст (ҷараён намегузарад)',

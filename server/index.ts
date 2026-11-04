@@ -205,7 +205,9 @@ apiRouter.post('/tutor', rateLimiter, async (req: Request, res: Response) => {
         text:
           payload.language === 'tg'
             ? 'Хатогӣ ҳангоми тавлиди посух. Лутфан, дубора кӯшиш кунед.'
-            : 'Ошибка при формировании ответа. Пожалуйста, повторите попытку.',
+            : payload.language === 'ru'
+              ? 'Ошибка при формировании ответа. Пожалуйста, повторите попытку.'
+              : 'An error occurred while generating the response. Please try again.',
       })}\n\n`
     );
     res.write('data: [DONE]\n\n');
